@@ -1,2 +1,2 @@
-# Web Showcase &middot; ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ruidnogueira/web-showcase/build) ![Codecov](https://img.shields.io/codecov/c/github/ruidnogueira/web-showcase)
+# Web Showcase &middot; ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ruidnogueira/web-showcase/build) ![Codecov](https://img.shields.io/codecov/c/github/ruidnogueira/web-showcase) ![GitHub last commit](https://img.shields.io/github/last-commit/ruidnogueira/web-showcase)
 A project to practice and showcase what I have learned.
