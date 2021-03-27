@@ -1,0 +1,15 @@
+{
+  "overrides": [
+    {
+      "files": [".prettierrc", ".stylelintrc"],
+      "options": {
+        "parser": "json"
+      }
+    }
+  ],
+  "singleQuote": true,
+  "useTabs": false,
+  "semi": true,
+  "bracketSpacing": true,
+  "printWidth": 100
+}
