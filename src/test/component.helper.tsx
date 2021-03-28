@@ -1,8 +1,10 @@
 import { ReactElement, ComponentType } from 'react';
 import { render } from '@testing-library/react';
+import { MemoryRouter, MemoryRouterProps } from 'react-router';
 
 interface RenderOptions {
   wrapper?: ComponentType;
+  routerProps?: MemoryRouterProps;
 }
 
 /**
@@ -12,7 +14,9 @@ export function renderWithProviders(ui: ReactElement, options: RenderOptions = {
   const Wrapper = options.wrapper;
 
   const AllProviders: React.FC = ({ children }) => (
-    <>{Wrapper ? <Wrapper>{children}</Wrapper> : children}</>
+    <MemoryRouter {...options.routerProps}>
+      {Wrapper ? <Wrapper>{children}</Wrapper> : children}
+    </MemoryRouter>
   );
 
   return render(ui, { wrapper: AllProviders });
