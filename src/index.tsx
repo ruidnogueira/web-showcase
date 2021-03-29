@@ -1,15 +1,23 @@
-import { StrictMode } from 'react';
+import { StrictMode, Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import 'styles/styles.scss';
 import { App } from './app/App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { ConfigProvider } from 'app/core/configs/ConfigProvider';
+import { I18nProvider } from 'app/core/i18n/I18nProvider';
 
 ReactDOM.render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <ConfigProvider>
+        <I18nProvider>
+          <Suspense fallback={<div>Loading...</div>}>
+            <App />
+          </Suspense>
+        </I18nProvider>
+      </ConfigProvider>
     </BrowserRouter>
   </StrictMode>,
   document.getElementById('root')
