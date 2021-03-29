@@ -18,6 +18,9 @@ export function I18nProvider({ children }: { children: ReactNode }) {
         order: ['localStorage', 'navigator', 'path'],
         lookupLocalStorage: i18nConfig.localStorageKey,
       },
+      backend: {
+        loadPath: `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`,
+      },
       interpolation: {
         escapeValue: false, // not needed for react as it escapes by default
         format: getI18nFormatter(i18nConfig),
