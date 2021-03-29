@@ -10,11 +10,13 @@
     "@testing-library/react": "^11.2.5",
     "@testing-library/react-hooks": "^5.1.0",
     "@testing-library/user-event": "^12.8.3",
+    "@types/chance": "^1.1.1",
     "@types/jest": "^26.0.22",
     "@types/node": "^14.14.37",
     "@types/react": "^16.14.5",
     "@types/react-dom": "^16.9.12",
     "@types/react-router-dom": "^5.1.7",
+    "chance": "^1.1.7",
     "date-fns": "^2.19.0",
     "gh-pages": "^3.1.0",
     "husky": "^5.2.0",
@@ -22,6 +24,7 @@
     "i18next-browser-languagedetector": "^6.1.0",
     "i18next-http-backend": "^1.2.1",
     "lint-staged": "^10.5.4",
+    "msw": "^0.28.0",
     "prettier": "^2.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -38,7 +41,7 @@
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.4",
     "workbox-broadcast-update": "^5.1.4",
-    "workbox-cacheable-response": "^5.1.4",
+    "workbox-cacheable-response": "^6.1.2",
     "workbox-core": "^5.1.4",
     "workbox-expiration": "^5.1.4",
     "workbox-google-analytics": "^5.1.4",
@@ -116,5 +119,8 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
