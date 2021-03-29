@@ -7,6 +7,12 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { ConfigProvider } from 'app/core/configs/ConfigProvider';
 import { I18nProvider } from 'app/core/i18n/I18nProvider';
+import { worker } from 'mocks/server/browser.mock';
+
+worker.start({
+  waitUntilReady: true,
+  serviceWorker: { url: `${process.env.PUBLIC_URL}/mockServiceWorker.js` },
+});
 
 ReactDOM.render(
   <StrictMode>
