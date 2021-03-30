@@ -110,6 +110,8 @@
       "src/**/*.{ts,tsx}",
       "!src/**/mocks/**",
       "!src/**/test/**",
+      "!src/**/stories/**",
+      "!src/**/*.stories.*",
       "!src/index.tsx",
       "!src/react-app-env.d.ts",
       "!src/service-worker.ts",
