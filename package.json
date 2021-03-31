@@ -87,7 +87,7 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "chromatic": "chromatic --skip 'dependabot/**'",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "npm run build && source-map-explorer 'build/static/js/*.js'"
   },
   "eslintConfig": {
     "extends": [
