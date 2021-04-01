@@ -1,0 +1,52 @@
+@use '../utilities';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+html {
+  // Changes browser font-size from 16px to 10px
+  // 10px = 1rem
+
+  font-size: 62.5%;
+}
+
+body {
+  @include utilities.regular-text;
+
+  background-color: utilities.$color-background;
+  color: utilities.$color-text;
+}
+
+h1 {
+  @include utilities.h1;
+}
+
+h2 {
+  @include utilities.h2;
+}
+
+h3 {
+  @include utilities.h3;
+}
+
+h4 {
+  @include utilities.h4;
+}
+
+h5 {
+  @include utilities.h5;
+}
+
+h6 {
+  @include utilities.h6;
+}
