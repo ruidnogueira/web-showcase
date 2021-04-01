@@ -1,9 +1,13 @@
-import { enUS, enGB, pt } from 'date-fns/locale';
+// date-fns locales must be imported individually otherwise
+// all locales will be included in the bundle
+import enGB from 'date-fns/locale/en-GB';
+import enUS from 'date-fns/locale/en-US';
+import ptPT from 'date-fns/locale/pt';
 
 const dateLocales: Record<string, Locale> = {
   en: enGB,
   'en-US': enUS,
-  pt,
+  pt: ptPT,
 };
 
 export const i18nConfig = {
