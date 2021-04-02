@@ -1,41 +1,14 @@
+@use "sass:map";
 @use "functions";
 
-/* TODO */
-
-// ==== Colors ====
-$-color-alabaster: #fafafa;
-$-color-mine-shaft: #222;
-$-color-governor-bay: #3948ca;
-$-color-persian-red: #d32d2d;
-$-color-mariner: #2d5fd3;
-
-// ==== App colors ====
-
-$color-background: $-color-alabaster;
-$color-border: functions.tint($-color-mine-shaft, 70%);
-$color-border-hover: functions.tint($-color-mine-shaft, 50%);
-$color-border-active: $-color-mine-shaft;
-$color-border-focus: $-color-mariner;
-$color-outline: rgba($-color-mariner, 0.3);
-$color-text: $-color-mine-shaft;
-
-$colors: (
-  'primary': (
-    'color': $-color-governor-bay,
-    'color-hover': functions.shade($-color-governor-bay, 12%),
-    'color-hover-alt': functions.tint($-color-governor-bay, 70%),
-    'color-focus': functions.shade($-color-governor-bay, 12%),
-    'color-active': functions.shade($-color-governor-bay, 20%),
-    'color-outline': rgba($-color-governor-bay, 0.3),
-    'color-text': $-color-alabaster,
-    'color-text-alt': $-color-mine-shaft,
-  ),
-  'error': (
-    'color': $-color-persian-red,
-    'color-hover': functions.shade($-color-persian-red, 12%),
-    'color-focus': functions.shade($-color-persian-red, 12%),
-    'color-active': functions.shade($-color-persian-red, 20%),
-    'color-outline': rgba($-color-persian-red, 0.3),
-    'color-text': $-color-alabaster,
-  ),
+$base-colors: (
+  alabaster: #fafafa,
+  mine-shaft: #222,
+  governor-bay: #3948ca,
+  persian-red: #d32d2d,
+  mariner: #2d5fd3,
 );
+
+@function get-base-color($name) {
+  @return map.get($base-colors, $name);
+}
