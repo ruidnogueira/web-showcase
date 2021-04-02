@@ -1,8 +1,11 @@
 import { createContext, ReactNode, useContext, useMemo } from 'react';
 import { I18nConfig, i18nConfig } from './i18n.config';
+import { storageConfig } from './storage.config';
+import { StorageConfig } from './storage.config';
 
 export interface GlobalConfig {
   i18nConfig: I18nConfig;
+  storageConfig: StorageConfig;
 }
 
 const ConfigContext = createContext<GlobalConfig | undefined>(undefined);
@@ -17,6 +20,7 @@ export function ConfigProvider({
   const currentConfig: GlobalConfig = useMemo(
     () => ({
       i18nConfig,
+      storageConfig,
       ...config,
     }),
     [config]

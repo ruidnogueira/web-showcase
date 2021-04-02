@@ -9,6 +9,7 @@ import { ConfigProvider } from 'app/core/configs/ConfigProvider';
 import { I18nProvider } from 'app/core/i18n/I18nProvider';
 import { worker } from 'mocks/server/browser.mock';
 import { HelmetProvider } from 'react-helmet-async';
+import { ThemeProvider } from 'app/core/providers/ThemeProvider';
 
 worker.start({
   waitUntilReady: true,
@@ -21,9 +22,11 @@ ReactDOM.render(
       <ConfigProvider>
         <I18nProvider>
           <HelmetProvider>
-            <Suspense fallback={<div>Loading...</div>}>
-              <App />
-            </Suspense>
+            <ThemeProvider>
+              <Suspense fallback={<div>Loading...</div>}>
+                <App />
+              </Suspense>
+            </ThemeProvider>
           </HelmetProvider>
         </I18nProvider>
       </ConfigProvider>
