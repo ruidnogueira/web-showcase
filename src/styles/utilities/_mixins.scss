@@ -1,0 +1,27 @@
+@mixin light-theme {
+  $selector: ':root';
+
+  @if & {
+    #{$selector} & {
+      @content;
+    }
+  } @else {
+    #{$selector} {
+      @content;
+    }
+  }
+}
+
+@mixin dark-theme {
+  $selector: ':root[data-theme="dark"]';
+
+  @if & {
+    #{$selector} & {
+      @content;
+    }
+  } @else {
+    #{$selector} {
+      @content;
+    }
+  }
+}
