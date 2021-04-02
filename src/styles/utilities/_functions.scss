@@ -1,0 +1,11 @@
+// ==== Color ====
+
+// Slightly lighten a color
+@function tint($color, $percentage) {
+  @return mix(#fff, $color, $percentage);
+}
+
+// Slightly darken a color
+@function shade($color, $percentage) {
+  @return mix(#000, $color, $percentage);
+}

@@ -1,0 +1,14 @@
+@use "sass:map";
+@use "functions";
+
+$base-colors: (
+  alabaster: #fafafa,
+  mine-shaft: #222,
+  governor-bay: #3948ca,
+  persian-red: #d32d2d,
+  mariner: #2d5fd3,
+);
+
+@function get-base-color($name) {
+  @return map.get($base-colors, $name);
+}

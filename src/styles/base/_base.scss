@@ -1,0 +1,65 @@
+@use '../utilities';
+
+:root {
+  --color-text: #{get-base-color(mine-shaft)};
+  --color-background: #{get-base-color(alabaster)};
+
+  // Primary
+  --color-primary: #{get-base-color(governor-bay)};
+  --color-primary-text: #{get-base-color(alabaster)};
+
+  // Error
+  --color-error: #{get-base-color(persian-red)};
+  --color-error-text: #{get-base-color(alabaster)};
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+html {
+  // Changes browser font-size from 16px to 10px
+  // 10px = 1rem
+
+  font-size: 62.5%;
+}
+
+body {
+  @include utilities.regular-text;
+
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+h1 {
+  @include utilities.h1;
+}
+
+h2 {
+  @include utilities.h2;
+}
+
+h3 {
+  @include utilities.h3;
+}
+
+h4 {
+  @include utilities.h4;
+}
+
+h5 {
+  @include utilities.h5;
+}
+
+h6 {
+  @include utilities.h6;
+}
