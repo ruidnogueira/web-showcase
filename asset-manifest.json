@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/web-showcase/static/css/main.08cba8a4.chunk.css",
+    "main.css": "/web-showcase/static/css/main.ba191bd7.chunk.css",
     "main.js": "/web-showcase/static/js/main.6ff8ecc3.chunk.js",
     "main.js.map": "/web-showcase/static/js/main.6ff8ecc3.chunk.js.map",
     "runtime-main.js": "/web-showcase/static/js/runtime-main.7d2f97fa.js",
@@ -12,15 +12,16 @@
     "index.html": "/web-showcase/index.html",
     "service-worker.js": "/web-showcase/service-worker.js",
     "service-worker.js.map": "/web-showcase/service-worker.js.map",
-    "static/css/main.08cba8a4.chunk.css.map": "/web-showcase/static/css/main.08cba8a4.chunk.css.map",
+    "static/css/main.ba191bd7.chunk.css.map": "/web-showcase/static/css/main.ba191bd7.chunk.css.map",
     "static/js/2.f95efb4b.chunk.js.LICENSE.txt": "/web-showcase/static/js/2.f95efb4b.chunk.js.LICENSE.txt",
+    "static/media/styles.scss": "/web-showcase/static/media/Roboto-Regular.49ae34d4.woff",
     "static/media/getFetch.cjs": "/web-showcase/static/media/getFetch.d7d6010d.cjs",
     "static/media/logo.103b5fa1.svg": "/web-showcase/static/media/logo.103b5fa1.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.7d2f97fa.js",
     "static/js/2.f95efb4b.chunk.js",
-    "static/css/main.08cba8a4.chunk.css",
+    "static/css/main.ba191bd7.chunk.css",
     "static/js/main.6ff8ecc3.chunk.js"
   ]
 }
