@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { server } from 'mocks/server/server.mock';
-import 'test/browser.helper';
+import 'test/globalMocks';
 
 beforeAll(() => {
   server.listen({ onUnhandledRequest: 'error' });
