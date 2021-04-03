@@ -5,8 +5,6 @@ import { useConfig } from '../configs/ConfigProvider';
 
 export type Theme = 'light' | 'dark';
 
-// TODO GLOBAL PROVIDER
-
 const ThemeContext = createContext<{ theme: Theme; toggleTheme: () => void } | undefined>(
   undefined
 );
@@ -18,14 +16,14 @@ export function ThemeProvider({
   children: ReactNode;
   initialTheme?: Theme;
 }) {
-  const { storageConfig } = useConfig();
+  const { storageKeys } = useConfig();
 
   const [theme, setTheme] = useState<Theme>(() => {
     if (initialTheme) {
       return initialTheme;
     }
 
-    const savedTheme = getFromLocalStorage<Theme>(storageConfig.theme);
+    const savedTheme = getFromLocalStorage<Theme>(storageKeys.theme);
     if (savedTheme) {
       return savedTheme;
     }
@@ -36,12 +34,12 @@ export function ThemeProvider({
   const themeState = useMemo(() => {
     const toggleTheme = () => {
       const newTheme = theme === 'light' ? 'dark' : 'light';
-      saveToLocalStorage(storageConfig.theme, newTheme);
+      saveToLocalStorage(storageKeys.theme, newTheme);
       setTheme(newTheme);
     };
 
     return { theme, toggleTheme };
-  }, [theme, storageConfig]);
+  }, [theme, storageKeys]);
 
   return (
     <>

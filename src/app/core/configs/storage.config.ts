@@ -1,5 +1,5 @@
-export const storageConfig = {
+export const storageKeys = {
   theme: 'theme',
 };
 
-export type StorageConfig = typeof storageConfig;
+export type StorageKeys = typeof storageKeys;
