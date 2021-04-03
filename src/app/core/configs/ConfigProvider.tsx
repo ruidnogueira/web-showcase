@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useContext, useMemo } from 'react';
 import { I18nConfig, i18nConfig } from './i18n.config';
-import { storageKeys } from './storage.config';
-import { StorageKeys } from './storage.config';
+import { storageKeys, StorageKeys } from './storage.config';
 
 export interface GlobalConfig {
   i18nConfig: I18nConfig;
