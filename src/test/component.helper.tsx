@@ -3,7 +3,8 @@ import { render } from '@testing-library/react';
 import { MemoryRouter, MemoryRouterProps } from 'react-router';
 import { I18nextProvider } from 'react-i18next';
 import { i18nMock } from './i18n.mock';
-import { HelmetProvider } from 'react-helmet-async';
+import { GlobalProviders } from 'app/core/providers/GlobalProviders';
+import { ConfigProvider } from 'app/core/configs/ConfigProvider';
 
 interface RenderOptions {
   wrapper?: ComponentType;
@@ -19,7 +20,9 @@ export function renderWithProviders(ui: ReactElement, options: RenderOptions = {
   const AllProviders: React.FC = ({ children }) => (
     <MemoryRouter {...options.routerProps}>
       <I18nextProvider i18n={i18nMock}>
-        <HelmetProvider>{Wrapper ? <Wrapper>{children}</Wrapper> : children}</HelmetProvider>
+        <ConfigProvider>
+          <GlobalProviders>{Wrapper ? <Wrapper>{children}</Wrapper> : children}</GlobalProviders>
+        </ConfigProvider>
       </I18nextProvider>
     </MemoryRouter>
   );

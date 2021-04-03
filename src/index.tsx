@@ -8,8 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ConfigProvider } from 'app/core/configs/ConfigProvider';
 import { I18nProvider } from 'app/core/i18n/I18nProvider';
 import { worker } from 'mocks/server/browser.mock';
-import { HelmetProvider } from 'react-helmet-async';
-import { ThemeProvider } from 'app/core/providers/ThemeProvider';
+import { GlobalProviders } from 'app/core/providers/GlobalProviders';
 
 worker.start({
   waitUntilReady: true,
@@ -21,13 +20,11 @@ ReactDOM.render(
     <BrowserRouter>
       <ConfigProvider>
         <I18nProvider>
-          <HelmetProvider>
-            <ThemeProvider>
-              <Suspense fallback={<div>Loading...</div>}>
-                <App />
-              </Suspense>
-            </ThemeProvider>
-          </HelmetProvider>
+          <GlobalProviders>
+            <Suspense fallback={<div>Loading...</div>}>
+              <App />
+            </Suspense>
+          </GlobalProviders>
         </I18nProvider>
       </ConfigProvider>
     </BrowserRouter>
