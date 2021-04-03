@@ -18,7 +18,7 @@ test('throws error if provider is missing', () => {
 });
 
 test('uses provided config', () => {
-  const config: GlobalConfig = {
+  const config: Partial<GlobalConfig> = {
     i18nConfig: {
       ...i18nConfig,
       supportedLanguages: [],

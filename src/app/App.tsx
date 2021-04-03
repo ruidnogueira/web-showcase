@@ -1,9 +1,10 @@
-import logo from 'assets/logo.svg';
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
+import { useTheme } from './core/providers/ThemeProvider';
 
 export function App() {
   const { t, i18n } = useTranslation();
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <>
@@ -11,12 +12,8 @@ export function App() {
         <html lang={i18n.languages[0]} />
       </Helmet>
 
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>{t('appWorking')}</p>
-        </header>
-      </div>
+      <p>{t('appWorking')}</p>
+      <button onClick={toggleTheme}>theme: {theme}</button>
     </>
   );
 }

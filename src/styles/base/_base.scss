@@ -1,16 +1,21 @@
 @use '../utilities';
 
-:root {
-  --color-text: #{get-base-color(mine-shaft)};
-  --color-background: #{get-base-color(alabaster)};
+@include utilities.light-theme {
+  --color-text: #{utilities.get-base-color(mine-shaft)};
+  --color-background: #{utilities.get-base-color(alabaster)};
 
   // Primary
-  --color-primary: #{get-base-color(governor-bay)};
-  --color-primary-text: #{get-base-color(alabaster)};
+  --color-primary: #{utilities.get-base-color(governor-bay)};
+  --color-primary-text: #{utilities.get-base-color(alabaster)};
 
   // Error
-  --color-error: #{get-base-color(persian-red)};
-  --color-error-text: #{get-base-color(alabaster)};
+  --color-error: #{utilities.get-base-color(persian-red)};
+  --color-error-text: #{utilities.get-base-color(alabaster)};
+}
+
+@include utilities.dark-theme {
+  --color-text: #{utilities.get-base-color(alabaster)};
+  --color-background: #{utilities.get-base-color(mine-shaft)};
 }
 
 *,
