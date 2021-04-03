@@ -1,27 +1,26 @@
 {
   "files": {
-    "main.css": "/web-showcase/static/css/main.ba191bd7.chunk.css",
-    "main.js": "/web-showcase/static/js/main.6ff8ecc3.chunk.js",
-    "main.js.map": "/web-showcase/static/js/main.6ff8ecc3.chunk.js.map",
-    "runtime-main.js": "/web-showcase/static/js/runtime-main.7d2f97fa.js",
-    "runtime-main.js.map": "/web-showcase/static/js/runtime-main.7d2f97fa.js.map",
-    "static/js/2.f95efb4b.chunk.js": "/web-showcase/static/js/2.f95efb4b.chunk.js",
-    "static/js/2.f95efb4b.chunk.js.map": "/web-showcase/static/js/2.f95efb4b.chunk.js.map",
-    "static/js/3.ae25107b.chunk.js": "/web-showcase/static/js/3.ae25107b.chunk.js",
-    "static/js/3.ae25107b.chunk.js.map": "/web-showcase/static/js/3.ae25107b.chunk.js.map",
+    "main.css": "/web-showcase/static/css/main.fb94349f.chunk.css",
+    "main.js": "/web-showcase/static/js/main.888d2d83.chunk.js",
+    "main.js.map": "/web-showcase/static/js/main.888d2d83.chunk.js.map",
+    "runtime-main.js": "/web-showcase/static/js/runtime-main.c1547f74.js",
+    "runtime-main.js.map": "/web-showcase/static/js/runtime-main.c1547f74.js.map",
+    "static/js/2.c660c1f5.chunk.js": "/web-showcase/static/js/2.c660c1f5.chunk.js",
+    "static/js/2.c660c1f5.chunk.js.map": "/web-showcase/static/js/2.c660c1f5.chunk.js.map",
+    "static/js/3.28a08fb1.chunk.js": "/web-showcase/static/js/3.28a08fb1.chunk.js",
+    "static/js/3.28a08fb1.chunk.js.map": "/web-showcase/static/js/3.28a08fb1.chunk.js.map",
     "index.html": "/web-showcase/index.html",
     "service-worker.js": "/web-showcase/service-worker.js",
     "service-worker.js.map": "/web-showcase/service-worker.js.map",
-    "static/css/main.ba191bd7.chunk.css.map": "/web-showcase/static/css/main.ba191bd7.chunk.css.map",
-    "static/js/2.f95efb4b.chunk.js.LICENSE.txt": "/web-showcase/static/js/2.f95efb4b.chunk.js.LICENSE.txt",
+    "static/css/main.fb94349f.chunk.css.map": "/web-showcase/static/css/main.fb94349f.chunk.css.map",
+    "static/js/2.c660c1f5.chunk.js.LICENSE.txt": "/web-showcase/static/js/2.c660c1f5.chunk.js.LICENSE.txt",
     "static/media/styles.scss": "/web-showcase/static/media/Roboto-Regular.49ae34d4.woff",
-    "static/media/getFetch.cjs": "/web-showcase/static/media/getFetch.d7d6010d.cjs",
-    "static/media/logo.103b5fa1.svg": "/web-showcase/static/media/logo.103b5fa1.svg"
+    "static/media/getFetch.cjs": "/web-showcase/static/media/getFetch.d7d6010d.cjs"
   },
   "entrypoints": [
-    "static/js/runtime-main.7d2f97fa.js",
-    "static/js/2.f95efb4b.chunk.js",
-    "static/css/main.ba191bd7.chunk.css",
-    "static/js/main.6ff8ecc3.chunk.js"
+    "static/js/runtime-main.c1547f74.js",
+    "static/js/2.c660c1f5.chunk.js",
+    "static/css/main.fb94349f.chunk.css",
+    "static/js/main.888d2d83.chunk.js"
   ]
 }
