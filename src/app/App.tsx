@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
-import { useTheme } from './core/providers/ThemeProvider';
+import { memo } from 'react';
+import { GuestPage } from './guest/GuestPage';
 
 export function App() {
-  const { t, i18n } = useTranslation();
-  const { theme, toggleTheme } = useTheme();
+  const { i18n } = useTranslation();
 
   return (
     <>
@@ -12,8 +12,11 @@ export function App() {
         <html lang={i18n.languages[0]} />
       </Helmet>
 
-      <p>{t('appWorking')}</p>
-      <button onClick={toggleTheme}>theme: {theme}</button>
+      <AppComponent />
     </>
   );
 }
+
+const AppComponent = memo(function AppComponent() {
+  return <GuestPage />;
+});
