@@ -1,4 +1,4 @@
-import { StrictMode, Suspense } from 'react';
+import { Profiler, StrictMode, Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import 'styles/styles.scss';
 import { App } from './app/App';
@@ -17,17 +17,19 @@ worker.start({
 
 ReactDOM.render(
   <StrictMode>
-    <BrowserRouter>
-      <ConfigProvider>
-        <I18nProvider>
-          <GlobalProviders>
-            <Suspense fallback={<div>Loading...</div>}>
-              <App />
-            </Suspense>
-          </GlobalProviders>
-        </I18nProvider>
-      </ConfigProvider>
-    </BrowserRouter>
+    <Profiler id="App" onRender={() => {}}>
+      <BrowserRouter>
+        <ConfigProvider>
+          <I18nProvider>
+            <GlobalProviders>
+              <Suspense fallback={<div>Loading...</div>}>
+                <App />
+              </Suspense>
+            </GlobalProviders>
+          </I18nProvider>
+        </ConfigProvider>
+      </BrowserRouter>
+    </Profiler>
   </StrictMode>,
   document.getElementById('root')
 );
