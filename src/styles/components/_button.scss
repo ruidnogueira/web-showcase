@@ -41,31 +41,31 @@
 
   @each $variant in utilities.$color-variants {
     &--#{$variant} {
-      background: utilities.get-variant-color($variant);
+      background: utilities.get-color($variant);
       border-color: transparent;
-      color: utilities.get-variant-color($variant, 'text');
+      color: utilities.get-color($variant, 'text');
 
       &:hover {
-        background: utilities.get-variant-color($variant, 'hover');
+        background: utilities.get-color($variant, 'hover');
         border-color: transparent;
       }
 
       &:focus {
-        @include utilities.outline(utilities.get-variant-color($variant, 'outline'));
+        @include utilities.outline(utilities.get-color($variant, 'outline'));
 
-        background: utilities.get-variant-color($variant, 'focus');
+        background: utilities.get-color($variant, 'focus');
         border-color: transparent;
       }
 
       &:active {
         @include utilities.no-outline;
 
-        background: utilities.get-variant-color($variant, 'active');
+        background: utilities.get-color($variant, 'active');
         border-color: transparent;
       }
 
       &:disabled {
-        background: utilities.get-variant-color($variant);
+        background: utilities.get-color($variant);
         border-color: transparent;
       }
     }

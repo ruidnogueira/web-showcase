@@ -14,10 +14,12 @@ $color-variants: primary, error;
   @return map.get($base-colors, $name);
 }
 
-@function get-color($name) {
-  @return var(--color-#{$name});
-}
+@function get-color($names...) {
+  $color: '--color';
 
-@function get-variant-color($variant, $type: '') {
-  @return get-color(if($type == '', $variant, #{$variant}-#{$type}));
+  @each $name in $names {
+    $color: $color + '-' + $name;
+  }
+
+  @return var(#{$color});
 }
