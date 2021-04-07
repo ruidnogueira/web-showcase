@@ -1,0 +1,34 @@
+@use '../utilities';
+
+@mixin light-derived-colors($name, $color) {
+  --color-#{$name}: #{$color};
+  --color-#{$name}-hover: #{utilities.shade($color, 12%)};
+  --color-#{$name}-focus: #{utilities.shade($color, 12%)};
+  --color-#{$name}-active: #{utilities.shade($color, 20%)};
+  --color-#{$name}-outline: #{rgba($color, 0.3)};
+}
+
+@include utilities.light-theme {
+  --color-text: #{utilities.get-base-color('mine-shaft')};
+  --color-background: #{utilities.get-base-color('alabaster')};
+  --color-focus: #{utilities.get-base-color('mariner')};
+  --color-outline: #{rgba(utilities.get-base-color('mariner'), 0.3)};
+
+  // Default
+  --color-default: #{utilities.tint(utilities.get-base-color('mine-shaft'), 70%)};
+  --color-default-hover: #{utilities.tint(utilities.get-base-color('mine-shaft'), 50%)};
+  --color-default-active: #{utilities.get-base-color('mine-shaft')};
+
+  // Primary
+  --color-primary-text: #{utilities.get-base-color('alabaster')};
+  @include light-derived-colors('primary', utilities.get-base-color('governor-bay'));
+
+  // Error
+  --color-error-text: #{utilities.get-base-color('alabaster')};
+  @include light-derived-colors('error', utilities.get-base-color('persian-red'));
+}
+
+@include utilities.dark-theme {
+  --color-text: #{utilities.get-base-color('alabaster')};
+  --color-background: #{utilities.get-base-color('mine-shaft')};
+}

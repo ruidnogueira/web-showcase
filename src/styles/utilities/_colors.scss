@@ -8,6 +8,16 @@ $base-colors: (
   mariner: #2d5fd3,
 );
 
+$color-variants: primary, error;
+
 @function get-base-color($name) {
   @return map.get($base-colors, $name);
+}
+
+@function get-color($name) {
+  @return var(--color-#{$name});
+}
+
+@function get-variant-color($variant, $type: '') {
+  @return get-color(if($type == '', $variant, #{$variant}-#{$type}));
 }
