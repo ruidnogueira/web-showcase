@@ -16,6 +16,11 @@ $color-variants: primary, error;
 }
 
 @function get-color($names...) {
-  $separator: '-';
-  @return var(#{functions.join($separator, '--color', $names...)});
+  $color: '--color';
+
+  @each $name in $names {
+    $color: $color + '-' + $name;
+  }
+
+  @return var(#{$color});
 }

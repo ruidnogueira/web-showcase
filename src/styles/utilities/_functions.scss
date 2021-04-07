@@ -9,16 +9,3 @@
 @function shade($color, $percentage) {
   @return mix(#000, $color, $percentage);
 }
-
-// ==== List ====
-
-// Join multiple values together
-@function join($separator: ' ', $values...) {
-  $join: '';
-
-  @each $value in $values {
-    $join: $join + $separator + $value;
-  }
-
-  @return $join;
-}
