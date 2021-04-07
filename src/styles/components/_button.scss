@@ -1,0 +1,73 @@
+@use 'sass:map';
+@use '../utilities';
+
+.button {
+  @extend %control;
+  @include utilities.unselectable;
+
+  background: inherit;
+  border-color: utilities.get-color('default');
+  color: utilities.get-color('text');
+  cursor: pointer;
+  font-weight: normal;
+  justify-content: center;
+
+  &:hover {
+    border-color: utilities.get-color('default-hover');
+  }
+
+  &:focus {
+    @include utilities.outline;
+
+    border-color: utilities.get-color('focus');
+  }
+
+  &:active {
+    @include utilities.no-outline;
+
+    border-color: utilities.get-color('default-active');
+  }
+
+  &:disabled {
+    @include utilities.disabled;
+
+    background: inherit;
+    border-color: utilities.get-color('default');
+  }
+
+  &--small {
+    @include utilities.control--small;
+  }
+
+  @each $variant in utilities.$color-variants {
+    &--#{$variant} {
+      background: utilities.get-variant-color($variant);
+      border-color: transparent;
+      color: utilities.get-variant-color($variant, 'text');
+
+      &:hover {
+        background: utilities.get-variant-color($variant, 'hover');
+        border-color: transparent;
+      }
+
+      &:focus {
+        @include utilities.outline(utilities.get-variant-color($variant, 'outline'));
+
+        background: utilities.get-variant-color($variant, 'focus');
+        border-color: transparent;
+      }
+
+      &:active {
+        @include utilities.no-outline;
+
+        background: utilities.get-variant-color($variant, 'active');
+        border-color: transparent;
+      }
+
+      &:disabled {
+        background: utilities.get-variant-color($variant);
+        border-color: transparent;
+      }
+    }
+  }
+}
