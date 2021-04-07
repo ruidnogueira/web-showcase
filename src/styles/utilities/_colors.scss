@@ -1,4 +1,5 @@
 @use "sass:map";
+@use 'functions';
 
 $base-colors: (
   alabaster: #fafafa,
@@ -15,11 +16,6 @@ $color-variants: primary, error;
 }
 
 @function get-color($names...) {
-  $color: '--color';
-
-  @each $name in $names {
-    $color: $color + '-' + $name;
-  }
-
-  @return var(#{$color});
+  $separator: '-';
+  @return var(#{functions.join($separator, '--color', $names...)});
 }
