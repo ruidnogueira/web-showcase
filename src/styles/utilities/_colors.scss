@@ -11,6 +11,10 @@ $base-colors: (
 
 $color-variants: primary, error;
 
+@function derive-rgb-values-from-hex($hex) {
+  @return red($hex), green($hex), blue($hex);
+}
+
 @function get-base-color($name) {
   @return map.get($base-colors, $name);
 }
@@ -23,4 +27,19 @@ $color-variants: primary, error;
   }
 
   @return var(#{$color});
+}
+
+@function get-color-rgb($names...) {
+  $color: '--color';
+
+  @each $name in $names {
+    $color: $color + '-' + $name;
+  }
+
+  @return var(#{$color + '-rgb'});
+}
+
+@mixin with-rbg-var($var, $hex) {
+  --#{$var}: #{$hex};
+  --#{$var}-rgb: #{derive-rgb-values-from-hex($hex)};
 }

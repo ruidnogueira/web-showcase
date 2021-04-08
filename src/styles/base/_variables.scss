@@ -1,5 +1,9 @@
 @use '../utilities';
 
+// we need to store css vars as rgb values to be able to use with rgba
+// --color-rgb: 255 255 255
+// color: rgba(var(--color-rgb, 0.2))
+
 @mixin light-derived-colors($name, $color) {
   --color-#{$name}: #{$color};
   --color-#{$name}-hover: #{utilities.shade($color, 12%)};
@@ -9,7 +13,8 @@
 }
 
 @include utilities.light-theme {
-  --color-text: #{utilities.get-base-color('mine-shaft')};
+  @include utilities.with-rbg-var('color-text', utilities.get-base-color('mine-shaft'));
+
   --color-background: #{utilities.get-base-color('alabaster')};
   --color-focus: #{utilities.get-base-color('mariner')};
   --color-outline: #{rgba(utilities.get-base-color('mariner'), 0.3)};
