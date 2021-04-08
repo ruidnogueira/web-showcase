@@ -1,0 +1,43 @@
+@use 'sass:map';
+@use '../utilities';
+
+.input {
+  @extend %control;
+
+  background-color: utilities.get-color('background');
+  border-color: utilities.get-color('default');
+
+  &::placeholder {
+    color: rgba(utilities.get-color-rgb('text'), 0.4);
+  }
+
+  &:hover {
+    border-color: utilities.get-color('default-hover');
+  }
+
+  &:focus {
+    @include utilities.outline;
+
+    border-color: utilities.get-color('default-focus');
+  }
+
+  &--small {
+    @include utilities.control--small;
+  }
+
+  @each $variant in utilities.$color-variants {
+    &--#{$variant} {
+      border-color: utilities.get-color($variant);
+
+      &:hover {
+        border-color: utilities.get-color($variant, 'hover');
+      }
+
+      &:focus {
+        @include utilities.outline(utilities.get-color($variant, 'outline'));
+
+        border-color: utilities.get-color($variant, 'focus');
+      }
+    }
+  }
+}
