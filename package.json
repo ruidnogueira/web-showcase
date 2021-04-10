@@ -41,6 +41,7 @@
     "msw": "^0.28.0",
     "prettier": "^2.2.1",
     "ramda": "^0.27.1",
+    "rc-select": "^12.1.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-feather": "^2.0.9",
@@ -92,8 +93,12 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:jsx-a11y/recommended"
     ],
+    "rules": {
+      "jsx-a11y/no-onchange": "off"
+    },
     "overrides": [
       {
         "files": [
