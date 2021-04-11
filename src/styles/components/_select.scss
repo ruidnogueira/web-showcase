@@ -1,0 +1,158 @@
+@use "sass:selector";
+@use '../utilities';
+
+$select-arrow-size: 2.4rem;
+$select-arrow-padding-right: utilities.$spacing-xxs;
+
+.select {
+  @extend %control;
+
+  background-color: utilities.get-color('background');
+  border-color: utilities.get-color('default');
+  cursor: pointer;
+  padding: 0;
+
+  &:hover:not(.select-focused) {
+    border-color: utilities.get-color('default-hover');
+  }
+
+  &-focused {
+    @include utilities.outline;
+
+    border-color: utilities.get-color('focus');
+  }
+
+  &--small {
+    @include utilities.control--small;
+  }
+
+  @each $variant in utilities.$color-variants {
+    &--#{$variant} {
+      border-color: utilities.get-color($variant);
+
+      &:hover:not(.select-focused) {
+        border-color: utilities.get-color($variant, 'hover');
+      }
+
+      &.select-focused {
+        @include utilities.outline(utilities.get-color($variant, 'outline'));
+
+        border-color: utilities.get-color($variant, 'focus');
+      }
+    }
+  }
+
+  &-selector {
+    display: inline-block;
+    height: 100%;
+    padding: utilities.$control-padding-vertical utilities.$control-padding-horizontal;
+    position: relative;
+    width: 100%;
+    z-index: 2;
+  }
+
+  &-selection {
+    &-item,
+    &-placeholder {
+      align-items: center;
+      display: inline-flex;
+      height: 100%;
+      padding-right: calc(
+        #{$select-arrow-size + $select-arrow-padding-right} - #{utilities.$control-padding-horizontal}
+      );
+      width: 100%;
+    }
+
+    &-search {
+      bottom: utilities.$control-padding-vertical;
+      left: utilities.$control-padding-horizontal;
+      position: absolute;
+      right: utilities.$control-padding-horizontal;
+      top: utilities.$control-padding-vertical;
+
+      &-input {
+        border: none;
+        cursor: inherit;
+        height: 100%;
+        margin: 0;
+        opacity: 0;
+        padding: 0;
+        width: 100%;
+      }
+    }
+  }
+
+  &-arrow {
+    align-items: center;
+    bottom: 0;
+    color: utilities.get-color('default');
+    display: flex;
+    justify-content: center;
+    padding-right: $select-arrow-padding-right;
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    .select-focused & {
+      color: utilities.get-color('focus');
+    }
+
+    .select:hover:not(.select-focused) & {
+      color: utilities.get-color('default-hover');
+    }
+
+    @each $variant in utilities.$color-variants {
+      .select--#{$variant} & {
+        color: utilities.get-color($variant);
+      }
+
+      .select--#{$variant}.select-focused & {
+        color: utilities.get-color($variant, 'focus');
+      }
+
+      .select--#{$variant}.select:hover:not(.select-focused) & {
+        color: utilities.get-color($variant, 'hover');
+      }
+    }
+
+    > * {
+      height: $select-arrow-size;
+      width: $select-arrow-size;
+    }
+  }
+
+  &-dropdown {
+    background-color: utilities.get-color('background');
+    box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08),
+      0 9px 28px 8px rgba(0, 0, 0, 0.05);
+    z-index: utilities.$z-index-dropdown;
+  }
+
+  &-dropdown-hidden {
+    display: none;
+  }
+
+  &-item-option {
+    @extend %control;
+
+    border: none;
+    border-radius: 0;
+
+    .select-dropdown--small & {
+      @include utilities.control--small;
+    }
+
+    &:hover,
+    &-active {
+      &:not(.select-item-option-selected) {
+        background-color: utilities.get-color('primary-light');
+        color: utilities.get-color('primary-light-text');
+      }
+    }
+
+    &-selected {
+      background-color: utilities.get-color('primary');
+      color: utilities.get-color('primary-text');
+    }
+  }
+}

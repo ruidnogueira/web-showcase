@@ -10,6 +10,7 @@
   --color-#{$name}-focus: #{utilities.shade($color, 12%)};
   --color-#{$name}-active: #{utilities.shade($color, 20%)};
   --color-#{$name}-outline: #{rgba($color, 0.3)};
+  --color-#{$name}-light: #{utilities.tint($color, 70%)};
 }
 
 @include utilities.light-theme {
@@ -26,10 +27,12 @@
 
   // Primary
   --color-primary-text: #{utilities.get-base-color('alabaster')};
+  --color-primary-light-text: #{utilities.get-base-color('mine-shaft')};
   @include light-derived-colors('primary', utilities.get-base-color('governor-bay'));
 
   // Error
   --color-error-text: #{utilities.get-base-color('alabaster')};
+  --color-error-light-text: #{utilities.get-base-color('mine-shaft')};
   @include light-derived-colors('error', utilities.get-base-color('persian-red'));
 }
 

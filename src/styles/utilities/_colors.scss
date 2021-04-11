@@ -1,6 +1,9 @@
 @use "sass:map";
 @use 'functions';
 
+// TODO PICK NEW BASE COLORS
+// TODO COLORS VARY TOO MUCH BETWEEN ELEMENTS MAYBE ADD ELEMENT VARIABLES
+
 $base-colors: (
   alabaster: #fafafa,
   mine-shaft: #222,
