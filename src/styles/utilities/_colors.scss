@@ -1,25 +1,52 @@
 @use "sass:map";
 @use 'functions';
 
-// TODO PICK NEW BASE COLORS
-// TODO COLORS VARY TOO MUCH BETWEEN ELEMENTS MAYBE ADD ELEMENT VARIABLES
+// TODO SOLVE RGB
 
 $base-colors: (
-  alabaster: #fafafa,
-  mine-shaft: #222,
-  governor-bay: #3948ca,
-  persian-red: #d32d2d,
-  mariner: #2d5fd3,
+  'alabaster': #fafafa,
+  'governor-bay': #3948ca,
+  'mariner': #2d5fd3,
+  'mine-shaft': #222,
+  'persian-red': #d32d2d,
+  'silver': #c9c9c9,
 );
 
-$color-variants: primary, error;
+$color-variants: 'primary', 'error';
 
+$light-variant-colors: (
+  'primary': (
+    'base': map.get($base-colors, 'governor-bay'),
+    'text': map.get($base-colors, 'alabaster'),
+    'invert-text': map.get($base-colors, 'mine-shaft'),
+    'outline': rgba(map.get($base-colors, 'governor-bay'), 0.3),
+  ),
+  'error': (
+    'base': map.get($base-colors, 'persian-red'),
+    'text': map.get($base-colors, 'alabaster'),
+    'invert-text': map.get($base-colors, 'mine-shaft'),
+    'outline': rgba(map.get($base-colors, 'persian-red'), 0.3),
+  ),
+);
+
+$light-app-colors: (
+  'background': map.get($base-colors, 'alabaster'),
+  'focus': map.get($base-colors, 'mariner'),
+  'outline': rgba(map.get($base-colors, 'mariner'), 0.3),
+  'default': map.get($base-colors, 'silver'),
+);
+
+$light-colors: map.merge($light-app-colors, $light-variant-colors);
+
+$dark-variant-colors: ();
+
+$dark-app-colors: ();
+
+$dark-colors: map.merge($dark-app-colors, $dark-variant-colors);
+
+// TODO REMOVE
 @function derive-rgb-values-from-hex($hex) {
   @return red($hex), green($hex), blue($hex);
-}
-
-@function get-base-color($name) {
-  @return map.get($base-colors, $name);
 }
 
 @function get-color($names...) {
@@ -32,6 +59,7 @@ $color-variants: primary, error;
   @return var(#{$color});
 }
 
+// TODO REMOVE
 @function get-color-rgb($names...) {
   $color: '--color';
 
@@ -45,4 +73,14 @@ $color-variants: primary, error;
 @mixin with-rbg-var($var, $hex) {
   --#{$var}: #{$hex};
   --#{$var}-rgb: #{derive-rgb-values-from-hex($hex)};
+}
+
+@mixin set-app-colors($parent, $parent-key: '') {
+  @if $parent-key == '' or type-of($parent) == 'map' {
+    @each $child-key, $child in $parent {
+      @include set-app-colors($child, #{$parent-key}-#{$child-key});
+    }
+  } @else {
+    --color#{$parent-key}: #{$parent};
+  }
 }

@@ -1,24 +1,40 @@
 @use 'sass:map';
 @use '../utilities';
 
+@include utilities.light-theme {
+  $default-color: map.get(utilities.$light-colors, 'default');
+
+  --color-input-base: #{$default-color};
+  --color-input-hover: #{utilities.shade($default-color, 20%)};
+  --color-input-focus: #{map.get(utilities.$light-colors, 'focus')};
+
+  @each $variant in utilities.$color-variants {
+    $color: map.get(utilities.$light-variant-colors, $variant, 'base');
+
+    --color-input-#{$variant}-base: #{utilities.tint($color, 20%)};
+    --color-input-#{$variant}-hover: #{utilities.tint($color, 0%)};
+    --color-input-#{$variant}-focus: #{utilities.shade($color, 20%)};
+  }
+}
+
 .input {
   @extend %control;
 
   background-color: utilities.get-color('background');
-  border-color: utilities.get-color('default');
+  border-color: utilities.get-color('input-base');
 
   &::placeholder {
     color: rgba(utilities.get-color-rgb('text'), 0.4);
   }
 
   &:hover {
-    border-color: utilities.get-color('default-hover');
+    border-color: utilities.get-color('input-hover');
   }
 
   &:focus {
     @include utilities.outline;
 
-    border-color: utilities.get-color('default-focus');
+    border-color: utilities.get-color('input-focus');
   }
 
   &--small {
@@ -27,16 +43,16 @@
 
   @each $variant in utilities.$color-variants {
     &--#{$variant} {
-      border-color: utilities.get-color($variant);
+      border-color: utilities.get-color('input', $variant, 'base');
 
       &:hover {
-        border-color: utilities.get-color($variant, 'hover');
+        border-color: utilities.get-color('input', $variant, 'hover');
       }
 
       &:focus {
         @include utilities.outline(utilities.get-color($variant, 'outline'));
 
-        border-color: utilities.get-color($variant, 'focus');
+        border-color: utilities.get-color('input', $variant, 'focus');
       }
     }
   }

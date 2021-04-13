@@ -1,25 +1,34 @@
-@use "sass:selector";
+@use "sass:map";
 @use '../utilities';
+
+// TODO SELECT BUG MOVING UP DOWN --small
 
 $select-arrow-size: 2.4rem;
 $select-arrow-padding-right: utilities.$spacing-xxs;
+
+@include utilities.light-theme {
+  --color-select-option-hover: #{utilities.tint(
+      map.get(utilities.$light-colors, 'primary', 'base'),
+      70%
+    )};
+}
 
 .select {
   @extend %control;
 
   background-color: utilities.get-color('background');
-  border-color: utilities.get-color('default');
+  border-color: utilities.get-color('input-base');
   cursor: pointer;
   padding: 0;
 
   &:hover:not(.select-focused) {
-    border-color: utilities.get-color('default-hover');
+    border-color: utilities.get-color('input-hover');
   }
 
   &-focused {
     @include utilities.outline;
 
-    border-color: utilities.get-color('focus');
+    border-color: utilities.get-color('input-focus');
   }
 
   &--small {
@@ -28,16 +37,16 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
 
   @each $variant in utilities.$color-variants {
     &--#{$variant} {
-      border-color: utilities.get-color($variant);
+      border-color: utilities.get-color('input', $variant, 'base');
 
       &:hover:not(.select-focused) {
-        border-color: utilities.get-color($variant, 'hover');
+        border-color: utilities.get-color('input', $variant, 'hover');
       }
 
       &.select-focused {
         @include utilities.outline(utilities.get-color($variant, 'outline'));
 
-        border-color: utilities.get-color($variant, 'focus');
+        border-color: utilities.get-color('input', $variant, 'focus');
       }
     }
   }
@@ -85,7 +94,7 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
   &-arrow {
     align-items: center;
     bottom: 0;
-    color: utilities.get-color('default');
+    color: utilities.get-color('input-base');
     display: flex;
     justify-content: center;
     padding-right: $select-arrow-padding-right;
@@ -94,24 +103,24 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
     top: 0;
 
     .select-focused & {
-      color: utilities.get-color('focus');
+      color: utilities.get-color('input-focus');
     }
 
     .select:hover:not(.select-focused) & {
-      color: utilities.get-color('default-hover');
+      color: utilities.get-color('input-hover');
     }
 
     @each $variant in utilities.$color-variants {
       .select--#{$variant} & {
-        color: utilities.get-color($variant);
+        color: utilities.get-color('input', $variant, 'base');
       }
 
       .select--#{$variant}.select-focused & {
-        color: utilities.get-color($variant, 'focus');
+        color: utilities.get-color('input', $variant, 'focus');
       }
 
       .select--#{$variant}.select:hover:not(.select-focused) & {
-        color: utilities.get-color($variant, 'hover');
+        color: utilities.get-color('input', $variant, 'hover');
       }
     }
 
@@ -145,13 +154,13 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
     &:hover,
     &-active {
       &:not(.select-item-option-selected) {
-        background-color: utilities.get-color('primary-light');
-        color: utilities.get-color('primary-light-text');
+        background-color: utilities.get-color('select-option-hover');
+        color: utilities.get-color('primary-invert-text');
       }
     }
 
     &-selected {
-      background-color: utilities.get-color('primary');
+      background-color: utilities.get-color('primary-base');
       color: utilities.get-color('primary-text');
     }
   }
