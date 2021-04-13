@@ -25,3 +25,25 @@
     }
   }
 }
+
+@mixin outline($color: var(--color-outline)) {
+  /* Visible in the full-colour space */
+  box-shadow: 0 0 0 0.2rem $color;
+
+  /* Visible in Windows high-contrast themes */
+  outline: transparent solid 2px;
+}
+
+@mixin no-outline {
+  box-shadow: none;
+  outline: none;
+}
+
+@mixin unselectable {
+  user-select: none;
+}
+
+@mixin disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}

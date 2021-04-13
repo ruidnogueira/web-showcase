@@ -2,7 +2,7 @@ import { ReactElement, ComponentType } from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter, MemoryRouterProps } from 'react-router';
 import { I18nextProvider } from 'react-i18next';
-import { i18nMock } from './i18n.mock';
+import { i18nMock } from '../mocks/i18n.mock';
 import { GlobalProviders } from 'app/core/providers/GlobalProviders';
 import { ConfigProvider } from 'app/core/configs/ConfigProvider';
 

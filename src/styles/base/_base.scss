@@ -1,23 +1,5 @@
 @use '../utilities';
 
-@include utilities.light-theme {
-  --color-text: #{utilities.get-base-color(mine-shaft)};
-  --color-background: #{utilities.get-base-color(alabaster)};
-
-  // Primary
-  --color-primary: #{utilities.get-base-color(governor-bay)};
-  --color-primary-text: #{utilities.get-base-color(alabaster)};
-
-  // Error
-  --color-error: #{utilities.get-base-color(persian-red)};
-  --color-error-text: #{utilities.get-base-color(alabaster)};
-}
-
-@include utilities.dark-theme {
-  --color-text: #{utilities.get-base-color(alabaster)};
-  --color-background: #{utilities.get-base-color(mine-shaft)};
-}
-
 *,
 *::before,
 *::after {
@@ -41,8 +23,8 @@ html {
 body {
   @include utilities.regular-text;
 
-  background-color: var(--color-background);
-  color: var(--color-text);
+  background-color: utilities.get-color('background');
+  color: utilities.get-color('text');
 }
 
 h1 {
