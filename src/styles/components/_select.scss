@@ -1,9 +1,8 @@
 @use "sass:map";
 @use '../utilities';
 
-// TODO SELECT BUG MOVING UP DOWN --small
-
-$select-arrow-size: 2.4rem;
+$select-arrow-width: 1.8em;
+$select-arrow-height: 1.6em;
 $select-arrow-padding-right: utilities.$spacing-xxs;
 
 @include utilities.light-theme {
@@ -67,7 +66,7 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
       display: inline-flex;
       height: 100%;
       padding-right: calc(
-        #{$select-arrow-size + $select-arrow-padding-right} - #{utilities.$control-padding-horizontal}
+        #{$select-arrow-width} + #{$select-arrow-padding-right} - #{utilities.$control-padding-horizontal}
       );
       width: 100%;
     }
@@ -125,8 +124,8 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
     }
 
     > * {
-      height: $select-arrow-size;
-      width: $select-arrow-size;
+      height: $select-arrow-height;
+      width: $select-arrow-width;
     }
   }
 
