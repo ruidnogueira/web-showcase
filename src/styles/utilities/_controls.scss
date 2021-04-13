@@ -25,6 +25,7 @@ $control-padding-horizontal: calc(0.75em - #{$control-border-width});
   outline: none;
   padding: $control-padding-vertical $control-padding-horizontal;
   position: relative;
+  vertical-align: middle;
 }
 
 @mixin control--small {
