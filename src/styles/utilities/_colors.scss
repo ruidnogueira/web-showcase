@@ -1,8 +1,6 @@
 @use "sass:map";
 @use 'functions';
 
-// TODO SOLVE RGB
-
 $base-colors: (
   'alabaster': #fafafa,
   'governor-bay': #3948ca,
@@ -31,6 +29,7 @@ $light-variant-colors: (
 
 $light-app-colors: (
   'background': map.get($base-colors, 'alabaster'),
+  'text': map.get($base-colors, 'mine-shaft'),
   'focus': map.get($base-colors, 'mariner'),
   'outline': rgba(map.get($base-colors, 'mariner'), 0.3),
   'default': map.get($base-colors, 'silver'),
@@ -44,11 +43,6 @@ $dark-app-colors: ();
 
 $dark-colors: map.merge($dark-app-colors, $dark-variant-colors);
 
-// TODO REMOVE
-@function derive-rgb-values-from-hex($hex) {
-  @return red($hex), green($hex), blue($hex);
-}
-
 @function get-color($names...) {
   $color: '--color';
 
@@ -57,22 +51,6 @@ $dark-colors: map.merge($dark-app-colors, $dark-variant-colors);
   }
 
   @return var(#{$color});
-}
-
-// TODO REMOVE
-@function get-color-rgb($names...) {
-  $color: '--color';
-
-  @each $name in $names {
-    $color: $color + '-' + $name;
-  }
-
-  @return var(#{$color + '-rgb'});
-}
-
-@mixin with-rbg-var($var, $hex) {
-  --#{$var}: #{$hex};
-  --#{$var}-rgb: #{derive-rgb-values-from-hex($hex)};
 }
 
 @mixin set-app-colors($parent, $parent-key: '') {

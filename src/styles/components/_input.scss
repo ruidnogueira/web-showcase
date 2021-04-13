@@ -7,6 +7,7 @@
   --color-input-base: #{$default-color};
   --color-input-hover: #{utilities.shade($default-color, 20%)};
   --color-input-focus: #{map.get(utilities.$light-colors, 'focus')};
+  --color-input-placeholder: #{rgba(map.get(utilities.$light-colors, 'text'), 0.4)};
 
   @each $variant in utilities.$color-variants {
     $color: map.get(utilities.$light-variant-colors, $variant, 'base');
@@ -24,7 +25,7 @@
   border-color: utilities.get-color('input-base');
 
   &::placeholder {
-    color: rgba(utilities.get-color-rgb('text'), 0.4);
+    color: utilities.get-color('input-placeholder');
   }
 
   &:hover {
