@@ -1,13 +1,64 @@
 @use "sass:map";
+@use 'functions';
 
 $base-colors: (
-  alabaster: #fafafa,
-  mine-shaft: #222,
-  governor-bay: #3948ca,
-  persian-red: #d32d2d,
-  mariner: #2d5fd3,
+  'alabaster': #fafafa,
+  'governor-bay': #3948ca,
+  'mariner': #2d5fd3,
+  'mine-shaft': #222,
+  'persian-red': #d32d2d,
+  'silver': #c9c9c9,
 );
 
-@function get-base-color($name) {
-  @return map.get($base-colors, $name);
+$color-variants: 'primary', 'error';
+
+$light-variant-colors: (
+  'primary': (
+    'base': map.get($base-colors, 'governor-bay'),
+    'text': map.get($base-colors, 'alabaster'),
+    'invert-text': map.get($base-colors, 'mine-shaft'),
+    'outline': rgba(map.get($base-colors, 'governor-bay'), 0.3),
+  ),
+  'error': (
+    'base': map.get($base-colors, 'persian-red'),
+    'text': map.get($base-colors, 'alabaster'),
+    'invert-text': map.get($base-colors, 'mine-shaft'),
+    'outline': rgba(map.get($base-colors, 'persian-red'), 0.3),
+  ),
+);
+
+$light-app-colors: (
+  'background': map.get($base-colors, 'alabaster'),
+  'text': map.get($base-colors, 'mine-shaft'),
+  'focus': map.get($base-colors, 'mariner'),
+  'outline': rgba(map.get($base-colors, 'mariner'), 0.3),
+  'default': map.get($base-colors, 'silver'),
+);
+
+$light-colors: map.merge($light-app-colors, $light-variant-colors);
+
+$dark-variant-colors: ();
+
+$dark-app-colors: ();
+
+$dark-colors: map.merge($dark-app-colors, $dark-variant-colors);
+
+@function get-color($names...) {
+  $color: '--color';
+
+  @each $name in $names {
+    $color: $color + '-' + $name;
+  }
+
+  @return var(#{$color});
+}
+
+@mixin set-app-colors($parent, $parent-key: '') {
+  @if $parent-key == '' or type-of($parent) == 'map' {
+    @each $child-key, $child in $parent {
+      @include set-app-colors($child, #{$parent-key}-#{$child-key});
+    }
+  } @else {
+    --color#{$parent-key}: #{$parent};
+  }
 }
