@@ -1,0 +1,9 @@
+@use '../utilities';
+
+@include utilities.light-theme {
+  @include utilities.set-app-colors(utilities.$light-colors);
+}
+
+@include utilities.dark-theme {
+  @include utilities.set-app-colors(utilities.$dark-colors);
+}

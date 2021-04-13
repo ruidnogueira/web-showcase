@@ -1,0 +1,83 @@
+@use '../utilities';
+@use 'sass:map';
+
+@include utilities.light-theme {
+  $default-color: map.get(utilities.$light-colors, 'default');
+
+  --color-button-hover: #{utilities.shade($default-color, 12%)};
+  --color-button-focus: #{utilities.shade($default-color, 12%)};
+  --color-button-active: #{utilities.shade($default-color, 20%)};
+
+  @each $variant in utilities.$color-variants {
+    $color: map.get(utilities.$light-variant-colors, $variant, 'base');
+
+    --color-button-#{$variant}-hover: #{utilities.shade($color, 12%)};
+    --color-button-#{$variant}-focus: #{utilities.shade($color, 12%)};
+    --color-button-#{$variant}-active: #{utilities.shade($color, 20%)};
+  }
+}
+
+.button {
+  @extend %control;
+  @include utilities.unselectable;
+
+  background-color: utilities.get-color('default');
+  border-color: transparent;
+  color: utilities.get-color('text');
+  cursor: pointer;
+  font-weight: normal;
+  justify-content: center;
+
+  &:hover {
+    background: utilities.get-color('button-hover');
+  }
+
+  &:focus {
+    @include utilities.outline;
+
+    background-color: utilities.get-color('button-focus');
+  }
+
+  &:active {
+    @include utilities.no-outline;
+
+    background-color: utilities.get-color('button-active');
+  }
+
+  &:disabled {
+    @include utilities.disabled;
+
+    background-color: utilities.get-color('default');
+  }
+
+  &--small {
+    @include utilities.control--small;
+  }
+
+  @each $variant in utilities.$color-variants {
+    &--#{$variant} {
+      background: utilities.get-color($variant, 'base');
+      color: utilities.get-color($variant, 'text');
+
+      &:hover {
+        background: utilities.get-color('button', $variant, 'hover');
+      }
+
+      &:focus {
+        @include utilities.outline(utilities.get-color($variant, 'outline'));
+
+        background: utilities.get-color('button', $variant, 'focus');
+      }
+
+      &:active {
+        @include utilities.no-outline;
+
+        background: utilities.get-color('button', $variant, 'active');
+      }
+
+      &:disabled {
+        background: utilities.get-color($variant, 'base');
+      }
+    }
+  }
+}
