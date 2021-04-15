@@ -1,6 +1,8 @@
 @use "sass:map";
 @use '../utilities';
 
+// TODO DISABLED
+
 $select-arrow-width: 1.8em;
 $select-arrow-height: 1.6em;
 $select-arrow-padding-right: utilities.$spacing-xxs;
@@ -20,7 +22,7 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
   cursor: pointer;
   padding: 0;
 
-  &:hover:not(.select-focused) {
+  &:hover:not(.select-focused):not(.select-disabled) {
     border-color: utilities.get-color('input-hover');
   }
 
@@ -28,6 +30,12 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
     @include utilities.outline;
 
     border-color: utilities.get-color('input-focus');
+  }
+
+  &-disabled {
+    @include utilities.disabled;
+
+    border-color: utilities.get-color('input-base');
   }
 
   &--small {
@@ -38,7 +46,7 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
     &--#{$variant} {
       border-color: utilities.get-color('input', $variant, 'base');
 
-      &:hover:not(.select-focused) {
+      &:hover:not(.select-focused):not(.select-disabled) {
         border-color: utilities.get-color('input', $variant, 'hover');
       }
 
@@ -46,6 +54,10 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
         @include utilities.outline(utilities.get-color($variant, 'outline'));
 
         border-color: utilities.get-color('input', $variant, 'focus');
+      }
+
+      &.select-disabled {
+        border-color: utilities.get-color('input', $variant, 'base');
       }
     }
   }
@@ -105,7 +117,11 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
       color: utilities.get-color('input-focus');
     }
 
-    .select:hover:not(.select-focused) & {
+    .select-disabled & {
+      color: utilities.get-color('input-base');
+    }
+
+    .select:hover:not(.select-focused):not(.select-disabled) & {
       color: utilities.get-color('input-hover');
     }
 
@@ -118,7 +134,11 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
         color: utilities.get-color('input', $variant, 'focus');
       }
 
-      .select--#{$variant}.select:hover:not(.select-focused) & {
+      .select--#{$variant}.select-disabled & {
+        color: utilities.get-color('input', $variant, 'base');
+      }
+
+      .select--#{$variant}.select:hover:not(.select-focused):not(.select-disabled) & {
         color: utilities.get-color('input', $variant, 'hover');
       }
     }
