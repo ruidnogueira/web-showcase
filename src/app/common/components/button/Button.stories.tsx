@@ -3,13 +3,10 @@ import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 import { Button, ButtonProps } from './Button';
 
 export default {
-  title: 'UI Components/Button',
+  title: 'Atoms/Button',
   component: Button,
   argTypes: {
-    variant: {
-      control: { type: 'select' },
-      options: [undefined, ...Object.values(ColorVariant)],
-    },
+    variant: { control: { disable: true } },
     size: {
       control: { type: 'select' },
       options: [undefined, ...Object.values(ControlSize)],
@@ -18,22 +15,25 @@ export default {
   args: {
     children: 'Button',
     type: 'button',
+    disabled: false,
   },
 } as Meta<ButtonProps>;
 
-const Template: Story<ButtonProps> = (args) => <Button {...args} />;
+const colorVariants = [undefined, ...Object.values(ColorVariant)];
+const Template: Story<ButtonProps> = (args) => (
+  <div style={{ display: 'flex', gap: '10px' }}>
+    {colorVariants.map((variant) => (
+      <Button {...args} key={variant} variant={variant} />
+    ))}
+  </div>
+);
 
 export const Default = Template.bind({});
 Default.args = {};
 
-export const Primary = Template.bind({});
-Primary.args = {
-  variant: ColorVariant.Primary,
-};
-
-export const Error = Template.bind({});
-Error.args = {
-  variant: ColorVariant.Error,
+export const Disabled = Template.bind({});
+Disabled.args = {
+  disabled: true,
 };
 
 export const Small = Template.bind({});

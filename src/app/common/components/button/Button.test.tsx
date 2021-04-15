@@ -1,11 +1,10 @@
 import { render } from '@testing-library/react';
 import { ButtonProps } from './Button';
-import ButtonStory, { Default, Error, Primary, Small } from './Button.stories';
+import ButtonStory, { Default, Disabled, Small } from './Button.stories';
 
 test.each([
   ['Default', Default],
-  ['Error', Error],
-  ['Primary', Primary],
+  ['Disabled', Disabled],
   ['Small', Small],
 ])('renders %s story', (_, Component) => {
   const props = { ...ButtonStory.args, ...Component.args } as ButtonProps;

@@ -3,13 +3,10 @@ import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 import { Select, SelectProps } from './Select';
 
 export default {
-  title: 'UI components/Select',
+  title: 'Atoms/Select',
   component: Select,
   argTypes: {
-    variant: {
-      control: { type: 'select' },
-      options: [undefined, ...Object.values(ColorVariant)],
-    },
+    variant: { control: { disable: true } },
     size: {
       control: { type: 'select' },
       options: [undefined, ...Object.values(ControlSize)],
@@ -17,28 +14,29 @@ export default {
   },
   args: {
     placeholder: 'Select',
+    disabled: false,
   },
 } as Meta<SelectProps<any>>;
 
+const colorVariants = [undefined, ...Object.values(ColorVariant)];
 const Template: Story<SelectProps<any>> = (args) => (
-  <Select {...args}>
-    <Select.Option value="john">John</Select.Option>
-    <Select.Option value="ann">Ann</Select.Option>
-    <Select.Option value="davis">Davis</Select.Option>
-  </Select>
+  <div style={{ display: 'flex', gap: '10px' }}>
+    {colorVariants.map((variant) => (
+      <Select {...args} key={variant} variant={variant}>
+        <Select.Option value="john">John</Select.Option>
+        <Select.Option value="ann">Ann</Select.Option>
+        <Select.Option value="davis">Davis</Select.Option>
+      </Select>
+    ))}
+  </div>
 );
 
 export const Default = Template.bind({});
 Default.args = {};
 
-export const Primary = Template.bind({});
-Primary.args = {
-  variant: ColorVariant.Primary,
-};
-
-export const Error = Template.bind({});
-Error.args = {
-  variant: ColorVariant.Error,
+export const Disabled = Template.bind({});
+Disabled.args = {
+  disabled: true,
 };
 
 export const Small = Template.bind({});
