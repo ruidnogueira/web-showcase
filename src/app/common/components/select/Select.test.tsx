@@ -1,10 +1,9 @@
 import { render } from '@testing-library/react';
-import { Default, Error, Primary, Small } from './Select.stories';
+import { Default, Disabled, Small } from './Select.stories';
 
 test.each([
   ['Default', Default],
-  ['Error', Error],
-  ['Primary', Primary],
+  ['Disabled', Disabled],
   ['Small', Small],
 ])('renders %s story', (_, Component) => {
   render(<Component {...Component.args} />);
