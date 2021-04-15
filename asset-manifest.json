@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/web-showcase/static/css/main.01e83491.chunk.css",
+    "main.css": "/web-showcase/static/css/main.9c01017a.chunk.css",
     "main.js": "/web-showcase/static/js/main.fd510f0e.chunk.js",
     "main.js.map": "/web-showcase/static/js/main.fd510f0e.chunk.js.map",
     "runtime-main.js": "/web-showcase/static/js/runtime-main.c1547f74.js",
@@ -12,7 +12,7 @@
     "index.html": "/web-showcase/index.html",
     "service-worker.js": "/web-showcase/service-worker.js",
     "service-worker.js.map": "/web-showcase/service-worker.js.map",
-    "static/css/main.01e83491.chunk.css.map": "/web-showcase/static/css/main.01e83491.chunk.css.map",
+    "static/css/main.9c01017a.chunk.css.map": "/web-showcase/static/css/main.9c01017a.chunk.css.map",
     "static/js/2.1d59cbfc.chunk.js.LICENSE.txt": "/web-showcase/static/js/2.1d59cbfc.chunk.js.LICENSE.txt",
     "static/media/styles.scss": "/web-showcase/static/media/Roboto-Regular.49ae34d4.woff",
     "static/media/getFetch.cjs": "/web-showcase/static/media/getFetch.d7d6010d.cjs"
@@ -20,7 +20,7 @@
   "entrypoints": [
     "static/js/runtime-main.c1547f74.js",
     "static/js/2.1d59cbfc.chunk.js",
-    "static/css/main.01e83491.chunk.css",
+    "static/css/main.9c01017a.chunk.css",
     "static/js/main.fd510f0e.chunk.js"
   ]
 }
