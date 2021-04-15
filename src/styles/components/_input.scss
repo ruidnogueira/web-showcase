@@ -38,6 +38,12 @@
     border-color: utilities.get-color('input-focus');
   }
 
+  &:disabled {
+    @include utilities.disabled;
+
+    border-color: utilities.get-color('input-base');
+  }
+
   &--small {
     @include utilities.control--small;
   }
@@ -54,6 +60,10 @@
         @include utilities.outline(utilities.get-color($variant, 'outline'));
 
         border-color: utilities.get-color('input', $variant, 'focus');
+      }
+
+      &:disabled {
+        border-color: utilities.get-color('input', $variant, 'base');
       }
     }
   }
