@@ -1,0 +1,12 @@
+@use '../utilities';
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  @include utilities.regular-text;
+
+  margin-bottom: utilities.$spacing-xxxs;
+}
