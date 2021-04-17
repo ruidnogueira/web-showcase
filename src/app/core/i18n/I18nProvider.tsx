@@ -11,6 +11,10 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const { i18nConfig } = useConfig();
 
   useEffect(() => {
+    if (i18next.isInitialized) {
+      return;
+    }
+
     i18next
       .use(Backend)
       .use(LanguageDetector)
