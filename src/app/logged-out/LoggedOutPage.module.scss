@@ -1,0 +1,25 @@
+@use "~styles/utilities";
+@use "LoggedOutShared.module" as shared;
+
+.backdrop {
+  background-color: utilities.get-color('primary-base');
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  @media (min-width: shared.$mobile-breakpoint) {
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.card {
+  background-color: utilities.get-color('background');
+  height: 100%;
+
+  @media (min-width: shared.$mobile-breakpoint) {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    height: auto;
+    margin-top: utilities.$spacing-s;
+  }
+}
