@@ -11,6 +11,7 @@ export function I18nProvider({ children }: { children: ReactNode }) {
   const { i18nConfig } = useConfig();
 
   useEffect(() => {
+    /* istanbul ignore next */
     if (i18next.isInitialized) {
       return;
     }

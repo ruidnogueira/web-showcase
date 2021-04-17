@@ -1,9 +1,15 @@
 import { render } from '@testing-library/react';
+import { i18nMock } from 'mocks/i18n.mock';
+import { I18nextProvider } from 'react-i18next';
 import SpinnerStory, { AcessibilityAlert, Default } from './Spinner.stories';
 
 test.each([
   ['Default', Default],
   ['AcessibilityAlert', AcessibilityAlert],
 ])('renders %s story', (_, Component) => {
-  render(<Component {...SpinnerStory.args} {...Component.args} />);
+  render(
+    <I18nextProvider i18n={i18nMock}>
+      <Component {...SpinnerStory.args} {...Component.args} />
+    </I18nextProvider>
+  );
 });
