@@ -3,7 +3,11 @@
   "pages": {
     "login": {
       "title": "Inicia sessão",
-      "submit": "Iniciar sessão"
+      "submit": "Iniciar sessão",
+      "errors": {
+        "invalidLogin": "O e-mail ou palavra-passe que introduziste não corresponde a uma conta. Por favor verifica e tenta outra vez.",
+        "unexpected": "Desculpa, ocurreu um erro inesperado. Tenta novamente mais tarde."
+      }
     }
   },
   "props": {

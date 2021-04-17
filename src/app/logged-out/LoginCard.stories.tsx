@@ -1,12 +1,17 @@
 import { Story, Meta } from '@storybook/react';
 import { Suspense } from 'react';
 import { StorybookGlobalProviders } from 'test/storybook.helper';
-import { LoginCardPresentation, LoginCardPresentationProps } from './LoginCard';
+import { LoginCardError, LoginCardPresentation, LoginCardPresentationProps } from './LoginCard';
 
 export default {
   title: 'Organisms/Login Card',
   component: LoginCardPresentation,
-  argTypes: {},
+  argTypes: {
+    error: {
+      control: { type: 'inline-radio' },
+      options: [undefined, ...Object.values(LoginCardError)],
+    },
+  },
   args: {},
   parameters: {
     docs: {
@@ -26,7 +31,7 @@ export default {
 
 const Template: Story<LoginCardPresentationProps> = (args) => (
   <Suspense fallback={<div>loading...</div>}>
-    <LoginCardPresentation />
+    <LoginCardPresentation {...args} />
   </Suspense>
 );
 

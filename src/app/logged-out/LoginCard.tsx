@@ -9,10 +9,17 @@ import loginStyles from './LoginCard.module.scss';
 import pageStyles from './LoggedOut.module.scss';
 import classNames from 'classnames';
 
-export interface LoginCardPresentationProps {}
+export enum LoginCardError {
+  Invalid = 'INVALID',
+  Unexpected = 'UNEXPECTED',
+}
+
+export interface LoginCardPresentationProps {
+  error?: LoginCardError;
+}
 
 export function LoginCard() {
-  return <LoginCard />;
+  return <LoginCardPresentation />;
 }
 
 const prefix = 'login_card-';
@@ -22,7 +29,7 @@ const ids = {
   password: prefix + 'password',
 };
 
-export function LoginCardPresentation() {
+export function LoginCardPresentation(props: LoginCardPresentationProps) {
   const { constants } = useConfig();
   const { t } = useTranslation();
 
@@ -31,6 +38,13 @@ export function LoginCardPresentation() {
       <h1 className={pageStyles.title}>{t('pages.login.title')}</h1>
 
       <form className={loginStyles.form}>
+        {props.error === LoginCardError.Invalid && (
+          <ErrorMessage message={t('pages.login.errors.invalidLogin')} />
+        )}
+        {props.error === LoginCardError.Unexpected && (
+          <ErrorMessage message={t('pages.login.errors.unexpected')} />
+        )}
+
         <Field className={loginStyles.field}>
           <Label htmlFor={ids.email}>{t('props.user.email')}</Label>
           <Input
@@ -57,6 +71,14 @@ export function LoginCardPresentation() {
           {t('pages.login.submit')}
         </Button>
       </form>
+    </div>
+  );
+}
+
+function ErrorMessage({ message }: { message: string }) {
+  return (
+    <div className={classNames('help help--error', loginStyles.error)} role="alert">
+      {message}
     </div>
   );
 }
