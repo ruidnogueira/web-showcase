@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import { Button, ButtonProps } from './Button';
-import ButtonStory, { Default, Disabled, Loading, Small } from './Button.stories';
+import Story, { Default, Disabled, Loading, Small } from './Button.stories';
 import { i18nMock } from 'mocks/i18n.mock';
 
 test.each([
@@ -10,7 +10,7 @@ test.each([
   ['Small', Small],
   ['Loading', Loading],
 ])('renders %s story', (_, Component) => {
-  const props = { ...ButtonStory.args, ...Component.args } as ButtonProps;
+  const props = { ...Story.args, ...Component.args } as ButtonProps;
   render(
     <I18nextProvider i18n={i18nMock}>
       <Component {...props} />
