@@ -47,3 +47,20 @@
   cursor: not-allowed;
   opacity: 0.5;
 }
+
+@mixin not($list...) {
+  // flatten list variable
+  @if (length($list) == 1) {
+    $list: nth($list, 1);
+  }
+
+  $not: '';
+
+  @each $value in $list {
+    $not: $not + ':not(#{$value})';
+  }
+
+  &#{$not} {
+    @content;
+  }
+}

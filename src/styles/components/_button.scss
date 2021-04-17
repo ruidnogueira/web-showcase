@@ -1,6 +1,8 @@
 @use '../utilities';
 @use 'sass:map';
 
+$button-variants: utilities.prefix-list(utilities.$color-variants, '.button--');
+
 @include utilities.light-theme {
   $default-color: map.get(utilities.$light-colors, 'default');
 
@@ -78,6 +80,12 @@
       &:disabled {
         background: utilities.get-color($variant, 'base');
       }
+    }
+  }
+
+  @include utilities.not($button-variants) {
+    .spinner {
+      stroke: utilities.get-color('text');
     }
   }
 }

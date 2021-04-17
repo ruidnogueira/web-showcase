@@ -32,12 +32,17 @@ const Template: Story<ButtonProps> = (args) => (
 export const Default = Template.bind({});
 Default.args = {};
 
+export const Small = Template.bind({});
+Small.args = {
+  size: ControlSize.Small,
+};
+
 export const Disabled = Template.bind({});
 Disabled.args = {
   disabled: true,
 };
 
-export const Small = Template.bind({});
-Small.args = {
-  size: ControlSize.Small,
+export const Loading = Template.bind({});
+Loading.args = {
+  isLoading: true,
 };

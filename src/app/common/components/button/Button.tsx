@@ -1,6 +1,7 @@
 import { ButtonHTMLAttributes } from 'react';
 import classNames from 'classnames';
 import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
+import { Spinner } from '../spinner/Spinner';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   type: 'submit' | 'reset' | 'button';
@@ -14,9 +15,22 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
    * Specifies the size
    */
   size?: ControlSize;
+
+  /**
+   * Specifies whether loading spinner is visible
+   */
+  isLoading?: boolean;
 }
 
-export function Button({ className, variant, size, ...props }: ButtonProps) {
+export function Button({
+  children,
+  disabled,
+  isLoading,
+  className,
+  variant,
+  size,
+  ...props
+}: ButtonProps) {
   return (
     <button
       {...props}
@@ -25,6 +39,9 @@ export function Button({ className, variant, size, ...props }: ButtonProps) {
         { [`button--${variant}`]: variant, [`button--${size}`]: size },
         className
       )}
-    />
+      disabled={disabled || isLoading}
+    >
+      {isLoading ? <Spinner /> : children}
+    </button>
   );
 }

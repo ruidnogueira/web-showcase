@@ -1,3 +1,5 @@
+@use "sass:list";
+
 // ==== Color ====
 
 // Slightly lighten a color
@@ -8,4 +10,14 @@
 // Slightly darken a color
 @function shade($color, $percentage) {
   @return mix(#000, $color, $percentage);
+}
+
+@function prefix-list($list, $prefix) {
+  $new-list: ();
+
+  @each $value in $list {
+    $new-list: list.append($new-list, #{$prefix} + #{$value});
+  }
+
+  @return $new-list;
 }
