@@ -1,3 +1,15 @@
 {
-  "appWorking": "App is working!"
+  "appWorking": "App is working!",
+  "pages": {
+    "login": {
+      "title": "Login",
+      "submit": "Log in"
+    }
+  },
+  "props": {
+    "user": {
+      "email": "Email",
+      "password": "Password"
+    }
+  }
 }

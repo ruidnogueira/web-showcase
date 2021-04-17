@@ -1,3 +1,15 @@
 {
-  "appWorking": "Aplicação funciona!"
+  "appWorking": "Aplicação funciona!",
+  "pages": {
+    "login": {
+      "title": "Inicia sessão",
+      "submit": "Iniciar sessão"
+    }
+  },
+  "props": {
+    "user": {
+      "email": "E-mail",
+      "password": "Palavra-passe"
+    }
+  }
 }

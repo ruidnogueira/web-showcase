@@ -1,0 +1,28 @@
+@use "~styles/utilities";
+@use "LoggedOut.module" as page;
+
+.card {
+  @media (min-width: page.$mobile-breakpoint) {
+    width: 32.2rem;
+  }
+}
+
+.form {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  padding: utilities.$spacing-s page.$card-horizontal-margin;
+
+  @media (min-width: page.$mobile-breakpoint) {
+    flex-grow: 0;
+  }
+}
+
+.field {
+  margin-bottom: utilities.$spacing-l;
+
+  &:last-of-type {
+    margin-bottom: utilities.$spacing-xxxl;
+  }
+}

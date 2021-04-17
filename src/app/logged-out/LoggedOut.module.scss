@@ -1,0 +1,38 @@
+@use "~styles/utilities";
+
+// TODO CHECK IF THIS WILL CREATE PROBLEMS IF IMPORTED MULTIPLE TIMES IN CSS FILES
+
+$mobile-breakpoint: 34em;
+$card-horizontal-margin: utilities.$spacing-s;
+
+.title {
+  align-items: center;
+  background-color: utilities.get-color('primary-base');
+  color: utilities.get-color('primary-text');
+  display: inline-flex;
+  flex-basis: calc(100% / 3);
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 0;
+  padding: utilities.$spacing-l $card-horizontal-margin;
+  text-align: center;
+
+  @media (min-width: $mobile-breakpoint) {
+    background-color: utilities.get-color('background');
+    color: utilities.get-color('primary-base');
+    flex-basis: auto;
+  }
+}
+
+.card {
+  background-color: utilities.get-color('background');
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  @media (min-width: $mobile-breakpoint) {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    height: auto;
+    margin-top: utilities.$spacing-s;
+  }
+}
