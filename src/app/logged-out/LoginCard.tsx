@@ -16,6 +16,7 @@ export enum LoginCardError {
 
 export interface LoginCardPresentationProps {
   error?: LoginCardError;
+  isSubmitting?: boolean;
 }
 
 export function LoginCard() {
@@ -53,6 +54,7 @@ export function LoginCardPresentation(props: LoginCardPresentationProps) {
             type="email"
             className="input"
             maxLength={constants.defaultInputMaxLength}
+            disabled={props.isSubmitting}
           />
         </Field>
 
@@ -64,10 +66,11 @@ export function LoginCardPresentation(props: LoginCardPresentationProps) {
             type="password"
             className="input"
             maxLength={constants.defaultInputMaxLength}
+            disabled={props.isSubmitting}
           />
         </Field>
 
-        <Button type="submit" variant={ColorVariant.Primary}>
+        <Button type="submit" variant={ColorVariant.Primary} isLoading={props.isSubmitting}>
           {t('pages.login.submit')}
         </Button>
       </form>

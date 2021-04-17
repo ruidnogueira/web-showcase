@@ -37,3 +37,8 @@ const Template: Story<LoginCardPresentationProps> = (args) => (
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const Submitting = Template.bind({});
+Submitting.args = {
+  isSubmitting: true,
+};
