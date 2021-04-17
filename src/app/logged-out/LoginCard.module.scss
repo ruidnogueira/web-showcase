@@ -1,8 +1,11 @@
 @use "~styles/utilities";
-@use "LoggedOut.module" as page;
+@use "LoggedOutShared.module" as shared;
 
 .card {
-  @media (min-width: page.$mobile-breakpoint) {
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: shared.$mobile-breakpoint) {
     width: 32.2rem;
   }
 }
@@ -12,9 +15,9 @@
   flex: 1 0 auto;
   flex-direction: column;
   justify-content: center;
-  padding: utilities.$spacing-s page.$card-horizontal-margin;
+  padding: utilities.$spacing-s shared.$card-horizontal-margin;
 
-  @media (min-width: page.$mobile-breakpoint) {
+  @media (min-width: shared.$mobile-breakpoint) {
     flex-grow: 0;
   }
 }

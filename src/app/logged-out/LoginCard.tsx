@@ -5,8 +5,8 @@ import { Input } from 'app/common/components/input/Input';
 import { useConfig } from 'app/core/configs/ConfigProvider';
 import { ColorVariant } from 'app/core/models/styles.model';
 import { useTranslation } from 'react-i18next';
-import loginStyles from './LoginCard.module.scss';
-import pageStyles from './LoggedOut.module.scss';
+import styles from './LoginCard.module.scss';
+import sharedStyles from './LoggedOutShared.module.scss';
 import classNames from 'classnames';
 
 export enum LoginCardError {
@@ -14,13 +14,17 @@ export enum LoginCardError {
   Unexpected = 'UNEXPECTED',
 }
 
-export interface LoginCardPresentationProps {
+export interface LoginCardProps {
+  className?: string;
+}
+
+export interface LoginCardPresentationProps extends LoginCardProps {
   error?: LoginCardError;
   isSubmitting?: boolean;
 }
 
-export function LoginCard() {
-  return <LoginCardPresentation />;
+export function LoginCard(props: LoginCardProps) {
+  return <LoginCardPresentation {...props} />;
 }
 
 const prefix = 'login_card-';
@@ -30,23 +34,27 @@ const ids = {
   password: prefix + 'password',
 };
 
-export function LoginCardPresentation(props: LoginCardPresentationProps) {
+export function LoginCardPresentation({
+  className,
+  error,
+  isSubmitting,
+}: LoginCardPresentationProps) {
   const { constants } = useConfig();
   const { t } = useTranslation();
 
   return (
-    <div className={classNames(pageStyles.card, loginStyles.card)}>
-      <h1 className={pageStyles.title}>{t('pages.login.title')}</h1>
+    <div className={classNames(styles.card, className)}>
+      <h1 className={sharedStyles.title}>{t('pages.login.title')}</h1>
 
-      <form className={loginStyles.form}>
-        {props.error === LoginCardError.Invalid && (
+      <form className={styles.form}>
+        {error === LoginCardError.Invalid && (
           <ErrorMessage message={t('pages.login.errors.invalidLogin')} />
         )}
-        {props.error === LoginCardError.Unexpected && (
+        {error === LoginCardError.Unexpected && (
           <ErrorMessage message={t('pages.login.errors.unexpected')} />
         )}
 
-        <Field className={loginStyles.field}>
+        <Field className={styles.field}>
           <Label htmlFor={ids.email}>{t('props.user.email')}</Label>
           <Input
             id={ids.email}
@@ -54,11 +62,11 @@ export function LoginCardPresentation(props: LoginCardPresentationProps) {
             type="email"
             className="input"
             maxLength={constants.defaultInputMaxLength}
-            disabled={props.isSubmitting}
+            disabled={isSubmitting}
           />
         </Field>
 
-        <Field className={loginStyles.field}>
+        <Field className={styles.field}>
           <Label htmlFor={ids.password}>{t('props.user.password')}</Label>
           <Input
             id={ids.password}
@@ -66,11 +74,11 @@ export function LoginCardPresentation(props: LoginCardPresentationProps) {
             type="password"
             className="input"
             maxLength={constants.defaultInputMaxLength}
-            disabled={props.isSubmitting}
+            disabled={isSubmitting}
           />
         </Field>
 
-        <Button type="submit" variant={ColorVariant.Primary} isLoading={props.isSubmitting}>
+        <Button type="submit" variant={ColorVariant.Primary} isLoading={isSubmitting}>
           {t('pages.login.submit')}
         </Button>
       </form>
@@ -80,7 +88,7 @@ export function LoginCardPresentation(props: LoginCardPresentationProps) {
 
 function ErrorMessage({ message }: { message: string }) {
   return (
-    <div className={classNames('help help--error', loginStyles.error)} role="alert">
+    <div className={classNames('help help--error', styles.error)} role="alert">
       {message}
     </div>
   );
