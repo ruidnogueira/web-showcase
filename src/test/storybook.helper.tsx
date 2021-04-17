@@ -24,3 +24,7 @@ export function StorybookGlobalProviders(props: RenderProps) {
     </MemoryRouter>
   );
 }
+
+export function StorybookVariants({ children }: { children: ReactNode }) {
+  return <div style={{ display: 'flex', gap: '10px' }}>{children}</div>;
+}
