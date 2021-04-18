@@ -3,8 +3,6 @@ import { Suspense } from 'react';
 import { StorybookGlobalProviders } from 'test/storybook.helper';
 import { LoggedOutPage } from './LoggedOutPage';
 
-// TODO CHROMATIC CONFIG
-
 export default {
   title: 'Pages/LoggedOutPage',
   component: LoggedOutPage,
@@ -16,6 +14,8 @@ export default {
         type: 'code',
       },
     },
+    layout: 'fullscreen',
+    chromatic: { viewports: [360, 1800] },
   },
   decorators: [
     (Story) => (
