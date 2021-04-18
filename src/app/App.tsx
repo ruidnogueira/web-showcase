@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Helmet } from 'react-helmet-async';
 import { memo } from 'react';
-import { GuestPage } from './guest/GuestPage';
+import { LoggedOutPage } from './logged-out/LoggedOutPage';
 
 export function App() {
   const { i18n } = useTranslation();
@@ -18,5 +18,5 @@ export function App() {
 }
 
 const AppComponent = memo(function AppComponent() {
-  return <GuestPage />;
+  return <LoggedOutPage />;
 });
