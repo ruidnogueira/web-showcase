@@ -2,7 +2,7 @@ import { ReactElement, ComponentType } from 'react';
 import { render } from '@testing-library/react';
 import { MemoryRouter, MemoryRouterProps } from 'react-router';
 import { I18nextProvider } from 'react-i18next';
-import { i18nMock } from '../mocks/i18n.mock';
+import { createI18nMock } from '../mocks/i18n.mock';
 import { GlobalProviders } from 'app/core/providers/GlobalProviders';
 import { ConfigProvider } from 'app/core/configs/ConfigProvider';
 
@@ -19,7 +19,7 @@ export function renderWithProviders(ui: ReactElement, options: RenderOptions = {
 
   const AllProviders: React.FC = ({ children }) => (
     <MemoryRouter {...options.routerProps}>
-      <I18nextProvider i18n={i18nMock}>
+      <I18nextProvider i18n={createI18nMock()}>
         <ConfigProvider>
           <GlobalProviders>{Wrapper ? <Wrapper>{children}</Wrapper> : children}</GlobalProviders>
         </ConfigProvider>

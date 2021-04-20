@@ -27,4 +27,6 @@ i18n.use(initReactI18next).init({
   resources,
 });
 
-export const i18nMock = i18n;
+export function createI18nMock() {
+  return i18n.cloneInstance();
+}
