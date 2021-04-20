@@ -2,14 +2,21 @@
 @use "LoggedOutShared.module" as shared;
 
 .backdrop {
-  background-color: utilities.get-color('primary-base');
+  background-color: utilities.get-color('background');
   display: flex;
   flex-direction: column;
   height: 100%;
 
   @media (min-width: shared.$mobile-breakpoint) {
     align-items: center;
+    background-color: utilities.get-color('primary-base');
     justify-content: center;
+
+    &::before {
+      // to center language field
+      content: '';
+      flex: 1;
+    }
   }
 }
 
@@ -22,4 +29,12 @@
     height: auto;
     margin-top: utilities.$spacing-s;
   }
+}
+
+.languageField {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  padding: utilities.$spacing-s shared.$card-horizontal-margin;
 }
