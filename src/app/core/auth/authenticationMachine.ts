@@ -66,7 +66,7 @@ export const authenticationMachine = createMachine<
   {
     guards: {
       [AuthenticationMachineGuard.IsLoggedIn]: () => {
-        return true; // TODO
+        return false; // TODO
       },
     },
   }
