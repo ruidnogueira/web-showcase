@@ -14,7 +14,9 @@ const AuthenticationMachineContext = createContext<
 >(undefined);
 
 export function AuthenticationMachineProvider({ children }: { children: ReactNode }) {
-  const [, , service] = useMachine(authenticationMachine);
+  const [, , service] = useMachine(authenticationMachine, {
+    devTools: process.env.NODE_ENV === 'development',
+  });
 
   return (
     <AuthenticationMachineContext.Provider value={service}>
