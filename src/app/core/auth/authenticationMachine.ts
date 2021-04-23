@@ -38,7 +38,6 @@ export const authenticationMachine = createMachine<
     initial: AuthenticationMachineStateValue.CheckingIfLoggedIn,
     states: {
       [AuthenticationMachineStateValue.CheckingIfLoggedIn]: {
-        entry: send({ type: AuthenticationMachineEventType.CheckIfLoggedIn }),
         on: {
           [AuthenticationMachineEventType.CheckIfLoggedIn]: [
             {
@@ -48,6 +47,7 @@ export const authenticationMachine = createMachine<
             { target: AuthenticationMachineStateValue.LoggedOut },
           ],
         },
+        entry: send({ type: AuthenticationMachineEventType.CheckIfLoggedIn }),
       },
 
       [AuthenticationMachineStateValue.LoggedIn]: {
