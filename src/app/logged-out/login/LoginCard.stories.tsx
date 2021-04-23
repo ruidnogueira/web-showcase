@@ -1,7 +1,8 @@
 import { Story, Meta } from '@storybook/react';
 import { Suspense } from 'react';
 import { StorybookGlobalProviders } from 'test/storybook.helper';
-import { LoginCardError, LoginCardPresentation, LoginCardPresentationProps } from './LoginCard';
+import { LoginCardPresentation, LoginCardPresentationProps } from './LoginCard';
+import { LoginMachineError } from './loginMachine';
 
 export default {
   title: 'Organisms/Login Card',
@@ -9,7 +10,7 @@ export default {
   argTypes: {
     error: {
       control: { type: 'inline-radio' },
-      options: [undefined, ...Object.values(LoginCardError)],
+      options: [undefined, ...Object.values(LoginMachineError)],
     },
   },
   args: {},

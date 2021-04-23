@@ -6,25 +6,38 @@ import { useConfig } from 'app/core/configs/ConfigProvider';
 import { ColorVariant } from 'app/core/models/styles.model';
 import { useTranslation } from 'react-i18next';
 import styles from './LoginCard.module.scss';
-import sharedStyles from './LoggedOutShared.module.scss';
+import sharedStyles from '../LoggedOutShared.module.scss';
 import classNames from 'classnames';
-
-export enum LoginCardError {
-  Invalid = 'INVALID',
-  Unexpected = 'UNEXPECTED',
-}
+import { loginMachine, LoginMachineError } from './loginMachine';
+import { useMachine } from '@xstate/react';
+import { useEffect } from 'react';
+import { FetchMachineStateValue } from 'app/common/machines/fetchMachine';
+import { useAuthMachine } from 'app/core/auth/AuthMachineProvider';
+import { AuthMachineEventType } from 'app/core/auth/authMachine';
 
 export interface LoginCardProps {
   className?: string;
 }
 
 export interface LoginCardPresentationProps extends LoginCardProps {
-  error?: LoginCardError;
+  error?: LoginMachineError;
   isSubmitting?: boolean;
 }
 
 export function LoginCard(props: LoginCardProps) {
-  return <LoginCardPresentation {...props} />;
+  const [, sendAuthEvent] = useAuthMachine();
+  const [loginState] = useMachine(loginMachine, {
+    devTools: process.env.NODE_ENV === 'development',
+  });
+
+  useEffect(() => {
+    if (loginState.matches(FetchMachineStateValue.Success)) {
+      // TODO DATA
+      sendAuthEvent({ type: AuthMachineEventType.Login });
+    }
+  }, [loginState, sendAuthEvent]);
+
+  return <LoginCardPresentation {...props} error={loginState.context.error} />;
 }
 
 const prefix = 'login_card-';
@@ -47,10 +60,10 @@ export function LoginCardPresentation({
       <h1 className={sharedStyles.title}>{t('pages.login.title')}</h1>
 
       <form className={styles.form}>
-        {error === LoginCardError.Invalid && (
+        {error === LoginMachineError.Invalid && (
           <ErrorMessage message={t('pages.login.errors.invalidLogin')} />
         )}
-        {error === LoginCardError.Unexpected && (
+        {error === LoginMachineError.Unexpected && (
           <ErrorMessage message={t('pages.login.errors.unexpected')} />
         )}
 

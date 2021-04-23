@@ -1,4 +1,4 @@
-import { LoginCard } from './LoginCard';
+import { LoginCard } from './login/LoginCard';
 import styles from './LoggedOutPage.module.scss';
 import { LanguageSelect } from 'app/common/components/language-select/LanguageSelect';
 

@@ -1,5 +1,5 @@
 @use "~styles/utilities";
-@use "LoggedOutShared.module" as shared;
+@use "../LoggedOutShared.module" as shared;
 
 .card {
   display: flex;
