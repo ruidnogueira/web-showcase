@@ -1,18 +1,29 @@
-import { createMachine, assign, InvokeCreator, DoneInvokeEvent } from 'xstate';
+import { createMachine, assign, InvokeCreator } from 'xstate';
 
-export type FetchMachineContext<Data, Error> = {
-  data?: Data;
-  error?: Error;
+export type FetchMachineContext<ResponseData, ResponseError> = {
+  data?: ResponseData;
+  error?: ResponseError;
 };
 
 export enum FetchMachineEventType {
   Fetch = 'FETCH',
+  ReceiveDataSuccess = 'RECEIVE_DATA_SUCCESS',
+  ReceiveDataFailure = 'RECEIVE_DATA_ERROR',
 }
 
-export type FetchMachineEvent = {
-  type: FetchMachineEventType.Fetch;
-  data: any; // TODO CREATE MODEL
-};
+export type FetchMachineEvent<RequestData, ResponseData, ResponseError> =
+  | {
+      type: FetchMachineEventType.Fetch;
+      data: RequestData;
+    }
+  | {
+      type: FetchMachineEventType.ReceiveDataSuccess;
+      data: ResponseData;
+    }
+  | {
+      type: FetchMachineEventType.ReceiveDataFailure;
+      data: ResponseError;
+    };
 
 export enum FetchMachineStateValue {
   Idle = 'idle',
@@ -21,7 +32,7 @@ export enum FetchMachineStateValue {
   Failure = 'failure',
 }
 
-export type FetchMachineState<Data, Error> =
+export type FetchMachineState<ResponseData, ResponseError> =
   | {
       value: FetchMachineStateValue.Idle;
       context: {};
@@ -29,21 +40,21 @@ export type FetchMachineState<Data, Error> =
   | {
       value: FetchMachineStateValue.Pending;
       context: {
-        data?: Data;
-        error?: Error;
+        data?: ResponseData;
+        error?: ResponseError;
       };
     }
   | {
       value: FetchMachineStateValue.Success;
       context: {
-        data: Data;
+        data: ResponseData;
       };
     }
   | {
       value: FetchMachineStateValue.Failure;
       context: {
-        data?: Data;
-        error: Error;
+        data?: ResponseData;
+        error: ResponseError;
       };
     };
 
@@ -51,20 +62,30 @@ export enum FetchMachineService {
   FetchData = 'fetchData',
 }
 
-export function createFetchMachine<Data = unknown, ErrorType = Error>(
+export enum FetchMachineAction {
+  AssignData = 'assignData',
+  AssignError = 'assignError',
+}
+
+export function createFetchMachine<
+  RequestData = unknown,
+  ResponseData = unknown,
+  ResponseError = Error
+>(config: {
+  id: string;
   fetcher: InvokeCreator<
-    FetchMachineContext<Data, ErrorType>,
-    FetchMachineEvent,
-    FetchMachineState<Data, ErrorType>
-  >
-) {
+    FetchMachineContext<ResponseData, ResponseError>,
+    FetchMachineEvent<RequestData, ResponseData, ResponseError>,
+    FetchMachineState<ResponseData, ResponseError>
+  >;
+}) {
   return createMachine<
-    FetchMachineContext<Data, ErrorType>,
-    FetchMachineEvent,
-    FetchMachineState<Data, ErrorType>
+    FetchMachineContext<ResponseData, ResponseError>,
+    FetchMachineEvent<RequestData, ResponseData, ResponseError>,
+    FetchMachineState<ResponseData, ResponseError>
   >(
     {
-      id: 'fetch',
+      id: config.id,
       initial: FetchMachineStateValue.Idle,
       states: {
         [FetchMachineStateValue.Idle]: {
@@ -76,21 +97,24 @@ export function createFetchMachine<Data = unknown, ErrorType = Error>(
         [FetchMachineStateValue.Pending]: {
           on: {
             [FetchMachineEventType.Fetch]: FetchMachineStateValue.Pending,
+            [FetchMachineEventType.ReceiveDataSuccess]: {
+              target: FetchMachineStateValue.Success,
+              actions: FetchMachineAction.AssignData,
+            },
+            [FetchMachineEventType.ReceiveDataFailure]: {
+              target: FetchMachineStateValue.Failure,
+              actions: FetchMachineAction.AssignError,
+            },
           },
           invoke: {
             src: FetchMachineService.FetchData,
             onDone: {
               target: FetchMachineStateValue.Success,
-              actions: assign((_, event: DoneInvokeEvent<Data>) => ({
-                data: event.data,
-                error: undefined,
-              })),
+              actions: FetchMachineAction.AssignData,
             },
             onError: {
               target: FetchMachineStateValue.Failure,
-              actions: assign((_, event: DoneInvokeEvent<ErrorType>) => ({
-                error: event.data,
-              })),
+              actions: FetchMachineAction.AssignError,
             },
           },
         },
@@ -110,7 +134,28 @@ export function createFetchMachine<Data = unknown, ErrorType = Error>(
     },
     {
       services: {
-        [FetchMachineService.FetchData]: fetcher,
+        [FetchMachineService.FetchData]: config.fetcher,
+      },
+      actions: {
+        [FetchMachineAction.AssignData]: assign((_, event) => {
+          if (event.type !== FetchMachineEventType.ReceiveDataSuccess) {
+            return {};
+          }
+
+          return {
+            data: event.data,
+            error: undefined,
+          };
+        }),
+        [FetchMachineAction.AssignError]: assign((_, event) => {
+          if (event.type !== FetchMachineEventType.ReceiveDataFailure) {
+            return {};
+          }
+
+          return {
+            error: event.data,
+          };
+        }),
       },
     }
   );
