@@ -50,6 +50,7 @@
     "react-i18next": "^11.8.12",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "rxjs": "^6.6.7",
     "sass": "^1.32.8",
     "source-map-explorer": "^2.5.2",
     "stylelint": "^13.12.0",
