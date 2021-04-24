@@ -8,12 +8,8 @@ import { useTranslation } from 'react-i18next';
 import styles from './LoginCard.module.scss';
 import sharedStyles from '../LoggedOutShared.module.scss';
 import classNames from 'classnames';
-import { loginMachine, LoginMachineError } from './loginMachine';
-import { useMachine } from '@xstate/react';
-import { useEffect } from 'react';
-import { FetchMachineStateValue } from 'app/common/machines/fetchMachine';
-import { useAuthMachine } from 'app/core/auth/AuthMachineProvider';
-import { AuthMachineEventType } from 'app/core/auth/authMachine';
+import { LoginMachineError } from './loginMachine';
+import { useLoginCard } from './useLoginCard';
 
 export interface LoginCardProps {
   className?: string;
@@ -25,19 +21,8 @@ export interface LoginCardPresentationProps extends LoginCardProps {
 }
 
 export function LoginCard(props: LoginCardProps) {
-  const [, sendAuthEvent] = useAuthMachine();
-  const [loginState] = useMachine(loginMachine, {
-    devTools: process.env.NODE_ENV === 'development',
-  });
-
-  useEffect(() => {
-    if (loginState.matches(FetchMachineStateValue.Success)) {
-      // TODO DATA
-      sendAuthEvent({ type: AuthMachineEventType.Login });
-    }
-  }, [loginState, sendAuthEvent]);
-
-  return <LoginCardPresentation {...props} error={loginState.context.error} />;
+  const { error } = useLoginCard();
+  return <LoginCardPresentation {...props} error={error} />;
 }
 
 const prefix = 'login_card-';

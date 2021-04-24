@@ -1,4 +1,5 @@
 import { createFetchMachine } from 'app/common/machines/fetchMachine';
+import { AuthService } from 'app/core/api/services/authService';
 import { ApiAuthToken, ApiCreateAuthTokenRequest } from 'app/core/models/auth.model';
 
 export enum LoginMachineError {
@@ -6,13 +7,11 @@ export enum LoginMachineError {
   Unexpected = 'UNEXPECTED',
 }
 
-export const loginMachine = createFetchMachine<
-  ApiCreateAuthTokenRequest,
-  ApiAuthToken,
-  LoginMachineError
->({
-  id: 'login',
-  fetcher: () => () => {
-    // TODO
-  },
-});
+export function createLoginMachine(authService: AuthService) {
+  return createFetchMachine<ApiCreateAuthTokenRequest, ApiAuthToken, LoginMachineError>({
+    id: 'login',
+    fetcher: () => () => {
+      // TODO
+    },
+  });
+}
