@@ -58,15 +58,6 @@ export type FetchMachineState<ResponseData, ResponseError> =
       };
     };
 
-export enum FetchMachineService {
-  FetchData = 'fetchData',
-}
-
-export enum FetchMachineAction {
-  AssignData = 'assignData',
-  AssignError = 'assignError',
-}
-
 export function createFetchMachine<
   RequestData = unknown,
   ResponseData = unknown,
@@ -79,84 +70,61 @@ export function createFetchMachine<
     FetchMachineState<ResponseData, ResponseError>
   >;
 }) {
+  const assignData = assign((_: any, event: { data: ResponseData }) => ({
+    data: event.data,
+    error: undefined,
+  }));
+
+  const assignError = assign((_: any, event: { data: ResponseError }) => ({
+    error: event.data,
+  }));
+
   return createMachine<
     FetchMachineContext<ResponseData, ResponseError>,
     FetchMachineEvent<RequestData, ResponseData, ResponseError>,
     FetchMachineState<ResponseData, ResponseError>
-  >(
-    {
-      id: config.id,
-      initial: FetchMachineStateValue.Idle,
-      states: {
-        [FetchMachineStateValue.Idle]: {
-          on: {
-            [FetchMachineEventType.Fetch]: FetchMachineStateValue.Pending,
+  >({
+    id: config.id,
+    initial: FetchMachineStateValue.Idle,
+    states: {
+      [FetchMachineStateValue.Idle]: {
+        on: {
+          [FetchMachineEventType.Fetch]: FetchMachineStateValue.Pending,
+        },
+      },
+
+      [FetchMachineStateValue.Pending]: {
+        on: {
+          [FetchMachineEventType.Fetch]: FetchMachineStateValue.Pending,
+          [FetchMachineEventType.ReceiveDataSuccess]: {
+            target: FetchMachineStateValue.Success,
+            actions: assignData,
+          },
+          [FetchMachineEventType.ReceiveDataFailure]: {
+            target: FetchMachineStateValue.Failure,
+            actions: assignError,
           },
         },
-
-        [FetchMachineStateValue.Pending]: {
-          on: {
-            [FetchMachineEventType.Fetch]: FetchMachineStateValue.Pending,
-            [FetchMachineEventType.ReceiveDataSuccess]: {
-              target: FetchMachineStateValue.Success,
-              actions: FetchMachineAction.AssignData,
-            },
-            [FetchMachineEventType.ReceiveDataFailure]: {
-              target: FetchMachineStateValue.Failure,
-              actions: FetchMachineAction.AssignError,
-            },
-          },
-          invoke: {
-            src: FetchMachineService.FetchData,
-            onDone: {
-              target: FetchMachineStateValue.Success,
-              actions: FetchMachineAction.AssignData,
-            },
-            onError: {
-              target: FetchMachineStateValue.Failure,
-              actions: FetchMachineAction.AssignError,
-            },
+        invoke: {
+          src: config.fetcher,
+          onError: {
+            target: FetchMachineStateValue.Failure,
+            actions: assignError,
           },
         },
+      },
 
-        [FetchMachineStateValue.Success]: {
-          on: {
-            [FetchMachineEventType.Fetch]: FetchMachineStateValue.Pending,
-          },
+      [FetchMachineStateValue.Success]: {
+        on: {
+          [FetchMachineEventType.Fetch]: FetchMachineStateValue.Pending,
         },
+      },
 
-        [FetchMachineStateValue.Failure]: {
-          on: {
-            [FetchMachineEventType.Fetch]: FetchMachineStateValue.Pending,
-          },
+      [FetchMachineStateValue.Failure]: {
+        on: {
+          [FetchMachineEventType.Fetch]: FetchMachineStateValue.Pending,
         },
       },
     },
-    {
-      services: {
-        [FetchMachineService.FetchData]: config.fetcher,
-      },
-      actions: {
-        [FetchMachineAction.AssignData]: assign((_, event) => {
-          if (event.type !== FetchMachineEventType.ReceiveDataSuccess) {
-            return {};
-          }
-
-          return {
-            data: event.data,
-            error: undefined,
-          };
-        }),
-        [FetchMachineAction.AssignError]: assign((_, event) => {
-          if (event.type !== FetchMachineEventType.ReceiveDataFailure) {
-            return {};
-          }
-
-          return {
-            error: event.data,
-          };
-        }),
-      },
-    }
-  );
+  });
 }
