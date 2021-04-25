@@ -13,7 +13,7 @@ export function ApiServicesProvider({ children }: { children: ReactNode }) {
 
   const services: ApiServices = useMemo(
     () => ({
-      authService: createAuthService(api),
+      authService: createAuthService({ api }),
     }),
     [api]
   );

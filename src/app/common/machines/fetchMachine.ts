@@ -1,4 +1,4 @@
-import { createMachine, assign, InvokeCreator } from 'xstate';
+import { createMachine, assign, InvokeCreator, StateMachine } from 'xstate';
 
 export type FetchMachineContext<ResponseData, ResponseError> = {
   data?: ResponseData;
@@ -58,6 +58,13 @@ export type FetchMachineState<ResponseData, ResponseError> =
       };
     };
 
+export type FetchMachine<RequestData, ResponseData, ResponseError> = StateMachine<
+  FetchMachineContext<ResponseData, ResponseError>,
+  any,
+  FetchMachineEvent<RequestData, ResponseData, ResponseError>,
+  FetchMachineState<ResponseData, ResponseError>
+>;
+
 export function createFetchMachine<
   RequestData = unknown,
   ResponseData = unknown,
@@ -69,7 +76,7 @@ export function createFetchMachine<
     FetchMachineEvent<RequestData, ResponseData, ResponseError>,
     FetchMachineState<ResponseData, ResponseError>
   >;
-}) {
+}): FetchMachine<RequestData, ResponseData, ResponseError> {
   const assignData = assign((_: any, event: { data: ResponseData }) => ({
     data: event.data,
     error: undefined,
@@ -79,11 +86,7 @@ export function createFetchMachine<
     error: event.data,
   }));
 
-  return createMachine<
-    FetchMachineContext<ResponseData, ResponseError>,
-    FetchMachineEvent<RequestData, ResponseData, ResponseError>,
-    FetchMachineState<ResponseData, ResponseError>
-  >({
+  return createMachine({
     id: config.id,
     initial: FetchMachineStateValue.Idle,
     states: {

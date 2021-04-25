@@ -23,7 +23,7 @@ export function useLoginCard() {
 function useLoginMachine() {
   const { authService } = useApiServices();
 
-  const loginMachine = useMemo(() => createLoginMachine(authService), [authService]);
+  const loginMachine = useMemo(() => createLoginMachine({ authService }), [authService]);
 
   return useMachine(loginMachine, { devTools: process.env.NODE_ENV === 'development' });
 }
