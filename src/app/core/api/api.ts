@@ -1,7 +1,8 @@
-import { Observable } from 'rxjs';
-import { ajax, AjaxRequest } from 'rxjs/ajax';
-import { map } from 'rxjs/operators';
-import { ApiResponse, AppliedInterceptor, Interceptor, ApiClient } from './api.types';
+import { Observable, of } from 'rxjs';
+import { ajax, AjaxError, AjaxRequest } from 'rxjs/ajax';
+import { catchError, map } from 'rxjs/operators';
+import { AppliedInterceptor, Interceptor, ApiClient, ApiResponseEither } from './api.types';
+import { left, right } from 'fp-ts/lib/Either';
 
 export function createApiClient(interceptors: Interceptor[] = []): ApiClient {
   const call = applyInterceptors(interceptors);
@@ -16,8 +17,11 @@ export function createApiClient(interceptors: Interceptor[] = []): ApiClient {
   };
 }
 
-const ajaxRequest = <T>(data: AjaxRequest): Observable<ApiResponse<T>> =>
-  ajax(data).pipe(map((response) => ({ status: response.status, body: response.response })));
+const ajaxRequest = <Data>(data: AjaxRequest): Observable<ApiResponseEither<Data>> =>
+  ajax(data).pipe(
+    map((response) => left({ status: response.status, body: response.response })),
+    catchError((error: AjaxError) => of(right({ status: error.status, body: error.response })))
+  );
 
 function applyInterceptors(interceptors: Interceptor[]) {
   return interceptors.reduceRight<AppliedInterceptor>(

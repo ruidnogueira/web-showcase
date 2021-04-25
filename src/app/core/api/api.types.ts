@@ -1,36 +1,54 @@
+import { Either } from 'fp-ts/lib/Either';
 import { Observable } from 'rxjs';
 import { AjaxRequest } from 'rxjs/ajax';
 
-export interface ApiResponse<T> {
+export interface ApiResponse<T = unknown> {
   status: number;
   body: T;
 }
 
-export type AppliedInterceptor = <T>(data: AjaxRequest) => Observable<ApiResponse<T>>;
+export interface ApiErrorResponse {
+  status: number;
+  body: any;
+}
 
-export type Interceptor = <T>(
+export type ApiResponseEither<ResponseData = unknown> = Either<
+  ApiErrorResponse,
+  ApiResponse<ResponseData>
+>;
+
+export type AppliedInterceptor = <Data>(data: AjaxRequest) => Observable<ApiResponseEither<Data>>;
+
+export type Interceptor = <Data>(
   data: AjaxRequest,
   next: AppliedInterceptor
-) => Observable<ApiResponse<T>>;
+) => Observable<ApiResponseEither<Data>>;
 
 export interface ApiClient {
-  call: <T>(data: AjaxRequest) => Observable<ApiResponse<T>>;
+  call: <Data>(data: AjaxRequest) => Observable<ApiResponseEither<Data>>;
 
-  get: <T>(url: string, headers?: AjaxRequest['headers']) => Observable<ApiResponse<T>>;
+  get: <Data>(url: string, headers?: AjaxRequest['headers']) => Observable<ApiResponseEither<Data>>;
 
-  post: <T>(
+  post: <Data>(
     url: string,
     body?: any,
     headers?: AjaxRequest['headers']
-  ) => Observable<ApiResponse<T>>;
+  ) => Observable<ApiResponseEither<Data>>;
 
-  put: <T>(url: string, body?: any, headers?: AjaxRequest['headers']) => Observable<ApiResponse<T>>;
-
-  patch: <T>(
+  put: <Data>(
     url: string,
     body?: any,
     headers?: AjaxRequest['headers']
-  ) => Observable<ApiResponse<T>>;
+  ) => Observable<ApiResponseEither<Data>>;
 
-  delete: <T>(url: string, headers?: AjaxRequest['headers']) => Observable<ApiResponse<T>>;
+  patch: <Data>(
+    url: string,
+    body?: any,
+    headers?: AjaxRequest['headers']
+  ) => Observable<ApiResponseEither<Data>>;
+
+  delete: <Data>(
+    url: string,
+    headers?: AjaxRequest['headers']
+  ) => Observable<ApiResponseEither<Data>>;
 }
