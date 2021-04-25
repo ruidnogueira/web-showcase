@@ -12,18 +12,24 @@ export enum FetchMachineEventType {
 }
 
 export type FetchMachineEvent<RequestData, ResponseData, ResponseError> =
-  | {
-      type: FetchMachineEventType.Fetch;
-      data: RequestData;
-    }
-  | {
-      type: FetchMachineEventType.ReceiveDataSuccess;
-      data: ResponseData;
-    }
-  | {
-      type: FetchMachineEventType.ReceiveDataFailure;
-      data: ResponseError;
-    };
+  | FetchEvent<RequestData>
+  | ReceiveDataSuccessEvent<ResponseData>
+  | ReceiveDataFailureEvent<ResponseError>;
+
+interface FetchEvent<RequestData> {
+  type: FetchMachineEventType.Fetch;
+  data: RequestData;
+}
+
+interface ReceiveDataSuccessEvent<ResponseData> {
+  type: FetchMachineEventType.ReceiveDataSuccess;
+  data: ResponseData;
+}
+
+interface ReceiveDataFailureEvent<ResponseError> {
+  type: FetchMachineEventType.ReceiveDataFailure;
+  data: ResponseError;
+}
 
 export enum FetchMachineStateValue {
   Idle = 'idle',
@@ -73,7 +79,7 @@ export function createFetchMachine<
   id: string;
   fetcher: InvokeCreator<
     FetchMachineContext<ResponseData, ResponseError>,
-    FetchMachineEvent<RequestData, ResponseData, ResponseError>,
+    FetchEvent<RequestData>,
     FetchMachineState<ResponseData, ResponseError>
   >;
 }): FetchMachine<RequestData, ResponseData, ResponseError> {
@@ -109,7 +115,10 @@ export function createFetchMachine<
           },
         },
         invoke: {
-          src: config.fetcher,
+          src: (context, event, meta) =>
+            event.type === FetchMachineEventType.Fetch
+              ? config.fetcher(context, event, meta)
+              : () => {},
           onError: {
             target: FetchMachineStateValue.Failure,
             actions: assignError,

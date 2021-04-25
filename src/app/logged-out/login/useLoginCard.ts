@@ -1,14 +1,14 @@
 import { useMachine } from '@xstate/react';
-import { FetchMachineStateValue } from 'app/common/machines/fetchMachine';
+import { FetchMachineEventType, FetchMachineStateValue } from 'app/common/machines/fetchMachine';
 import { useApiServices } from 'app/core/api/services/ApiServicesProvider';
 import { AuthMachineEventType } from 'app/core/auth/authMachine';
 import { useAuthMachine } from 'app/core/auth/AuthMachineProvider';
-import { useEffect, useMemo } from 'react';
+import { FormEvent, useEffect, useMemo } from 'react';
 import { createLoginMachine } from './loginMachine';
 
 export function useLoginCard() {
   const [, sendAuthEvent] = useAuthMachine();
-  const [loginState] = useLoginMachine();
+  const [loginState, sendLoginEvent] = useLoginMachine();
 
   useEffect(() => {
     if (loginState.matches(FetchMachineStateValue.Success)) {
@@ -17,7 +17,13 @@ export function useLoginCard() {
     }
   }, [loginState, sendAuthEvent]);
 
-  return { error: loginState.context.error };
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    // TODO ANY
+    sendLoginEvent({ type: FetchMachineEventType.Fetch, data: {} as any });
+  };
+
+  return { error: loginState.context.error, handleSubmit };
 }
 
 function useLoginMachine() {

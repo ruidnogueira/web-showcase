@@ -19,8 +19,8 @@ export function createApiClient(interceptors: Interceptor[] = []): ApiClient {
 
 const ajaxRequest = <Data>(data: AjaxRequest): Observable<ApiResponseEither<Data>> =>
   ajax(data).pipe(
-    map((response) => left({ status: response.status, body: response.response })),
-    catchError((error: AjaxError) => of(right({ status: error.status, body: error.response })))
+    map((response) => right({ status: response.status, body: response.response })),
+    catchError((error: AjaxError) => of(left({ status: error.status, body: error.response })))
   );
 
 function applyInterceptors(interceptors: Interceptor[]) {

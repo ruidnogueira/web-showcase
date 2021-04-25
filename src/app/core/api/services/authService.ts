@@ -7,7 +7,7 @@ export interface AuthService {
   login: (user: ApiCreateAuthTokenRequest) => Observable<ApiResponseEither<ApiAuthToken>>;
 }
 
-const apiPath = process.env.REACT_APP_API_PATH;
+const apiPath = process.env.PUBLIC_URL + process.env.REACT_APP_API_PATH;
 
 export const createAuthService: Reader<{ api: ApiClient }, AuthService> = ({ api }) => ({
   login: (user) => api.post(apiPath + '/auth-token', user),

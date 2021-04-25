@@ -10,6 +10,7 @@ import sharedStyles from '../LoggedOutShared.module.scss';
 import classNames from 'classnames';
 import { LoginMachineError } from './loginMachine';
 import { useLoginCard } from './useLoginCard';
+import { FormEvent } from 'react';
 
 export interface LoginCardProps {
   className?: string;
@@ -18,11 +19,13 @@ export interface LoginCardProps {
 export interface LoginCardPresentationProps extends LoginCardProps {
   error?: LoginMachineError;
   isSubmitting?: boolean;
+  onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
 
 export function LoginCard(props: LoginCardProps) {
-  const { error } = useLoginCard();
-  return <LoginCardPresentation {...props} error={error} />;
+  const { error, handleSubmit } = useLoginCard();
+
+  return <LoginCardPresentation {...props} error={error} onSubmit={handleSubmit} />;
 }
 
 const prefix = 'login_card-';
@@ -36,6 +39,7 @@ export function LoginCardPresentation({
   className,
   error,
   isSubmitting,
+  onSubmit,
 }: LoginCardPresentationProps) {
   const { constants } = useConfig();
   const { t } = useTranslation();
@@ -44,7 +48,7 @@ export function LoginCardPresentation({
     <div className={classNames(styles.card, className)}>
       <h1 className={sharedStyles.title}>{t('pages.login.title')}</h1>
 
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={onSubmit}>
         {error === LoginMachineError.Invalid && (
           <ErrorMessage message={t('pages.login.errors.invalidLogin')} />
         )}
