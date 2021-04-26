@@ -1,4 +1,8 @@
-import { createMachine, send } from 'xstate';
+import { getFromLocalStorage, saveToLocalStorage } from 'app/common/utils/browser.util';
+import { Reader } from 'fp-ts/lib/Reader';
+import { createMachine, send, StateMachine } from 'xstate';
+import { StorageKeys } from 'app/core/configs/storage.config';
+import { ApiAuthToken } from '../models/auth.model';
 
 export type AuthMachineContext = {};
 
@@ -11,7 +15,12 @@ export enum AuthMachineEventType {
 export type AuthMachineEvent =
   | { type: AuthMachineEventType.CheckIfLoggedIn }
   | { type: AuthMachineEventType.Logout }
-  | { type: AuthMachineEventType.Login };
+  | LoginEvent;
+
+interface LoginEvent {
+  type: AuthMachineEventType.Login;
+  data: ApiAuthToken;
+}
 
 export enum AuthMachineStateValue {
   CheckingIfLoggedIn = 'checkingIfLoggedIn',
@@ -24,12 +33,18 @@ export type AuthMachineState = {
   context: {};
 };
 
-export enum AuthMachineGuard {
-  IsLoggedIn = 'isLoggedIn',
-}
+export const createAuthMachine: Reader<
+  { storageKeys: StorageKeys },
+  StateMachine<AuthMachineContext, any, AuthMachineEvent, AuthMachineState>
+> = ({ storageKeys }) => {
+  const storeToken = (_: any, event: LoginEvent) =>
+    saveToLocalStorage(storageKeys.authToken, event.data);
 
-export const authMachine = createMachine<AuthMachineContext, AuthMachineEvent, AuthMachineState>(
-  {
+  const clearToken = () => localStorage.removeItem(storageKeys.authToken);
+
+  const isLoggedIn = () => Boolean(getFromLocalStorage<ApiAuthToken>(storageKeys.authToken));
+
+  return createMachine({
     id: 'auth',
     initial: AuthMachineStateValue.CheckingIfLoggedIn,
     states: {
@@ -38,7 +53,7 @@ export const authMachine = createMachine<AuthMachineContext, AuthMachineEvent, A
           [AuthMachineEventType.CheckIfLoggedIn]: [
             {
               target: AuthMachineStateValue.LoggedIn,
-              cond: AuthMachineGuard.IsLoggedIn,
+              cond: isLoggedIn,
             },
             { target: AuthMachineStateValue.LoggedOut },
           ],
@@ -48,22 +63,21 @@ export const authMachine = createMachine<AuthMachineContext, AuthMachineEvent, A
 
       [AuthMachineStateValue.LoggedIn]: {
         on: {
-          [AuthMachineEventType.Logout]: AuthMachineStateValue.LoggedOut,
+          [AuthMachineEventType.Logout]: {
+            target: AuthMachineStateValue.LoggedOut,
+            actions: clearToken,
+          },
         },
       },
 
       [AuthMachineStateValue.LoggedOut]: {
         on: {
-          [AuthMachineEventType.Login]: AuthMachineStateValue.LoggedIn,
+          [AuthMachineEventType.Login]: {
+            target: AuthMachineStateValue.LoggedIn,
+            actions: storeToken,
+          },
         },
       },
     },
-  },
-  {
-    guards: {
-      [AuthMachineGuard.IsLoggedIn]: () => {
-        return false; // TODO
-      },
-    },
-  }
-);
+  });
+};

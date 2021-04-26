@@ -1,18 +1,22 @@
-import { createContext, ReactNode, useContext } from 'react';
+import { createContext, ReactNode, useContext, useMemo } from 'react';
 import { useMachine, useService } from '@xstate/react';
 import { Interpreter } from 'xstate';
 import {
-  authMachine,
   AuthMachineContext as MachineContext,
   AuthMachineEvent,
   AuthMachineState,
+  createAuthMachine,
 } from './authMachine';
+import { useConfig } from '../configs/ConfigProvider';
 
 const AuthMachineContext = createContext<
   Interpreter<MachineContext, any, AuthMachineEvent, AuthMachineState> | undefined
 >(undefined);
 
 export function AuthMachineProvider({ children }: { children: ReactNode }) {
+  const { storageKeys } = useConfig();
+
+  const authMachine = useMemo(() => createAuthMachine({ storageKeys }), [storageKeys]);
   const [, , service] = useMachine(authMachine, {
     devTools: process.env.NODE_ENV === 'development',
   });

@@ -12,8 +12,7 @@ export function useLoginCard() {
 
   useEffect(() => {
     if (loginState.matches(FetchMachineStateValue.Success)) {
-      // TODO DATA
-      sendAuthEvent({ type: AuthMachineEventType.Login });
+      sendAuthEvent({ type: AuthMachineEventType.Login, data: loginState.context.data });
     }
   }, [loginState, sendAuthEvent]);
 
