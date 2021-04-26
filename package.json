@@ -97,9 +97,17 @@
     "extends": [
       "react-app",
       "react-app/jest",
+      "plugin:jest/recommended",
+      "plugin:jest/style",
       "plugin:jsx-a11y/recommended"
     ],
     "rules": {
+      "jest/consistent-test-it": [
+        "error",
+        {
+          "fn": "test"
+        }
+      ],
       "jsx-a11y/no-onchange": "off",
       "jsx-a11y/html-has-lang": "off"
     },

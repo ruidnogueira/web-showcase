@@ -11,7 +11,7 @@ const setup = () => {
   const i18nMock = createI18nMock();
   i18nMock.changeLanguage('en-GB');
 
-  render(
+  const result = render(
     <ConfigProvider
       config={{
         i18nConfig: {
@@ -30,11 +30,12 @@ const setup = () => {
     </ConfigProvider>
   );
 
-  return { i18nMock };
+  return { ...result, i18nMock };
 };
 
 test('renders', () => {
-  setup();
+  const { container } = setup();
+  expect(container).toBeInTheDocument();
 });
 
 test('changes language when new option is selected', async () => {

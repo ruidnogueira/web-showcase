@@ -2,5 +2,6 @@ import { render } from '@testing-library/react';
 import { Label } from './Label';
 
 test('renders', () => {
-  render(<Label>label text</Label>);
+  const { container } = render(<Label>label text</Label>);
+  expect(container).toBeInTheDocument();
 });
