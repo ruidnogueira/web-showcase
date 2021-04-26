@@ -1,5 +1,8 @@
 {
-  "appWorking": "App is working!",
+  "actions": {},
+  "states": {
+    "loading": "Loading"
+  },
   "pages": {
     "login": {
       "title": "Login",

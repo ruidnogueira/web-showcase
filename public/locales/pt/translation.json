@@ -1,5 +1,8 @@
 {
-  "appWorking": "Aplicação funciona!",
+  "actions": {},
+  "states": {
+    "loading": "A carregar"
+  },
   "pages": {
     "login": {
       "title": "Inicia sessão",
