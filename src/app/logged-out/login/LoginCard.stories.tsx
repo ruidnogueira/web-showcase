@@ -13,7 +13,11 @@ export default {
       options: [undefined, ...Object.values(LoginMachineError)],
     },
   },
-  args: {},
+  args: {
+    values: { email: '', password: '' },
+    onChange: () => {},
+    onSubmit: () => {},
+  },
   parameters: {
     docs: {
       source: {

@@ -9,27 +9,31 @@ import styles from './LoginCard.module.scss';
 import sharedStyles from '../LoggedOutShared.module.scss';
 import classNames from 'classnames';
 import { LoginMachineError } from './loginMachine';
-import { useLoginCard } from './useLoginCard';
-import { FormEvent } from 'react';
+import { LoginForm, useLoginCard } from './useLoginCard';
+import { ChangeEvent, FormEvent } from 'react';
 
 export interface LoginCardProps {
   className?: string;
 }
 
 export interface LoginCardPresentationProps extends LoginCardProps {
+  values: LoginForm;
   error?: LoginMachineError;
   isSubmitting?: boolean;
+  onChange: (event: ChangeEvent<HTMLElement>) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
 }
 
 export function LoginCard(props: LoginCardProps) {
-  const { isSubmitting, error, handleSubmit } = useLoginCard();
+  const { isSubmitting, error, values, handleChange, handleSubmit } = useLoginCard();
 
   return (
     <LoginCardPresentation
       {...props}
       isSubmitting={isSubmitting}
       error={error}
+      values={values}
+      onChange={handleChange}
       onSubmit={handleSubmit}
     />
   );
@@ -46,6 +50,8 @@ export function LoginCardPresentation({
   className,
   error,
   isSubmitting,
+  values,
+  onChange,
   onSubmit,
 }: LoginCardPresentationProps) {
   const { constants } = useConfig();
@@ -72,6 +78,8 @@ export function LoginCardPresentation({
             className="input"
             maxLength={constants.defaultInputMaxLength}
             disabled={isSubmitting}
+            value={values.email}
+            onChange={onChange}
           />
         </Field>
 
@@ -84,6 +92,8 @@ export function LoginCardPresentation({
             className="input"
             maxLength={constants.defaultInputMaxLength}
             disabled={isSubmitting}
+            value={values.password}
+            onChange={onChange}
           />
         </Field>
 

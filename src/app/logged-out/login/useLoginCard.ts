@@ -3,8 +3,14 @@ import { FetchMachineEventType, FetchMachineStateValue } from 'app/common/machin
 import { useApiServices } from 'app/core/api/services/ApiServicesProvider';
 import { AuthMachineEventType } from 'app/core/auth/authMachine';
 import { useAuthMachine } from 'app/core/auth/AuthMachineProvider';
-import { FormEvent, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { createLoginMachine } from './loginMachine';
+import { useFormik } from 'formik';
+
+export interface LoginForm {
+  email: string;
+  password: string;
+}
 
 export function useLoginCard() {
   const [, sendAuthEvent] = useAuthMachine();
@@ -16,15 +22,20 @@ export function useLoginCard() {
     }
   }, [loginState, sendAuthEvent]);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    // TODO ANY
-    sendLoginEvent({ type: FetchMachineEventType.Fetch, data: {} as any });
-  };
+  const { handleSubmit, handleChange, values } = useFormik<LoginForm>({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+
+    onSubmit: (values) => {
+      sendLoginEvent({ type: FetchMachineEventType.Fetch, data: values });
+    },
+  });
 
   const isSubmitting = loginState.matches(FetchMachineStateValue.Pending);
 
-  return { isSubmitting, error: loginState.context.error, handleSubmit };
+  return { isSubmitting, error: loginState.context.error, values, handleChange, handleSubmit };
 }
 
 function useLoginMachine() {
