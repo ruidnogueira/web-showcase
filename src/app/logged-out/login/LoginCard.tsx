@@ -23,9 +23,16 @@ export interface LoginCardPresentationProps extends LoginCardProps {
 }
 
 export function LoginCard(props: LoginCardProps) {
-  const { error, handleSubmit } = useLoginCard();
+  const { isSubmitting, error, handleSubmit } = useLoginCard();
 
-  return <LoginCardPresentation {...props} error={error} onSubmit={handleSubmit} />;
+  return (
+    <LoginCardPresentation
+      {...props}
+      isSubmitting={isSubmitting}
+      error={error}
+      onSubmit={handleSubmit}
+    />
+  );
 }
 
 const prefix = 'login_card-';

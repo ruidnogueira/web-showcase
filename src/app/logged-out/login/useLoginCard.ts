@@ -23,7 +23,9 @@ export function useLoginCard() {
     sendLoginEvent({ type: FetchMachineEventType.Fetch, data: {} as any });
   };
 
-  return { error: loginState.context.error, handleSubmit };
+  const isSubmitting = loginState.matches(FetchMachineStateValue.Pending);
+
+  return { isSubmitting, error: loginState.context.error, handleSubmit };
 }
 
 function useLoginMachine() {
