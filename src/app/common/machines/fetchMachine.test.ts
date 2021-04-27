@@ -25,7 +25,7 @@ describe(`${FetchMachineStateValue.Pending}`, () => {
 
     const service = interpret(machine).start();
 
-    service.send({ type: FetchMachineEventType.Fetch });
+    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
@@ -46,7 +46,7 @@ describe(`${FetchMachineStateValue.Success}`, () => {
   test('reaches state', () => {
     const { service } = setup();
 
-    service.send({ type: FetchMachineEventType.Fetch });
+    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
     service.send({ type: FetchMachineEventType.ReceiveDataSuccess, data: undefined });
 
     expect(service.state.matches(FetchMachineStateValue.Success)).toBe(true);
@@ -56,7 +56,7 @@ describe(`${FetchMachineStateValue.Success}`, () => {
     const response = chance.sentence();
     const { service } = setup();
 
-    service.send({ type: FetchMachineEventType.Fetch });
+    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
     service.send({ type: FetchMachineEventType.ReceiveDataSuccess, data: response });
 
     expect(service.state.context.data).toBe(response);
@@ -66,9 +66,9 @@ describe(`${FetchMachineStateValue.Success}`, () => {
     const error = new Error();
     const { service } = setup();
 
-    service.send({ type: FetchMachineEventType.Fetch });
+    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
     service.send({ type: FetchMachineEventType.ReceiveDataFailure, data: error });
-    service.send({ type: FetchMachineEventType.Fetch });
+    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
     service.send({ type: FetchMachineEventType.ReceiveDataSuccess, data: undefined });
 
     expect(service.state.context.error).toBeUndefined();
@@ -90,7 +90,7 @@ describe(`${FetchMachineStateValue.Failure}`, () => {
   test('reaches state', () => {
     const { service } = setup();
 
-    service.send({ type: FetchMachineEventType.Fetch });
+    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
     service.send({ type: FetchMachineEventType.ReceiveDataFailure, data: new Error() });
 
     expect(service.state.matches(FetchMachineStateValue.Failure)).toBe(true);
@@ -100,7 +100,7 @@ describe(`${FetchMachineStateValue.Failure}`, () => {
     const error = new Error();
     const { service } = setup();
 
-    service.send({ type: FetchMachineEventType.Fetch });
+    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
     service.send({ type: FetchMachineEventType.ReceiveDataFailure, data: error });
 
     expect(service.state.context.error).toBe(error);

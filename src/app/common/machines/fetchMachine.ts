@@ -29,7 +29,7 @@ export type FetchMachineEvent<
 
 interface FetchEvent<RequestData> {
   type: FetchMachineEventType.Fetch;
-  data?: RequestData;
+  data: RequestData;
 }
 
 interface ReceiveDataSuccessEvent<ResponseData> {
@@ -65,6 +65,7 @@ export type FetchMachineState<ResponseData, ResponseError> =
       value: FetchMachineStateValue.Success;
       context: {
         data: ResponseData;
+        error?: undefined;
       };
     }
   | {
@@ -102,7 +103,7 @@ export function createFetchMachine<
     error: event.data,
   }));
 
-  const clearError = assign(() => ({
+  const clearError = assign((_: any) => ({
     error: undefined,
   }));
 
