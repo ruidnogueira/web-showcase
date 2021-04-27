@@ -1,6 +1,13 @@
 import { createMachine, assign, InvokeCreator, StateMachine } from 'xstate';
 
-export type FetchMachineContext<ResponseData, ResponseError> = {
+type DefaultRequestData = unknown;
+type DefaultResponseData = unknown;
+type DefaultResponseError = Error;
+
+export type FetchMachineContext<
+  ResponseData = DefaultResponseData,
+  ResponseError = DefaultResponseError
+> = {
   data?: ResponseData;
   error?: ResponseError;
 };
@@ -11,14 +18,18 @@ export enum FetchMachineEventType {
   ReceiveDataFailure = 'RECEIVE_DATA_ERROR',
 }
 
-export type FetchMachineEvent<RequestData, ResponseData, ResponseError> =
+export type FetchMachineEvent<
+  RequestData = DefaultRequestData,
+  ResponseData = DefaultResponseData,
+  ResponseError = DefaultResponseError
+> =
   | FetchEvent<RequestData>
   | ReceiveDataSuccessEvent<ResponseData>
   | ReceiveDataFailureEvent<ResponseError>;
 
 interface FetchEvent<RequestData> {
   type: FetchMachineEventType.Fetch;
-  data: RequestData;
+  data?: RequestData;
 }
 
 interface ReceiveDataSuccessEvent<ResponseData> {
@@ -72,9 +83,9 @@ export type FetchMachine<RequestData, ResponseData, ResponseError> = StateMachin
 >;
 
 export function createFetchMachine<
-  RequestData = unknown,
-  ResponseData = unknown,
-  ResponseError = Error
+  RequestData = DefaultRequestData,
+  ResponseData = DefaultResponseData,
+  ResponseError = DefaultResponseError
 >(config: {
   id: string;
   fetcher: InvokeCreator<
@@ -85,16 +96,20 @@ export function createFetchMachine<
 }): FetchMachine<RequestData, ResponseData, ResponseError> {
   const assignData = assign((_: any, event: { data: ResponseData }) => ({
     data: event.data,
-    error: undefined,
   }));
 
   const assignError = assign((_: any, event: { data: ResponseError }) => ({
     error: event.data,
   }));
 
+  const clearError = assign(() => ({
+    error: undefined,
+  }));
+
   return createMachine({
     id: config.id,
     initial: FetchMachineStateValue.Idle,
+    context: {},
     states: {
       [FetchMachineStateValue.Idle]: {
         on: {
@@ -107,7 +122,7 @@ export function createFetchMachine<
           [FetchMachineEventType.Fetch]: FetchMachineStateValue.Pending,
           [FetchMachineEventType.ReceiveDataSuccess]: {
             target: FetchMachineStateValue.Success,
-            actions: assignData,
+            actions: [assignData, clearError],
           },
           [FetchMachineEventType.ReceiveDataFailure]: {
             target: FetchMachineStateValue.Failure,

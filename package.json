@@ -108,6 +108,7 @@
           "fn": "test"
         }
       ],
+      "jest/prefer-called-with": "warn",
       "jsx-a11y/no-onchange": "off",
       "jsx-a11y/html-has-lang": "off"
     },
