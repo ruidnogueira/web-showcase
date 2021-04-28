@@ -8,9 +8,9 @@ import { useTranslation } from 'react-i18next';
 import styles from './LoginCard.module.scss';
 import sharedStyles from '../LoggedOutShared.module.scss';
 import classNames from 'classnames';
-import { LoginMachineError } from './loginMachine';
-import { LoginForm, useLoginCard } from './useLoginCard';
+import { useLoginCard } from './useLoginCard';
 import { ChangeEvent, FormEvent } from 'react';
+import { LoginError, LoginForm } from './login.types';
 
 export interface LoginCardProps {
   className?: string;
@@ -18,7 +18,7 @@ export interface LoginCardProps {
 
 export interface LoginCardPresentationProps extends LoginCardProps {
   values: LoginForm;
-  error?: LoginMachineError;
+  error?: LoginError;
   isSubmitting?: boolean;
   onChange: (event: ChangeEvent<HTMLElement>) => void;
   onSubmit: (event: FormEvent<HTMLFormElement>) => void;
@@ -62,10 +62,10 @@ export function LoginCardPresentation({
       <h1 className={sharedStyles.title}>{t('pages.login.title')}</h1>
 
       <form className={styles.form} onSubmit={onSubmit}>
-        {error === LoginMachineError.Invalid && (
+        {error === LoginError.Invalid && (
           <ErrorMessage message={t('pages.login.errors.invalidLogin')} />
         )}
-        {error === LoginMachineError.Unexpected && (
+        {error === LoginError.Unexpected && (
           <ErrorMessage message={t('pages.login.errors.unexpected')} />
         )}
 

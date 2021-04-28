@@ -9,15 +9,11 @@ import { Reader } from 'fp-ts/lib/Reader';
 import { map } from 'rxjs/operators';
 import * as E from 'fp-ts/lib/Either';
 import { pipe } from 'fp-ts/lib/function';
-
-export enum LoginMachineError {
-  Invalid = 'INVALID',
-  Unexpected = 'UNEXPECTED',
-}
+import { LoginError } from './login.types';
 
 export const createLoginMachine: Reader<
   { authService: AuthService },
-  FetchMachine<ApiCreateAuthTokenRequest, ApiAuthToken, LoginMachineError>
+  FetchMachine<ApiCreateAuthTokenRequest, ApiAuthToken, LoginError>
 > = ({ authService }) => {
   return createFetchMachine({
     id: 'login',
@@ -31,8 +27,7 @@ export const createLoginMachine: Reader<
             E.match(
               (error) => ({
                 type: FetchMachineEventType.ReceiveDataFailure,
-                data:
-                  error.status === 401 ? LoginMachineError.Invalid : LoginMachineError.Unexpected,
+                data: error.status === 401 ? LoginError.Invalid : LoginError.Unexpected,
               }),
 
               (response) => ({

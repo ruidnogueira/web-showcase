@@ -5,12 +5,8 @@ import { AuthMachineEventType } from 'app/core/auth/authMachine';
 import { useAuthMachine } from 'app/core/auth/AuthMachineProvider';
 import { useEffect, useMemo } from 'react';
 import { createLoginMachine } from './loginMachine';
-import { useFormik } from 'formik';
-
-export interface LoginForm {
-  email: string;
-  password: string;
-}
+import { FormikErrors, useFormik } from 'formik';
+import { LoginError, LoginForm } from './login.types';
 
 export function useLoginCard() {
   const [, sendAuthEvent] = useAuthMachine();
@@ -22,20 +18,45 @@ export function useLoginCard() {
     }
   }, [loginState, sendAuthEvent]);
 
-  const { handleSubmit, handleChange, values } = useFormik<LoginForm>({
+  const { handleSubmit, handleChange, values, errors } = useFormik<LoginForm>({
     initialValues: {
       email: '',
       password: '',
     },
+
+    validate: (values): FormikErrors<LoginForm> => {
+      const errors: FormikErrors<LoginForm> = {};
+
+      if (!values.email) {
+        errors.email = 'required';
+      }
+
+      if (!values.password) {
+        errors.password = 'required';
+      }
+
+      return errors;
+    },
+
+    validateOnChange: false,
+    validateOnBlur: false,
 
     onSubmit: (values) => {
       sendLoginEvent({ type: FetchMachineEventType.Fetch, data: values });
     },
   });
 
+  const formError = Object.keys(errors).length > 0 ? LoginError.Invalid : undefined;
+
   const isSubmitting = loginState.matches(FetchMachineStateValue.Pending);
 
-  return { isSubmitting, error: loginState.context.error, values, handleChange, handleSubmit };
+  return {
+    isSubmitting,
+    error: formError ?? loginState.context.error,
+    values,
+    handleChange,
+    handleSubmit,
+  };
 }
 
 function useLoginMachine() {
