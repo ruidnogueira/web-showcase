@@ -1,4 +1,4 @@
 import { setupWorker } from 'msw';
-import { mockLoginRequest } from './handlers.mock';
+import { handleLoginRequest } from './handlers.mock';
 
-export const worker = setupWorker(mockLoginRequest({ delay: 1000 }));
+export const worker = setupWorker(handleLoginRequest({ delay: 1000 }));

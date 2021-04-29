@@ -13,15 +13,25 @@ const AuthMachineContext = createContext<
   Interpreter<MachineContext, any, AuthMachineEvent, AuthMachineState> | undefined
 >(undefined);
 
-export function AuthMachineProvider({ children }: { children: ReactNode }) {
+export function AuthMachineProvider({
+  children,
+  service,
+}: {
+  children: ReactNode;
+  service?: Interpreter<MachineContext, any, AuthMachineEvent, AuthMachineState>;
+}) {
   const { storageKeys } = useConfig();
 
   const authMachine = useMemo(() => createAuthMachine({ storageKeys }), [storageKeys]);
-  const [, , service] = useMachine(authMachine, {
+  const [, , defaultService] = useMachine(authMachine, {
     devTools: process.env.NODE_ENV === 'development',
   });
 
-  return <AuthMachineContext.Provider value={service}>{children}</AuthMachineContext.Provider>;
+  return (
+    <AuthMachineContext.Provider value={service ?? defaultService}>
+      {children}
+    </AuthMachineContext.Provider>
+  );
 }
 
 export function useAuthMachine() {

@@ -109,6 +109,7 @@
         }
       ],
       "jest/prefer-called-with": "warn",
+      "jest/expect-expect": "off",
       "jsx-a11y/no-onchange": "off",
       "jsx-a11y/html-has-lang": "off"
     },

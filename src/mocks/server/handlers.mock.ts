@@ -1,7 +1,7 @@
 import { mockAuthToken } from 'mocks/model/user.mock';
 import { ResponseTransformer, rest } from 'msw';
 
-export function mockLoginRequest(
+export function handleLoginRequest(
   options:
     | { transformer: () => ResponseTransformer | Promise<ResponseTransformer> }
     | { delay?: number } = {}

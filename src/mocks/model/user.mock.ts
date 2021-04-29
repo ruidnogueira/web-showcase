@@ -7,7 +7,7 @@ export function mockUserEmail() {
 }
 
 export function mockUserPassword() {
-  return chance.string({ alpha: true, numeric: true, symbols: true, length: 16 });
+  return chance.string({ alpha: true, numeric: true, length: 16 });
 }
 
 export function mockAuthToken() {

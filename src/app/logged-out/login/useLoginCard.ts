@@ -24,20 +24,7 @@ export function useLoginCard() {
       password: '',
     },
 
-    validate: (values): FormikErrors<LoginForm> => {
-      const errors: FormikErrors<LoginForm> = {};
-
-      if (!values.email) {
-        errors.email = 'required';
-      }
-
-      if (!values.password) {
-        errors.password = 'required';
-      }
-
-      return errors;
-    },
-
+    validate,
     validateOnChange: false,
     validateOnBlur: false,
 
@@ -65,4 +52,18 @@ function useLoginMachine() {
   const loginMachine = useMemo(() => createLoginMachine({ authService }), [authService]);
 
   return useMachine(loginMachine, { devTools: process.env.NODE_ENV === 'development' });
+}
+
+function validate(values: LoginForm): FormikErrors<LoginForm> {
+  const errors: FormikErrors<LoginForm> = {};
+
+  if (!values.email) {
+    errors.email = 'required';
+  }
+
+  if (!values.password) {
+    errors.password = 'required';
+  }
+
+  return errors;
 }
