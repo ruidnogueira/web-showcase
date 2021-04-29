@@ -108,7 +108,8 @@ describe('plans', () => {
         type: 'final',
 
         meta: {
-          test: async () => {
+          test: async ({ sendAuthEventSpy }: TestContext) => {
+            expect(sendAuthEventSpy).not.toHaveBeenCalled();
             expect(await invalidLoginErrorMessageQueries.find()).toBeInTheDocument();
             expect(unexpectedErrorMessageQueries.query()).toBeNull();
           },
@@ -120,7 +121,8 @@ describe('plans', () => {
         type: 'final',
 
         meta: {
-          test: async () => {
+          test: async ({ sendAuthEventSpy }: TestContext) => {
+            expect(sendAuthEventSpy).not.toHaveBeenCalled();
             expect(invalidLoginErrorMessageQueries.query()).toBeNull();
             expect(await unexpectedErrorMessageQueries.find()).toBeInTheDocument();
           },
@@ -159,9 +161,24 @@ describe('plans', () => {
     },
 
     [TestEventType.SubmitIncompleteData]: {
-      exec: async () => {
+      exec: async (_, event) => {
+        const { email, password } = event as { type: string; email: boolean; password: boolean };
+
+        if (email) {
+          userEvent.type(emailQueries.get(), mockUserEmail());
+        }
+
+        if (password) {
+          userEvent.type(passwordQueries.get(), mockUserPassword());
+        }
+
         userEvent.click(submitQueries.get());
       },
+      cases: [
+        { email: false, password: false },
+        { email: true, password: false },
+        { email: false, password: true },
+      ],
     },
 
     [TestEventType.LoadingEnded]: {
