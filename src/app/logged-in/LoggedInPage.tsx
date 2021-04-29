@@ -12,7 +12,7 @@ export function LoggedInPage() {
   };
 
   return (
-    <div>
+    <div data-testid="logged_in-page">
       <Button type="button" onClick={handleLogout}>
         Logout
       </Button>

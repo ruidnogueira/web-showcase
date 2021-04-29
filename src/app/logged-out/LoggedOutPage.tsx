@@ -4,7 +4,7 @@ import { LanguageSelect } from 'app/common/components/language-select/LanguageSe
 
 export function LoggedOutPage() {
   return (
-    <div className={styles.backdrop}>
+    <div className={styles.backdrop} data-testid="logged_out-page">
       <LoginCard className={styles.card} />
 
       <div className={styles.languageField}>
