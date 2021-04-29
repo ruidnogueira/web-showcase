@@ -1,4 +1,4 @@
-import { saveToLocalStorage } from 'app/common/utils/browser.util';
+import { getFromLocalStorage, saveToLocalStorage } from 'app/common/utils/browser.util';
 import { mockAuthToken } from 'mocks/model/user.mock';
 import { interpret } from 'xstate';
 import { storageKeys } from '../configs/storage.config';
@@ -38,4 +38,15 @@ test(`reaches ${AuthMachineStateValue.LoggedOut} state via ${AuthMachineEventTyp
   service.send({ type: AuthMachineEventType.Logout });
 
   expect(service.state.matches(AuthMachineStateValue.LoggedOut)).toBe(true);
+});
+
+test('clears user data from local storage when logging out', () => {
+  saveToLocalStorage(storageKeys.authToken, mockAuthToken());
+
+  const machine = createAuthMachine({ storageKeys });
+  const service = interpret(machine).start();
+
+  service.send({ type: AuthMachineEventType.Logout });
+
+  expect(getFromLocalStorage<string>(storageKeys.authToken)).toBeUndefined();
 });
