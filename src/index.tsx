@@ -20,11 +20,13 @@ async function render() {
     window.location.pathname = process.env.PUBLIC_URL + '/';
   }
 
-  await worker.start({
-    serviceWorker: {
-      url: `${process.env.PUBLIC_URL}/mockServiceWorker.js`,
-    },
-  });
+  if (process.env.REACT_APP_DISABLE_MOCKS !== 'true') {
+    await worker.start({
+      serviceWorker: {
+        url: `${process.env.PUBLIC_URL}/mockServiceWorker.js`,
+      },
+    });
+  }
 
   ReactDOM.render(
     <StrictMode>

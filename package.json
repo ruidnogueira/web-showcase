@@ -87,7 +87,8 @@
     "test": "react-scripts test",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "e2e": "cd e2e && jest",
-    "e2e:local": "cross-env BROWSER=chromium start-server-and-test start:silent http://localhost:3000/web-showcase e2e",
+    "e2e:local": "cross-env BROWSER=chromium REACT_APP_DISABLE_MOCKS=true start-server-and-test start:silent http://localhost:3000/web-showcase e2e",
+    "e2e:local:debug": "cross-env PWDEBUG=1 npm run e2e:local",
     "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
     "lint:eslint": "eslint --fix src/**/*.{ts,tsx}",
     "lint:prettier": "prettier --write src/**/*.{js,jsx,ts,tsx,json,css,scss,md}",
@@ -128,6 +129,14 @@
         ],
         "rules": {
           "import/no-anonymous-default-export": "off"
+        }
+      },
+      {
+        "files": [
+          "e2e/**/*"
+        ],
+        "rules": {
+          "testing-library/no-await-sync-query": "off"
         }
       }
     ]

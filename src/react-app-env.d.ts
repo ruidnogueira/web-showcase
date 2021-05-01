@@ -6,5 +6,6 @@ declare namespace NodeJS {
     NODE_ENV: 'development' | 'production' | 'test';
     REACT_APP_NAME: string;
     REACT_APP_API_PATH: string;
+    REACT_APP_DISABLE_MOCKS?: 'true';
   }
 }
