@@ -1,26 +1,32 @@
 @mixin light-theme {
-  $selector: ':root';
+  $root-selector: ':root';
+  $class-selector: '.theme--light';
 
   @if & {
-    #{$selector} & {
+    #{$root-selector} &,
+    #{$class-selector} & {
       @content;
     }
   } @else {
-    #{$selector} {
+    #{$root-selector},
+    #{$class-selector} {
       @content;
     }
   }
 }
 
 @mixin dark-theme {
-  $selector: ':root[data-theme="dark"]';
+  $root-selector: ':root[data-theme="dark"]';
+  $class-selector: '.theme--dark';
 
   @if & {
-    #{$selector} & {
+    #{$root-selector} &,
+    #{$class-selector} & {
       @content;
     }
   } @else {
-    #{$selector} {
+    #{$root-selector},
+    #{$class-selector} {
       @content;
     }
   }
