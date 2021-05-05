@@ -54,6 +54,19 @@
   opacity: 0.5;
 }
 
+@mixin visually-hidden {
+  border: 0 none;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  overflow-wrap: normal;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 @mixin not($list...) {
   // flatten list variable
   @if (length($list) == 1) {
