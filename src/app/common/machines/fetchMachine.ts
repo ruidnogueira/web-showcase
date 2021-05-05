@@ -91,7 +91,7 @@ export function createFetchMachine<
   id: string;
   fetcher: InvokeCreator<
     FetchMachineContext<ResponseData, ResponseError>,
-    FetchEvent<RequestData>,
+    FetchMachineEvent<RequestData, ResponseData, ResponseError>,
     FetchMachineState<ResponseData, ResponseError>
   >;
 }): FetchMachine<RequestData, ResponseData, ResponseError> {
@@ -131,10 +131,7 @@ export function createFetchMachine<
           },
         },
         invoke: {
-          src: (context, event, meta) =>
-            event.type === FetchMachineEventType.Fetch
-              ? config.fetcher(context, event, meta)
-              : () => {},
+          src: config.fetcher,
           onError: {
             target: FetchMachineStateValue.Failure,
             actions: assignError,

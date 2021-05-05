@@ -15,28 +15,32 @@ export const createLoginMachine: Reader<
   { authService: AuthService },
   FetchMachine<ApiCreateAuthTokenRequest, ApiAuthToken, LoginError>
 > = ({ authService }) => {
+  const login = (token: ApiCreateAuthTokenRequest) => {
+    return authService.login(token).pipe(
+      map((response) =>
+        pipe(
+          response,
+
+          E.match(
+            (error) => ({
+              type: FetchMachineEventType.ReceiveDataFailure,
+              data: error.status === 401 ? LoginError.Invalid : LoginError.Unexpected,
+            }),
+
+            (response) => ({
+              type: FetchMachineEventType.ReceiveDataSuccess,
+              data: response.body,
+            })
+          )
+        )
+      )
+    );
+  };
+
   return createFetchMachine({
     id: 'login',
 
     fetcher: (_, event) =>
-      authService.login(event.data).pipe(
-        map((response) =>
-          pipe(
-            response,
-
-            E.match(
-              (error) => ({
-                type: FetchMachineEventType.ReceiveDataFailure,
-                data: error.status === 401 ? LoginError.Invalid : LoginError.Unexpected,
-              }),
-
-              (response) => ({
-                type: FetchMachineEventType.ReceiveDataSuccess,
-                data: response.body,
-              })
-            )
-          )
-        )
-      ),
+      event.type === FetchMachineEventType.Fetch ? login(event.data) : () => {},
   });
 };
