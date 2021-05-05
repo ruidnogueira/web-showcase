@@ -32,9 +32,9 @@
   }
 }
 
-@mixin outline($color: var(--color-outline)) {
+@mixin outline($color: var(--color-outline), $width: 0.2rem) {
   /* Visible in the full-colour space */
-  box-shadow: 0 0 0 0.2rem $color;
+  box-shadow: 0 0 0 $width $color;
 
   /* Visible in Windows high-contrast themes */
   outline: transparent solid 2px;
