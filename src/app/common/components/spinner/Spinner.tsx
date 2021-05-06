@@ -7,12 +7,12 @@ import { ColorVariant } from 'app/core/models/styles.model';
 
 export interface SpinnerProps extends SVGAttributes<SVGElement> {
   /**
-   * Specifies the visual variant
+   * The visual variant of the spinner
    */
   variant?: ColorVariant;
 
   /**
-   * Specifies whether spinner should be read by screen readers
+   * Whether the spinner should be read by screen readers
    */
   isAlert?: boolean;
 }

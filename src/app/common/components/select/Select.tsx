@@ -10,12 +10,12 @@ export type SelectOptionProps = RcSelectOptionprops;
 
 export interface SelectProps<Value extends SelectValue> extends RcSelectProps<Value> {
   /**
-   * Specifies the visual variant
+   * The visual variant of the select
    */
   variant?: ColorVariant;
 
   /**
-   * Specifies the size
+   * The size of the select
    */
   size?: ControlSize;
 }

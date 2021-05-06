@@ -7,17 +7,17 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   type: 'submit' | 'reset' | 'button';
 
   /**
-   * Specifies the visual variant
+   * The visual variant of the button
    */
   variant?: ColorVariant;
 
   /**
-   * Specifies the size
+   * The size of the button
    */
   size?: ControlSize;
 
   /**
-   * Specifies whether loading spinner is visible
+   * Whether the loading spinner is visible
    */
   isLoading?: boolean;
 }

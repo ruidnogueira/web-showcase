@@ -1,16 +1,16 @@
 import { usePropState } from 'app/common/hooks/usePropState';
 import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 import classNames from 'classnames';
-import { AriaAttributes, ChangeEvent, FocusEvent, useState } from 'react';
+import { ChangeEvent, FocusEvent, HTMLAttributes, ReactNode, useState } from 'react';
 
-export interface SwitchProps extends AriaAttributes {
+export interface SwitchProps {
   /**
-   * Specifies the visual variant
+   * The visual variant of the switch
    */
   variant?: ColorVariant;
 
   /**
-   * Specifies the size
+   * The size of the switch
    */
   size?: ControlSize;
 
@@ -19,9 +19,16 @@ export interface SwitchProps extends AriaAttributes {
   defaultChecked?: boolean;
   disabled?: boolean;
 
+  inputProps: HTMLAttributes<HTMLInputElement>;
+
   onChange?: (event: ChangeEvent<HTMLInputElement>) => unknown;
   onFocus?: (event: FocusEvent<HTMLInputElement>) => unknown;
   onBlur?: (event: FocusEvent<HTMLInputElement>) => unknown;
+
+  /**
+   * The content to be shown on the thumb
+   */
+  // thumbChildren: ReactNode; // TODO GET PROPS
 }
 
 export function Switch({
@@ -34,7 +41,6 @@ export function Switch({
   onChange,
   onBlur,
   onFocus,
-  ...props
 }: SwitchProps) {
   const [isFocused, setIsFocused] = useState(false);
   const [isCheckedInternal, setIsChecked] = usePropState(checked ?? defaultChecked);
@@ -43,7 +49,6 @@ export function Switch({
     <>
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <label
-        {...props}
         className={classNames(
           'switch',
           {
@@ -80,7 +85,7 @@ export function Switch({
           }}
         />
 
-        <span className="switch__thumb" aria-hidden={true} />
+        <span className="switch__thumb" aria-hidden={true}></span>
       </label>
     </>
   );
