@@ -12,6 +12,7 @@ export default {
       control: { type: 'select' },
       options: [undefined, ...Object.values(ControlSize)],
     },
+    thumbChildren: { control: { disable: true } },
   },
   args: {},
 } as Meta<SwitchProps>;
@@ -36,6 +37,11 @@ Checked.args = {
 export const Disabled = Template.bind({});
 Disabled.args = {
   disabled: true,
+};
+
+export const WithThumbContent = Template.bind({});
+WithThumbContent.args = {
+  thumbChildren: ({ isChecked }) => (isChecked ? '|' : 'O'),
 };
 
 export const Small = Template.bind({});

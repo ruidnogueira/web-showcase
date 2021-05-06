@@ -1,9 +1,9 @@
 import { usePropState } from 'app/common/hooks/usePropState';
 import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 import classNames from 'classnames';
-import { ChangeEvent, FocusEvent, HTMLAttributes, ReactNode, useState } from 'react';
+import { ComponentType, InputHTMLAttributes, ReactNode, useState } from 'react';
 
-export interface SwitchProps {
+export type SwitchProps = {
   /**
    * The visual variant of the switch
    */
@@ -15,35 +15,32 @@ export interface SwitchProps {
   size?: ControlSize;
 
   className?: string;
-  checked?: boolean;
-  defaultChecked?: boolean;
-  disabled?: boolean;
-
-  inputProps: HTMLAttributes<HTMLInputElement>;
-
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => unknown;
-  onFocus?: (event: FocusEvent<HTMLInputElement>) => unknown;
-  onBlur?: (event: FocusEvent<HTMLInputElement>) => unknown;
 
   /**
    * The content to be shown on the thumb
    */
-  // thumbChildren: ReactNode; // TODO GET PROPS
-}
+  thumbChildren?: ComponentType<{ isChecked: boolean }> | ReactNode;
+} & Pick<
+  InputHTMLAttributes<HTMLInputElement>,
+  'id' | 'checked' | 'defaultChecked' | 'disabled' | 'onChange' | 'onFocus' | 'onBlur'
+>;
 
 export function Switch({
+  id,
   variant,
   size,
   className,
   checked,
   defaultChecked,
   disabled,
+  thumbChildren: ThumbChildren,
   onChange,
   onBlur,
   onFocus,
 }: SwitchProps) {
   const [isFocused, setIsFocused] = useState(false);
   const [isCheckedInternal, setIsChecked] = usePropState(checked ?? defaultChecked);
+  const isChecked = checked ?? isCheckedInternal;
 
   return (
     <>
@@ -54,7 +51,7 @@ export function Switch({
           {
             [`switch--${variant}`]: variant,
             [`switch--${size}`]: size,
-            'switch--checked': checked ?? isCheckedInternal,
+            'switch--checked': isChecked,
             'switch--focus': isFocused,
             'switch--disabled': disabled,
           },
@@ -66,6 +63,7 @@ export function Switch({
         }}
       >
         <input
+          id={id}
           type="checkbox"
           className="switch__input"
           defaultChecked={defaultChecked}
@@ -85,8 +83,20 @@ export function Switch({
           }}
         />
 
-        <span className="switch__thumb" aria-hidden={true}></span>
+        <span className="switch__thumb" aria-hidden={true}>
+          {isComponentType(ThumbChildren) ? (
+            <ThumbChildren isChecked={isChecked ?? false} />
+          ) : (
+            ThumbChildren
+          )}
+        </span>
       </label>
     </>
   );
+}
+
+function isComponentType<T>(
+  component: ComponentType<T> | ReactNode
+): component is ComponentType<T> {
+  return typeof component === 'function';
 }

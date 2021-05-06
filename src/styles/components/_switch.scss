@@ -63,13 +63,17 @@ $switch-thumb-shift: $switch-padding - 1px;
   }
 
   &__thumb {
+    align-items: center;
     background-color: utilities.get-color('switch-thumb');
     border-radius: 50%;
+    display: inline-flex;
     height: $switch-thumb-size;
+    justify-content: center;
     left: $switch-thumb-shift;
     position: absolute;
     top: $switch-thumb-shift;
     transition: left 200ms;
+    vertical-align: middle;
     width: $switch-thumb-size;
 
     .switch--checked & {
