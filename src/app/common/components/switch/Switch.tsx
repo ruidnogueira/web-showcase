@@ -1,8 +1,9 @@
+import { usePropState } from 'app/common/hooks/usePropState';
 import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 import classNames from 'classnames';
-import { ChangeEvent, FocusEvent, useEffect, useState } from 'react';
+import { AriaAttributes, ChangeEvent, FocusEvent, useState } from 'react';
 
-export interface SwitchProps {
+export interface SwitchProps extends AriaAttributes {
   /**
    * Specifies the visual variant
    */
@@ -17,9 +18,9 @@ export interface SwitchProps {
   checked?: boolean;
   defaultChecked?: boolean;
 
-  onChange: (event: ChangeEvent<HTMLInputElement>) => unknown;
-  onFocus: (event: FocusEvent<HTMLInputElement>) => unknown;
-  onBlur: (event: FocusEvent<HTMLInputElement>) => unknown;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => unknown;
+  onFocus?: (event: FocusEvent<HTMLInputElement>) => unknown;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => unknown;
 }
 
 export function Switch({
@@ -27,27 +28,26 @@ export function Switch({
   size,
   className,
   checked,
+  defaultChecked,
   onChange,
   onBlur,
   onFocus,
+  ...props
 }: SwitchProps) {
   const [isFocused, setIsFocused] = useState(false);
-  const [isChecked, setIsChecked] = useState<boolean | undefined>(checked);
-
-  useEffect(() => {
-    setIsChecked(checked);
-  }, [checked]);
+  const [isCheckedInternal, setIsChecked] = usePropState(checked ?? defaultChecked);
 
   return (
     <>
       {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <label
+        {...props}
         className={classNames(
           'switch',
           {
             [`switch--${variant}`]: variant,
             [`switch--${size}`]: size,
-            'switch--checked': isChecked,
+            'switch--checked': checked ?? isCheckedInternal,
             'switch--focus': isFocused,
           },
           className
@@ -60,24 +60,23 @@ export function Switch({
         <input
           type="checkbox"
           className="switch__input"
+          defaultChecked={defaultChecked}
           checked={checked}
           onChange={(event) => {
             setIsChecked(event.target.checked);
-            onChange(event);
+            onChange?.(event);
           }}
           onFocus={(event) => {
             setIsFocused(true);
-            onFocus(event);
+            onFocus?.(event);
           }}
           onBlur={(event) => {
             setIsFocused(false);
-            onBlur(event);
+            onBlur?.(event);
           }}
         />
 
-        <span className="switch__track" aria-hidden={true}>
-          <span className="switch__thumb" />
-        </span>
+        <span className="switch__thumb" aria-hidden={true} />
       </label>
     </>
   );

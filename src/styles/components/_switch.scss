@@ -1,4 +1,5 @@
 @use '../utilities';
+@use 'sass:map';
 
 $switch-outline-width: 0.3rem;
 $switch-height: utilities.$control-height;
@@ -7,44 +8,48 @@ $switch-padding: 3px;
 $switch-thumb-size: calc(#{$switch-height} - #{2 * $switch-padding});
 $switch-thumb-shift: $switch-padding - 1px;
 
+@include utilities.light-theme {
+  $default-color: map.get(utilities.$light-colors, 'default');
+
+  --color-switch-unchecked: #{utilities.tint(map.get(utilities.$light-colors, 'default'), 20%)};
+  --color-switch-checked: #{map.get(utilities.$light-colors, 'focus')};
+  --color-switch-thumb: #{map.get(utilities.$base-colors, 'white')};
+}
+
 .switch {
+  @extend %control;
+
+  background: utilities.get-color('switch-unchecked');
+  border-radius: 9999px;
   height: $switch-height;
+  padding: $switch-padding;
+  transition: all 100ms;
   width: $switch-width;
+
+  &--checked {
+    background: utilities.get-color('switch-checked');
+  }
+
+  &--focus {
+    @include utilities.outline($width: $switch-outline-width);
+  }
+
+  &--small {
+    @include utilities.control--small;
+  }
 
   &__input {
     @include utilities.visually-hidden;
   }
 
-  &__track {
-    @extend %control;
-
-    background: red;
-    border-radius: 9999px;
-    height: 100%;
-    padding: $switch-padding;
-    position: relative;
-    width: 100%;
-
-    .switch--small & {
-      @include utilities.control--small;
-    }
-
-    .switch--checked & {
-      background: blue;
-    }
-
-    .switch--focus & {
-      @include utilities.outline($width: $switch-outline-width);
-    }
-  }
-
   &__thumb {
-    background: white;
+    background-color: utilities.get-color('switch-thumb');
     border-radius: 50%;
     height: $switch-thumb-size;
     left: $switch-thumb-shift;
     position: absolute;
     top: $switch-thumb-shift;
+    transition: left 200ms;
     width: $switch-thumb-size;
 
     .switch--checked & {
