@@ -14,16 +14,26 @@ $switch-thumb-shift: $switch-padding - 1px;
   --color-switch-unchecked: #{utilities.tint(map.get(utilities.$light-colors, 'default'), 20%)};
   --color-switch-checked: #{map.get(utilities.$light-colors, 'focus')};
   --color-switch-thumb: #{map.get(utilities.$base-colors, 'white')};
+
+  @each $variant in utilities.$color-variants {
+    --color-switch-#{$variant}-checked: #{map.get(
+        utilities.$light-variant-colors,
+        $variant,
+        'base'
+      )};
+  }
 }
+
+// TODO DISABLED
 
 .switch {
   @extend %control;
 
-  background: utilities.get-color('switch-unchecked');
+  background-color: utilities.get-color('switch-unchecked');
   border-radius: 9999px;
   height: $switch-height;
   padding: $switch-padding;
-  transition: all 100ms;
+  transition: background-color 100ms;
   width: $switch-width;
 
   &--checked {
@@ -36,6 +46,14 @@ $switch-thumb-shift: $switch-padding - 1px;
 
   &--small {
     @include utilities.control--small;
+  }
+
+  @each $variant in utilities.$color-variants {
+    &--#{$variant} {
+      &.switch--checked {
+        background-color: utilities.get-color('switch', $variant, 'checked');
+      }
+    }
   }
 
   &__input {

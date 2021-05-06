@@ -28,6 +28,11 @@ const Template: Story<SwitchProps> = (args) => (
 export const Default = Template.bind({});
 Default.args = {};
 
+export const Checked = Template.bind({});
+Checked.args = {
+  checked: true,
+};
+
 export const Small = Template.bind({});
 Small.args = {
   size: ControlSize.Small,
