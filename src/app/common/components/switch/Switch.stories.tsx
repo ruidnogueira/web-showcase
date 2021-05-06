@@ -33,6 +33,11 @@ Checked.args = {
   checked: true,
 };
 
+export const Disabled = Template.bind({});
+Disabled.args = {
+  disabled: true,
+};
+
 export const Small = Template.bind({});
 Small.args = {
   size: ControlSize.Small,

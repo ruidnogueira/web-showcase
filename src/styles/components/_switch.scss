@@ -24,8 +24,6 @@ $switch-thumb-shift: $switch-padding - 1px;
   }
 }
 
-// TODO DISABLED
-
 .switch {
   @extend %control;
 
@@ -42,6 +40,10 @@ $switch-thumb-shift: $switch-padding - 1px;
 
   &--focus {
     @include utilities.outline($width: $switch-outline-width);
+  }
+
+  &--disabled {
+    @include utilities.disabled;
   }
 
   &--small {

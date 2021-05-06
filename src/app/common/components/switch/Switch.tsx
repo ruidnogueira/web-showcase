@@ -17,6 +17,7 @@ export interface SwitchProps extends AriaAttributes {
   className?: string;
   checked?: boolean;
   defaultChecked?: boolean;
+  disabled?: boolean;
 
   onChange?: (event: ChangeEvent<HTMLInputElement>) => unknown;
   onFocus?: (event: FocusEvent<HTMLInputElement>) => unknown;
@@ -29,6 +30,7 @@ export function Switch({
   className,
   checked,
   defaultChecked,
+  disabled,
   onChange,
   onBlur,
   onFocus,
@@ -49,6 +51,7 @@ export function Switch({
             [`switch--${size}`]: size,
             'switch--checked': checked ?? isCheckedInternal,
             'switch--focus': isFocused,
+            'switch--disabled': disabled,
           },
           className
         )}
@@ -62,6 +65,7 @@ export function Switch({
           className="switch__input"
           defaultChecked={defaultChecked}
           checked={checked}
+          disabled={disabled}
           onChange={(event) => {
             setIsChecked(event.target.checked);
             onChange?.(event);
