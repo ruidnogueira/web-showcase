@@ -55,6 +55,13 @@ $switch-thumb-shift: $switch-padding - 1px;
       &.switch--checked {
         background-color: utilities.get-color('switch', $variant, 'checked');
       }
+
+      &.switch--focus {
+        @include utilities.outline(
+          $color: utilities.get-color($variant, 'outline'),
+          $width: $switch-outline-width
+        );
+      }
     }
   }
 
