@@ -5,7 +5,7 @@ import { useConfig } from '../configs/ConfigProvider';
 
 export type Theme = 'light' | 'dark';
 
-const ThemeContext = createContext<{ theme: Theme; toggleTheme: () => void } | undefined>(
+export const ThemeContext = createContext<{ theme: Theme; toggleTheme: () => void } | undefined>(
   undefined
 );
 
