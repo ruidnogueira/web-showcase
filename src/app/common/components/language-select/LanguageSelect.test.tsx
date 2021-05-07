@@ -6,6 +6,8 @@ import { findBySelectSelection, selectOption } from 'test/select.helper';
 import { i18nConfig } from 'app/core/configs/i18n.config';
 import { act } from 'react-dom/test-utils';
 import { createI18nMock } from 'mocks/i18n.mock';
+import Story, { Default } from './LanguageSelect.stories';
+import { renderWithProviders } from 'test/component.helper';
 
 const setup = () => {
   const i18nMock = createI18nMock();
@@ -32,6 +34,10 @@ const setup = () => {
 
   return { ...result, i18nMock };
 };
+
+test.each([['Default', Default]])('renders %s story', (_, Component) => {
+  renderWithProviders(<Component {...Story.args} {...Component.args} />);
+});
 
 test('renders', () => {
   const { container } = setup();
