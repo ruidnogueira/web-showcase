@@ -3,6 +3,12 @@
   "states": {
     "loading": "A carregar"
   },
+  "props": {
+    "user": {
+      "email": "E-mail",
+      "password": "Palavra-passe"
+    }
+  },
   "pages": {
     "login": {
       "title": "Inicia sessão",
@@ -13,10 +19,10 @@
       }
     }
   },
-  "props": {
-    "user": {
-      "email": "E-mail",
-      "password": "Palavra-passe"
+  "components": {
+    "themeSwitch": {
+      "light": "Ativar modo escuro",
+      "dark": "Ativar modo claro"
     }
   }
 }

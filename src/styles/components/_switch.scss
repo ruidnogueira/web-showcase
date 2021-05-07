@@ -35,7 +35,7 @@ $switch-thumb-shift: $switch-padding - 1px;
   width: $switch-width;
 
   &--checked {
-    background: utilities.get-color('switch-checked');
+    background-color: utilities.get-color('switch-checked');
   }
 
   &--focus {

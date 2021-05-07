@@ -1,7 +1,7 @@
 import { usePropState } from 'app/common/hooks/usePropState';
 import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 import classNames from 'classnames';
-import { ComponentType, InputHTMLAttributes, ReactNode, useState } from 'react';
+import { AriaAttributes, ChangeEvent, ComponentType, FocusEvent, ReactNode, useState } from 'react';
 
 export type SwitchProps = {
   /**
@@ -14,19 +14,23 @@ export type SwitchProps = {
    */
   size?: ControlSize;
 
+  id?: string;
   className?: string;
+  checked?: boolean;
+  defaultChecked?: boolean;
+  disabled?: boolean;
 
   /**
    * The content to be shown on the thumb
    */
   thumbChildren?: ComponentType<{ isChecked: boolean }> | ReactNode;
-} & Pick<
-  InputHTMLAttributes<HTMLInputElement>,
-  'id' | 'checked' | 'defaultChecked' | 'disabled' | 'onChange' | 'onFocus' | 'onBlur'
->;
+
+  onChange?: (isChecked: boolean, event: ChangeEvent<HTMLInputElement>) => unknown;
+  onFocus?: (event: FocusEvent<HTMLInputElement>) => unknown;
+  onBlur?: (event: FocusEvent<HTMLInputElement>) => unknown;
+} & Pick<AriaAttributes, 'aria-labelledby'>;
 
 export function Switch({
-  id,
   variant,
   size,
   className,
@@ -37,6 +41,7 @@ export function Switch({
   onChange,
   onBlur,
   onFocus,
+  ...props
 }: SwitchProps) {
   const [isFocused, setIsFocused] = useState(false);
   const [isCheckedInternal, setIsChecked] = usePropState(checked ?? defaultChecked);
@@ -63,7 +68,7 @@ export function Switch({
         }}
       >
         <input
-          id={id}
+          {...props}
           type="checkbox"
           className="switch__input"
           defaultChecked={defaultChecked}
@@ -71,7 +76,7 @@ export function Switch({
           disabled={disabled}
           onChange={(event) => {
             setIsChecked(event.target.checked);
-            onChange?.(event);
+            onChange?.(event.target.checked, event);
           }}
           onFocus={(event) => {
             setIsFocused(true);

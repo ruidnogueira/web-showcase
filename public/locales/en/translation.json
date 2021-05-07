@@ -3,6 +3,12 @@
   "states": {
     "loading": "Loading"
   },
+  "props": {
+    "user": {
+      "email": "Email",
+      "password": "Password"
+    }
+  },
   "pages": {
     "login": {
       "title": "Login",
@@ -13,10 +19,10 @@
       }
     }
   },
-  "props": {
-    "user": {
-      "email": "Email",
-      "password": "Password"
+  "components": {
+    "themeSwitch": {
+      "light": "Enable dark mode",
+      "dark": "Enable light mode"
     }
   }
 }

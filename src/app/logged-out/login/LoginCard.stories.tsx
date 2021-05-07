@@ -5,7 +5,7 @@ import { LoginError } from './login.types';
 import { LoginCardPresentation, LoginCardPresentationProps } from './LoginCard';
 
 export default {
-  title: 'Organisms/Login Card',
+  title: 'Organisms/LoginCard',
   component: LoginCardPresentation,
   argTypes: {
     error: {

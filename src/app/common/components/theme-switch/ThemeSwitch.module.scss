@@ -1,0 +1,11 @@
+@use '~styles/utilities';
+@use 'sass:map';
+
+.switch {
+  background-color: map.get(utilities.$base-colors, 'mine-shaft');
+}
+
+.icon {
+  color: map.get(utilities.$base-colors, 'web-orange');
+  fill: map.get(utilities.$base-colors, 'web-orange');
+}
