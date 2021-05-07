@@ -1,4 +1,3 @@
-import { usePropState } from 'app/common/hooks/usePropState';
 import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 import classNames from 'classnames';
 import { AriaAttributes, ChangeEvent, ComponentType, FocusEvent, ReactNode, useState } from 'react';
@@ -44,7 +43,7 @@ export function Switch({
   ...props
 }: SwitchProps) {
   const [isFocused, setIsFocused] = useState(false);
-  const [isCheckedInternal, setIsChecked] = usePropState(checked ?? defaultChecked);
+  const [isCheckedInternal, setIsChecked] = useState(defaultChecked);
   const isChecked = checked ?? isCheckedInternal;
 
   return (
