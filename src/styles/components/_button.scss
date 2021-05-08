@@ -4,15 +4,12 @@
 $button-variants: utilities.prefix-list(utilities.$color-variants, '.button--');
 $button-outline-width: 0.3rem;
 
-@include utilities.theme {
+@include utilities.light-theme {
   $default-color: map.get(utilities.$light-colors, 'default');
 
   --color-button-hover: #{utilities.tint($default-color, 20%)};
   --color-button-focus: #{utilities.tint($default-color, 20%)};
   --color-button-active: #{utilities.tint($default-color, 28%)};
-}
-
-@include utilities.light-theme {
   --color-button-text: #{map.get(utilities.$light-colors, 'text')};
 
   @each $variant in utilities.$color-variants {
@@ -25,6 +22,11 @@ $button-outline-width: 0.3rem;
 }
 
 @include utilities.dark-theme {
+  $default-color: map.get(utilities.$dark-colors, 'default');
+
+  --color-button-hover: #{utilities.tint($default-color, 20%)};
+  --color-button-focus: #{utilities.tint($default-color, 20%)};
+  --color-button-active: #{utilities.tint($default-color, 28%)};
   --color-button-text: #{map.get(utilities.$dark-colors, 'invert-text')};
 
   @each $variant in utilities.$color-variants {
@@ -103,9 +105,13 @@ $button-outline-width: 0.3rem;
     }
   }
 
-  @include utilities.not($button-variants) {
-    .spinner {
-      stroke: utilities.get-color('text');
+  &__spinner {
+    stroke: utilities.get-color('button-text');
+
+    @each $variant in utilities.$color-variants {
+      .button--#{$variant} & {
+        stroke: utilities.get-color($variant, 'text');
+      }
     }
   }
 }

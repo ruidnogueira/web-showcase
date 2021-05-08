@@ -42,7 +42,7 @@ export function Button({
       disabled={disabled || isLoading}
       aria-busy={isLoading}
     >
-      {isLoading ? <Spinner /> : children}
+      {isLoading ? <Spinner className="button__spinner" /> : children}
     </button>
   );
 }

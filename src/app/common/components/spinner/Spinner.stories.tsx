@@ -1,10 +1,11 @@
-import { Story, Meta } from '@storybook/react';
+import { Story, Meta, Args } from '@storybook/react';
 import { ConfigProvider } from 'app/core/configs/ConfigProvider';
 import { I18nProvider } from 'app/core/i18n/I18nProvider';
 import { ColorVariant } from 'app/core/models/styles.model';
+import { Theme } from 'app/core/providers/ThemeProvider';
 import { Suspense } from 'react';
 import { StorybookVariants } from 'test/storybook.helper';
-import { Spinner, SpinnerProps } from './Spinner';
+import { Spinner, SpinnerColorVariant, SpinnerProps } from './Spinner';
 
 export default {
   title: 'Atoms/Spinner',
@@ -28,21 +29,36 @@ export default {
   ],
 } as Meta<SpinnerProps>;
 
-const colorVariants = [undefined, ...Object.values(ColorVariant)];
-const Template: Story<SpinnerProps> = (args) => (
-  <Suspense fallback={<div>loading...</div>}>
-    <StorybookVariants>
-      {colorVariants.map((variant) => (
-        <Spinner
-          {...args}
-          key={variant ?? 'undefined'}
-          variant={variant}
-          style={{ width: '100px', height: '100px', backgroundColor: variant ?? '#000' }}
-        />
-      ))}
-    </StorybookVariants>
-  </Suspense>
-);
+const colorVariants = [
+  undefined,
+  ...Object.values(ColorVariant),
+  ...Object.values(SpinnerColorVariant),
+];
+
+const Template: Story<SpinnerProps> = (args, { globals }: { globals?: Args }) => {
+  const theme: Theme = globals?.theme;
+  const invertedBackground = theme === 'light' ? '#000' : '#fff';
+
+  return (
+    <Suspense fallback={<div>loading...</div>}>
+      <StorybookVariants>
+        {colorVariants.map((variant) => (
+          <Spinner
+            {...args}
+            key={variant ?? 'undefined'}
+            variant={variant}
+            style={{
+              width: '100px',
+              height: '100px',
+              backgroundColor:
+                variant !== SpinnerColorVariant.Inverted ? variant : invertedBackground,
+            }}
+          />
+        ))}
+      </StorybookVariants>
+    </Suspense>
+  );
+};
 
 export const Default = Template.bind({});
 Default.args = {};

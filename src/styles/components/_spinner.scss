@@ -1,15 +1,15 @@
 @use 'sass:map';
 @use '../utilities';
 
-@include utilities.light-theme {
-  --color-spinner: #{map.get(utilities.$base-colors, 'alabaster')};
-}
-
 .spinner {
   height: 100%;
   padding: utilities.$spacing-xxs;
-  stroke: utilities.get-color('spinner');
+  stroke: utilities.get-color('text');
   width: 100%;
+
+  &--inverted {
+    stroke: utilities.get-color('invert-text');
+  }
 
   @each $variant in utilities.$color-variants {
     &--#{$variant} {

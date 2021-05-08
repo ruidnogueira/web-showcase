@@ -5,11 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { VisuallyHidden } from '@reach/visually-hidden';
 import { ColorVariant } from 'app/core/models/styles.model';
 
+export enum SpinnerColorVariant {
+  Inverted = 'inverted',
+}
+
 export interface SpinnerProps extends SVGAttributes<SVGElement> {
   /**
    * The visual variant of the spinner
    */
-  variant?: ColorVariant;
+  variant?: ColorVariant | SpinnerColorVariant;
 
   /**
    * Whether the spinner should be read by screen readers
@@ -17,7 +21,7 @@ export interface SpinnerProps extends SVGAttributes<SVGElement> {
   isAlert?: boolean;
 }
 
-export function Spinner({ variant, isAlert, ...props }: SpinnerProps) {
+export function Spinner({ variant, isAlert, className, ...props }: SpinnerProps) {
   const { t } = useTranslation();
 
   return (
@@ -27,9 +31,7 @@ export function Spinner({ variant, isAlert, ...props }: SpinnerProps) {
       </VisuallyHidden>
       <SpinnerSvg
         {...props}
-        className={classNames('spinner', {
-          [`spinner--${variant}`]: variant,
-        })}
+        className={classNames('spinner', { [`spinner--${variant}`]: variant }, className)}
         aria-hidden={true}
       />
     </>
