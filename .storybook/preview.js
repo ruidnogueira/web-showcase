@@ -35,26 +35,36 @@ export const globalTypes = {
 };
 
 export const decorators = [
-  (Story, { globals }) =>
+  (Story, { globals, parameters }) =>
     isChromatic() ? (
       <>
-        <ThemeWrapper theme="light" style={{ marginBottom: '10px' }}>
+        <ThemeWrapper theme="light" style={{ marginBottom: '10px' }} parameters={parameters}>
           <Story />
         </ThemeWrapper>
-        <ThemeWrapper theme="dark">
+        <ThemeWrapper theme="dark" parameters={parameters}>
           <Story />
         </ThemeWrapper>
       </>
     ) : (
-      <ThemeWrapper theme={globals.theme}>
+      <ThemeWrapper theme={globals.theme} parameters={parameters}>
         <Story />
       </ThemeWrapper>
     ),
 ];
 
-function ThemeWrapper({ theme, children, style }) {
+function ThemeWrapper({ theme, children, style, parameters }) {
   return (
-    <div className={'theme--' + theme} style={{ height: '100%', width: '100%', ...style }}>
+    <div
+      className={'theme--' + theme}
+      style={{
+        height: '100%',
+        width: '100%',
+        color: 'var(--color-text)',
+        background: 'var(--color-background)',
+        padding: parameters.layout === 'fullscreen' ? undefined : '1rem',
+        ...style,
+      }}
+    >
       {children}
     </div>
   );
