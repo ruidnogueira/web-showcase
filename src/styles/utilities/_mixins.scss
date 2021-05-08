@@ -1,3 +1,17 @@
+@mixin theme {
+  $root-selector: ':root';
+
+  @if & {
+    #{$root-selector} & {
+      @content;
+    }
+  } @else {
+    #{$root-selector} {
+      @content;
+    }
+  }
+}
+
 @mixin light-theme {
   $root-selector: ':root';
   $class-selector: '.theme--light';

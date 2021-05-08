@@ -4,19 +4,35 @@
 $button-variants: utilities.prefix-list(utilities.$color-variants, '.button--');
 $button-outline-width: 0.3rem;
 
-@include utilities.light-theme {
+@include utilities.theme {
   $default-color: map.get(utilities.$light-colors, 'default');
 
-  --color-button-hover: #{utilities.shade($default-color, 12%)};
-  --color-button-focus: #{utilities.shade($default-color, 12%)};
-  --color-button-active: #{utilities.shade($default-color, 20%)};
+  --color-button-hover: #{utilities.tint($default-color, 20%)};
+  --color-button-focus: #{utilities.tint($default-color, 20%)};
+  --color-button-active: #{utilities.tint($default-color, 28%)};
+}
+
+@include utilities.light-theme {
+  --color-button-text: #{map.get(utilities.$light-colors, 'text')};
 
   @each $variant in utilities.$color-variants {
-    $color: map.get(utilities.$light-variant-colors, $variant, 'base');
+    $color: map.get(utilities.$light-colors, $variant, 'base');
 
     --color-button-#{$variant}-hover: #{utilities.shade($color, 12%)};
     --color-button-#{$variant}-focus: #{utilities.shade($color, 12%)};
     --color-button-#{$variant}-active: #{utilities.shade($color, 20%)};
+  }
+}
+
+@include utilities.dark-theme {
+  --color-button-text: #{map.get(utilities.$dark-colors, 'invert-text')};
+
+  @each $variant in utilities.$color-variants {
+    $color: map.get(utilities.$dark-colors, $variant, 'base');
+
+    --color-button-#{$variant}-hover: #{utilities.tint($color, 12%)};
+    --color-button-#{$variant}-focus: #{utilities.tint($color, 12%)};
+    --color-button-#{$variant}-active: #{utilities.tint($color, 20%)};
   }
 }
 
@@ -26,7 +42,7 @@ $button-outline-width: 0.3rem;
 
   background-color: utilities.get-color('default');
   border-color: transparent;
-  color: utilities.get-color('text');
+  color: utilities.get-color('button-text');
   cursor: pointer;
   font-weight: normal;
   justify-content: center;
