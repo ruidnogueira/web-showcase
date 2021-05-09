@@ -5,6 +5,7 @@
   $default-color: map.get(utilities.$light-colors, 'default');
 
   --color-input-base: #{$default-color};
+  --color-input-background: utilities.get-color('background');
   --color-input-hover: #{utilities.shade($default-color, 20%)};
   --color-input-focus: #{map.get(utilities.$light-colors, 'focus')};
   --color-input-placeholder: #{rgba(map.get(utilities.$light-colors, 'text'), 0.4)};
@@ -13,16 +14,35 @@
     $color: map.get(utilities.$light-variant-colors, $variant, 'base');
 
     --color-input-#{$variant}-base: #{utilities.tint($color, 20%)};
-    --color-input-#{$variant}-hover: #{utilities.tint($color, 0%)};
+    --color-input-#{$variant}-hover: #{$color};
     --color-input-#{$variant}-focus: #{utilities.shade($color, 20%)};
+  }
+}
+
+@include utilities.dark-theme {
+  $default-color: map.get(utilities.$dark-colors, 'default');
+
+  --color-input-base: #{$default-color};
+  --color-input-background: inherit;
+  --color-input-hover: #{utilities.tint($default-color, 40%)};
+  --color-input-focus: #{map.get(utilities.$dark-colors, 'focus')};
+  --color-input-placeholder: #{rgba(map.get(utilities.$dark-colors, 'text'), 0.7)};
+
+  @each $variant in utilities.$color-variants {
+    $color: map.get(utilities.$dark-colors, $variant, 'base');
+
+    --color-input-#{$variant}-base: #{utilities.shade($color, 20%)};
+    --color-input-#{$variant}-hover: #{$color};
+    --color-input-#{$variant}-focus: #{utilities.tint($color, 20%)};
   }
 }
 
 .input {
   @extend %control;
 
-  background-color: utilities.get-color('background');
+  background-color: utilities.get-color('input-background');
   border-color: utilities.get-color('input-base');
+  color: utilities.get-color('text');
 
   &::placeholder {
     color: utilities.get-color('input-placeholder');
