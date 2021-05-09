@@ -6,10 +6,28 @@ $select-arrow-height: 1.6em;
 $select-arrow-padding-right: utilities.$spacing-xxs;
 
 @include utilities.light-theme {
+  --color-select-dropdown-background: #{map.get(utilities.$light-colors, 'background')};
   --color-select-option-hover: #{utilities.tint(
       map.get(utilities.$light-colors, 'primary', 'base'),
       70%
     )};
+  --color-select-option-selected: #{map.get(utilities.$light-colors, 'primary', 'base')};
+  --color-select-option-text: #{map.get(utilities.$light-colors, 'text')};
+  --color-select-option-text-selected: #{map.get(utilities.$light-colors, 'primary', 'text')};
+}
+
+@include utilities.dark-theme {
+  --color-select-dropdown-background: #{utilities.tint(
+      map.get(utilities.$dark-colors, 'background'),
+      30%
+    )};
+  --color-select-option-hover: #{utilities.tint(map.get(utilities.$dark-colors, 'background'), 40%)};
+  --color-select-option-selected: #{utilities.tint(
+      map.get(utilities.$dark-colors, 'background'),
+      50%
+    )};
+  --color-select-option-text: #{map.get(utilities.$dark-colors, 'text')};
+  --color-select-option-text-selected: #{map.get(utilities.$dark-colors, 'text')};
 }
 
 .select {
@@ -148,7 +166,7 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
   }
 
   &-dropdown {
-    background-color: utilities.get-color('background');
+    background-color: utilities.get-color('select-dropdown-background');
     box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08),
       0 9px 28px 8px rgba(0, 0, 0, 0.05);
     z-index: utilities.$z-index-dropdown;
@@ -163,6 +181,7 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
 
     border: none;
     border-radius: 0;
+    color: utilities.get-color('select-option-text');
 
     .select-dropdown--small & {
       @include utilities.control--small;
@@ -172,13 +191,13 @@ $select-arrow-padding-right: utilities.$spacing-xxs;
     &-active {
       &:not(.select-item-option-selected) {
         background-color: utilities.get-color('select-option-hover');
-        color: utilities.get-color('primary-invert-text');
+        color: utilities.get-color('select-option-text');
       }
     }
 
     &-selected {
-      background-color: utilities.get-color('primary-base');
-      color: utilities.get-color('primary-text');
+      background-color: utilities.get-color('select-option-selected');
+      color: utilities.get-color('select-option-text-selected');
     }
   }
 }

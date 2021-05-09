@@ -5,7 +5,7 @@
   $default-color: map.get(utilities.$light-colors, 'default');
 
   --color-input-base: #{$default-color};
-  --color-input-background: utilities.get-color('background');
+  --color-input-background: #{map.get(utilities.$light-colors, 'background')};
   --color-input-hover: #{utilities.shade($default-color, 20%)};
   --color-input-focus: #{map.get(utilities.$light-colors, 'focus')};
   --color-input-placeholder: #{rgba(map.get(utilities.$light-colors, 'text'), 0.4)};
