@@ -2,7 +2,15 @@
 @use 'sass:map';
 
 .switch {
-  background-color: map.get(utilities.$base-colors, 'mine-shaft');
+  @include utilities.light-theme {
+    --color-switch-checked: #{map.get(utilities.$base-colors, 'mine-shaft')};
+    --color-switch-thumb: #{map.get(utilities.$base-colors, 'alabaster')};
+  }
+
+  @include utilities.dark-theme {
+    --color-switch-unchecked: #{map.get(utilities.$base-colors, 'alabaster')};
+    --color-switch-thumb: #{map.get(utilities.$base-colors, 'mine-shaft')};
+  }
 }
 
 .icon {

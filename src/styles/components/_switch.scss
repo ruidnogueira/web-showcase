@@ -7,7 +7,10 @@ $switch-width: 2 * $switch-height;
 $switch-padding: 3px;
 $switch-thumb-size: calc(#{$switch-height} - #{2 * $switch-padding});
 $switch-thumb-shift: $switch-padding - 1px;
-$switch-thumb-color: map.get(utilities.$base-colors, 'white');
+
+@include utilities.theme {
+  --color-switch-thumb: #{map.get(utilities.$base-colors, 'white')};
+}
 
 @include utilities.light-theme {
   --color-switch-unchecked: #{utilities.tint(map.get(utilities.$light-colors, 'default'), 20%)};
@@ -74,7 +77,7 @@ $switch-thumb-color: map.get(utilities.$base-colors, 'white');
 
   &__thumb {
     align-items: center;
-    background-color: $switch-thumb-color;
+    background-color: utilities.get-color('switch-thumb');
     border-radius: 50%;
     display: inline-flex;
     height: $switch-thumb-size;
