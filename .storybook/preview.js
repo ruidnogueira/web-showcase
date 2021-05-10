@@ -1,6 +1,10 @@
 import '../src/styles/styles.scss';
 import React from 'react';
 import isChromatic from 'chromatic/isChromatic';
+import { HelmetProvider } from 'react-helmet-async';
+import { ThemeProvider } from '../src/app/core/providers/ThemeProvider';
+import { ConfigProvider } from '../src/app/core/configs/ConfigProvider';
+import { I18nProvider } from '../src/app/core/i18n/I18nProvider';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -35,6 +39,17 @@ export const globalTypes = {
 };
 
 export const decorators = [
+  (Story, { globals }) => (
+    <HelmetProvider>
+      <ConfigProvider>
+        <I18nProvider>
+          <ThemeProvider initialTheme={globals.theme}>
+            <Story />
+          </ThemeProvider>
+        </I18nProvider>
+      </ConfigProvider>
+    </HelmetProvider>
+  ),
   (Story, { globals, parameters }) =>
     isChromatic() ? (
       <>

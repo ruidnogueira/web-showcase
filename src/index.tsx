@@ -9,6 +9,8 @@ import { ConfigProvider } from 'app/core/configs/ConfigProvider';
 import { I18nProvider } from 'app/core/i18n/I18nProvider';
 import { worker } from 'mocks/server/browser.mock';
 import { GlobalProviders } from 'app/core/providers/GlobalProviders';
+import { HelmetProvider } from 'react-helmet-async';
+import { ThemeProvider } from 'app/core/providers/ThemeProvider';
 
 async function render() {
   if (window.location.pathname === process.env.PUBLIC_URL) {
@@ -32,15 +34,19 @@ async function render() {
     <StrictMode>
       <Profiler id="App" onRender={() => {}}>
         <BrowserRouter>
-          <ConfigProvider>
-            <I18nProvider>
-              <GlobalProviders>
-                <Suspense fallback={<div>Loading...</div>}>
-                  <App />
-                </Suspense>
-              </GlobalProviders>
-            </I18nProvider>
-          </ConfigProvider>
+          <HelmetProvider>
+            <ConfigProvider>
+              <I18nProvider>
+                <ThemeProvider>
+                  <GlobalProviders>
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <App />
+                    </Suspense>
+                  </GlobalProviders>
+                </ThemeProvider>
+              </I18nProvider>
+            </ConfigProvider>
+          </HelmetProvider>
         </BrowserRouter>
       </Profiler>
     </StrictMode>,
