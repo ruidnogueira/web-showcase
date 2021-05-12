@@ -3,7 +3,6 @@ import { ConfigProvider } from 'app/core/configs/ConfigProvider';
 import { I18nProvider } from 'app/core/i18n/I18nProvider';
 import { ColorVariant } from 'app/core/models/styles.model';
 import { Theme } from 'app/core/providers/ThemeProvider';
-import { Suspense } from 'react';
 import { StorybookVariants } from 'test/storybook.helper';
 import { Spinner, SpinnerColorVariant, SpinnerProps } from './Spinner';
 
@@ -11,13 +10,7 @@ export default {
   title: 'Atoms/Spinner',
   component: Spinner,
   argTypes: { variant: { control: { disable: true } } },
-  parameters: {
-    docs: {
-      source: {
-        type: 'code',
-      },
-    },
-  },
+  parameters: {},
   decorators: [
     (Story) => (
       <ConfigProvider>
@@ -40,23 +33,21 @@ const Template: Story<SpinnerProps> = (args, { globals }: { globals?: Args }) =>
   const invertedBackground = theme === 'light' ? '#000' : '#fff';
 
   return (
-    <Suspense fallback={<div>loading...</div>}>
-      <StorybookVariants>
-        {colorVariants.map((variant) => (
-          <Spinner
-            {...args}
-            key={variant ?? 'undefined'}
-            variant={variant}
-            style={{
-              width: '100px',
-              height: '100px',
-              backgroundColor:
-                variant !== SpinnerColorVariant.Inverted ? variant : invertedBackground,
-            }}
-          />
-        ))}
-      </StorybookVariants>
-    </Suspense>
+    <StorybookVariants>
+      {colorVariants.map((variant) => (
+        <Spinner
+          {...args}
+          key={variant ?? 'undefined'}
+          variant={variant}
+          style={{
+            width: '100px',
+            height: '100px',
+            backgroundColor:
+              variant !== SpinnerColorVariant.Inverted ? variant : invertedBackground,
+          }}
+        />
+      ))}
+    </StorybookVariants>
   );
 };
 

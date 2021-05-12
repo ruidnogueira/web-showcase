@@ -1,18 +1,11 @@
 import { Story, Meta } from '@storybook/react';
-import { Suspense } from 'react';
 import { StorybookGlobalProviders } from 'test/storybook.helper';
 import { LanguageSelect } from './LanguageSelect';
 
 export default {
   title: 'Atoms/LanguageSelect',
   component: LanguageSelect,
-  parameters: {
-    docs: {
-      source: {
-        type: 'code',
-      },
-    },
-  },
+  parameters: {},
   decorators: [
     (Story) => (
       <StorybookGlobalProviders>
@@ -22,11 +15,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story = () => (
-  <Suspense fallback={<div>loading...</div>}>
-    <LanguageSelect />
-  </Suspense>
-);
+const Template: Story = () => <LanguageSelect />;
 
 export const Default = Template.bind({});
 Default.args = {};

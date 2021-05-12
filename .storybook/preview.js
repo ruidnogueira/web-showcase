@@ -5,6 +5,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import { ThemeContext } from '../src/app/core/providers/ThemeProvider';
 import { ConfigProvider } from '../src/app/core/configs/ConfigProvider';
 import { I18nProvider } from '../src/app/core/i18n/I18nProvider';
+import { Suspense } from 'react';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -44,12 +45,15 @@ export const decorators = [
       <ConfigProvider>
         <I18nProvider>
           <ThemeProvider theme={globals.theme}>
-            <Story />
+            <Suspense fallback={<div>Loading...</div>}>
+              <Story />
+            </Suspense>
           </ThemeProvider>
         </I18nProvider>
       </ConfigProvider>
     </HelmetProvider>
   ),
+
   (Story, { globals, parameters }) =>
     isChromatic() ? (
       <>

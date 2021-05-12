@@ -1,18 +1,11 @@
 import { Story, Meta } from '@storybook/react';
-import { Suspense } from 'react';
 import { StorybookGlobalProviders } from 'test/storybook.helper';
 import { ThemeSwitch } from './ThemeSwitch';
 
 export default {
   title: 'Atoms/ThemeSwitch',
   component: ThemeSwitch,
-  parameters: {
-    docs: {
-      source: {
-        type: 'code',
-      },
-    },
-  },
+  parameters: {},
   decorators: [
     (Story) => (
       <StorybookGlobalProviders>
@@ -22,11 +15,7 @@ export default {
   ],
 } as Meta;
 
-const Template: Story = () => (
-  <Suspense fallback={<div>loading...</div>}>
-    <ThemeSwitch />
-  </Suspense>
-);
+const Template: Story = () => <ThemeSwitch />;
 
 export const Default = Template.bind({});
 Default.args = {};

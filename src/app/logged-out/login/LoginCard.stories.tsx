@@ -1,5 +1,4 @@
 import { Story, Meta } from '@storybook/react';
-import { Suspense } from 'react';
 import { StorybookGlobalProviders } from 'test/storybook.helper';
 import { LoginError } from './login.types';
 import { LoginCardPresentation, LoginCardPresentationProps } from './LoginCard';
@@ -19,11 +18,6 @@ export default {
     onSubmit: () => {},
   },
   parameters: {
-    docs: {
-      source: {
-        type: 'code',
-      },
-    },
     layout: 'fullscreen',
     chromatic: { viewports: [360, 1800] },
   },
@@ -36,11 +30,7 @@ export default {
   ],
 } as Meta<LoginCardPresentationProps>;
 
-const Template: Story<LoginCardPresentationProps> = (args) => (
-  <Suspense fallback={<div>loading...</div>}>
-    <LoginCardPresentation {...args} />
-  </Suspense>
-);
+const Template: Story<LoginCardPresentationProps> = (args) => <LoginCardPresentation {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {};
