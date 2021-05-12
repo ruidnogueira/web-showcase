@@ -12,12 +12,38 @@
   @return mix(#000, $color, $percentage);
 }
 
-@function prefix-list($list, $prefix) {
+// ==== Util ====
+
+@function join-list($list, $glue: ', ') {
+  @if length($list) == 1 {
+    @return $list;
+  }
+
+  $string: '';
+  @each $item in $list {
+    @if $string != '' {
+      $string: $string + $glue;
+    }
+    $string: $string + $item;
+  }
+
+  @return $string;
+}
+
+@function append-list($list, $prefix: '', $suffix: '') {
   $new-list: ();
 
   @each $value in $list {
-    $new-list: list.append($new-list, #{$prefix} + #{$value});
+    $new-list: list.append($new-list, $prefix + $value + $suffix);
   }
 
   @return $new-list;
+}
+
+// ==== CSS Modules ====
+
+@function globalize($selector, $is-css-module) {
+  // workaround to prevent css module scoping of classes inside mixin
+  // improve this if a better solution is found
+  @return if($is-css-module, #{':global(' + $selector + ')'}, $selector);
 }

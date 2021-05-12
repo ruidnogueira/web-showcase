@@ -1,7 +1,7 @@
 @use '../utilities';
 @use 'sass:map';
 
-$button-variants: utilities.prefix-list(utilities.$color-variants, '.button--');
+$button-variants: utilities.append-list(utilities.$color-variants, $prefix: '.button--');
 $button-outline-width: 0.3rem;
 
 @include utilities.light-theme {
