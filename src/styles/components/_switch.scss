@@ -8,7 +8,7 @@ $switch-padding: 3px;
 $switch-thumb-size: calc(#{$switch-height} - #{2 * $switch-padding});
 $switch-thumb-shift: $switch-padding - 1px;
 
-@include utilities.theme {
+:root {
   --color-switch-thumb: #{map.get(utilities.$base-colors, 'white')};
 }
 

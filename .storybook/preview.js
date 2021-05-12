@@ -2,7 +2,7 @@ import '../src/styles/styles.scss';
 import React from 'react';
 import isChromatic from 'chromatic/isChromatic';
 import { HelmetProvider } from 'react-helmet-async';
-import { ThemeProvider } from '../src/app/core/providers/ThemeProvider';
+import { ThemeContext } from '../src/app/core/providers/ThemeProvider';
 import { ConfigProvider } from '../src/app/core/configs/ConfigProvider';
 import { I18nProvider } from '../src/app/core/i18n/I18nProvider';
 
@@ -43,7 +43,7 @@ export const decorators = [
     <HelmetProvider>
       <ConfigProvider>
         <I18nProvider>
-          <ThemeProvider initialTheme={globals.theme}>
+          <ThemeProvider theme={globals.theme}>
             <Story />
           </ThemeProvider>
         </I18nProvider>
@@ -70,7 +70,7 @@ export const decorators = [
 function ThemeWrapper({ theme, children, style, parameters }) {
   return (
     <div
-      className={'theme--' + theme}
+      data-theme={theme}
       style={{
         height: '100%',
         width: '100%',
@@ -82,5 +82,11 @@ function ThemeWrapper({ theme, children, style, parameters }) {
     >
       {children}
     </div>
+  );
+}
+
+function ThemeProvider({ theme, children }) {
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>{children}</ThemeContext.Provider>
   );
 }
