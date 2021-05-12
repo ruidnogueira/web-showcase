@@ -1,5 +1,5 @@
 import { getFromLocalStorage, saveToLocalStorage } from 'app/common/utils/browser.util';
-import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useConfig } from '../configs/ConfigProvider';
 
@@ -31,15 +31,22 @@ export function ThemeProvider({
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   });
 
+  const themeToggled = useRef(false);
+
+  useEffect(() => {
+    if (themeToggled) {
+      saveToLocalStorage(storageKeys.theme, theme);
+    }
+  }, [storageKeys.theme, theme]);
+
   const themeState = useMemo(() => {
     const toggleTheme = () => {
-      const newTheme = theme === 'light' ? 'dark' : 'light';
-      saveToLocalStorage(storageKeys.theme, newTheme);
-      setTheme(newTheme);
+      themeToggled.current = true;
+      setTheme((theme) => (theme === 'light' ? 'dark' : 'light'));
     };
 
     return { theme, toggleTheme };
-  }, [theme, storageKeys]);
+  }, [theme]);
 
   return (
     <>
