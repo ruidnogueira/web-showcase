@@ -53,7 +53,7 @@ export const decorators = [
   ),
 
   (Story, { globals, parameters }) =>
-    true ? (
+    isChromatic() ? (
       <>
         <ThemeWrapper theme="light" style={{ marginBottom: '10px' }} parameters={parameters}>
           <Story />

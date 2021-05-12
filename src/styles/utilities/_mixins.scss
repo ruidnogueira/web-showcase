@@ -1,25 +1,25 @@
 @use 'functions';
 
-@mixin theme($selector) {
+@mixin theme($selectors) {
   @if & {
-    #{$selector} & {
+    #{functions.join-list(functions.append-list($selectors, $suffix: ' &'))} {
       @content;
     }
   } @else {
-    #{$selector} {
+    #{functions.join-list($selectors)} {
       @content;
     }
   }
 }
 
 @mixin light-theme {
-  @include theme('[data-theme="light"]') {
+  @include theme(('[data-theme="light"]', '.theme--light')) {
     @content;
   }
 }
 
 @mixin dark-theme {
-  @include theme('[data-theme="dark"]') {
+  @include theme(('[data-theme="dark"]', '.theme--dark')) {
     @content;
   }
 }
