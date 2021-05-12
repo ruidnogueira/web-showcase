@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "~styles/utilities";
 @use "LoggedOutShared.module" as shared;
 
@@ -26,10 +27,16 @@
 }
 
 .card {
-  background-color: utilities.get-color('background');
+  --color-logged_out-card: #{utilities.get-color('background')};
+
+  background-color: var(--color-logged_out-card);
   height: 100%;
 
   @media (min-width: shared.$mobile-breakpoint) {
+    @include utilities.dark-theme {
+      --color-logged_out-card: #{utilities.tint(map.get(utilities.$dark-colors, 'background'), 6%)};
+    }
+
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     height: auto;
     margin-bottom: utilities.$spacing-s;

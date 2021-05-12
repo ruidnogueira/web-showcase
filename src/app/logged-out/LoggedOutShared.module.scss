@@ -4,9 +4,17 @@ $mobile-breakpoint: 34em;
 $card-horizontal-margin: utilities.$spacing-s;
 
 .title {
+  --color-logged_out-title-background: #{utilities.get-color('primary-base')};
+  --color-logged_out-title-text: #{utilities.get-color('primary-text')};
+
+  @include utilities.dark-theme {
+    --color-logged_out-title-background: #{utilities.get-color('primary-text')};
+    --color-logged_out-title-text: #{utilities.get-color('primary-base')};
+  }
+
   align-items: center;
-  background-color: utilities.get-color('primary-base');
-  color: utilities.get-color('primary-text');
+  background-color: utilities.get-color('logged_out-title-background');
+  color: utilities.get-color('logged_out-title-text');
   display: inline-flex;
   flex-basis: calc(100% / 3);
   flex-direction: column;
@@ -16,7 +24,7 @@ $card-horizontal-margin: utilities.$spacing-s;
   text-align: center;
 
   @media (min-width: $mobile-breakpoint) {
-    background-color: utilities.get-color('background');
+    background-color: utilities.get-color('logged_out-card');
     color: utilities.get-color('primary-base');
     flex-basis: auto;
   }
