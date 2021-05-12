@@ -40,26 +40,25 @@ export const globalTypes = {
 };
 
 export const decorators = [
-  (Story, { globals }) => (
+  (Story) => (
     <HelmetProvider>
       <ConfigProvider>
         <I18nProvider>
-          <ThemeProvider theme={globals.theme}>
-            <Suspense fallback={<div>Loading...</div>}>
-              <Story />
-            </Suspense>
-          </ThemeProvider>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Story />
+          </Suspense>
         </I18nProvider>
       </ConfigProvider>
     </HelmetProvider>
   ),
 
   (Story, { globals, parameters }) =>
-    isChromatic() ? (
+    true ? (
       <>
         <ThemeWrapper theme="light" style={{ marginBottom: '10px' }} parameters={parameters}>
           <Story />
         </ThemeWrapper>
+
         <ThemeWrapper theme="dark" parameters={parameters}>
           <Story />
         </ThemeWrapper>
@@ -73,24 +72,20 @@ export const decorators = [
 
 function ThemeWrapper({ theme, children, style, parameters }) {
   return (
-    <div
-      data-theme={theme}
-      style={{
-        height: '100%',
-        width: '100%',
-        color: 'var(--color-text)',
-        background: 'var(--color-background)',
-        padding: parameters.layout === 'fullscreen' ? undefined : '1rem',
-        ...style,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-function ThemeProvider({ theme, children }) {
-  return (
-    <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
+      <div
+        data-theme={theme}
+        style={{
+          height: '100%',
+          width: '100%',
+          color: 'var(--color-text)',
+          background: 'var(--color-background)',
+          padding: parameters.layout === 'fullscreen' ? undefined : '1rem',
+          ...style,
+        }}
+      >
+        {children}
+      </div>
+    </ThemeContext.Provider>
   );
 }
