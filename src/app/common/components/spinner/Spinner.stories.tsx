@@ -1,8 +1,8 @@
-import { Story, Meta, Args } from '@storybook/react';
+import { Story, Meta } from '@storybook/react';
 import { ConfigProvider } from 'app/core/configs/ConfigProvider';
 import { I18nProvider } from 'app/core/i18n/I18nProvider';
 import { ColorVariant } from 'app/core/models/styles.model';
-import { Theme } from 'app/core/providers/ThemeProvider';
+import { useTheme } from 'app/core/providers/ThemeProvider';
 import { StorybookVariants } from 'test/storybook.helper';
 import { Spinner, SpinnerColorVariant, SpinnerProps } from './Spinner';
 
@@ -28,8 +28,8 @@ const colorVariants = [
   ...Object.values(SpinnerColorVariant),
 ];
 
-const Template: Story<SpinnerProps> = (args, { globals }: { globals?: Args }) => {
-  const theme: Theme = globals?.theme;
+const Template: Story<SpinnerProps> = (args) => {
+  const { theme } = useTheme();
   const invertedBackground = theme === 'light' ? '#000' : '#fff';
 
   return (
