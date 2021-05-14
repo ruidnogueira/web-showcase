@@ -35,7 +35,7 @@ async function render() {
   ReactDOM.render(
     <StrictMode>
       <Profiler id="App" onRender={() => {}}>
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.REACT_APP_BASE_PATH}>
           <HelmetProvider>
             <ConfigProvider>
               <I18nProvider>

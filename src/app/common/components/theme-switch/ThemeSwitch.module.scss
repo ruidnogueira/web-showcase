@@ -1,8 +1,6 @@
 @use '~styles/utilities';
 @use 'sass:map';
 
-// TODO add typescript-plugin-css-modules
-
 .switch {
   @include utilities.light-theme {
     --color-switch-checked: #{map.get(utilities.$base-colors, 'mine-shaft')};
