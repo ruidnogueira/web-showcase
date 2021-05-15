@@ -86,6 +86,8 @@ jobs:
         env:
           REACT_APP_DISABLE_MOCKS: true
 
+      - uses: microsoft/playwright-github-action@v1
+
       - name: Run tests
         run: npm run e2e:ci
         env:
