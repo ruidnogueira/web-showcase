@@ -4,6 +4,7 @@
   "ignoreFiles": ["./node_modules/**", "**/*.js", "**/*.ts", "**/*.jsx", "**/*.tsx"],
   "rules": {
     "at-rule-no-unknown": null,
+    "selector-pseudo-class-no-unknown": [true, { ignorePseudoClasses: ['global'] }],
     "scss/at-rule-no-unknown": true,
     "order/properties-alphabetical-order": true
   },

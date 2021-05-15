@@ -1,5 +1,6 @@
 import { Story, Meta } from '@storybook/react';
 import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
+import { StorybookVariants } from 'test/storybook.helper';
 import { Input, InputProps } from './Input';
 
 export default {
@@ -20,11 +21,11 @@ export default {
 
 const colorVariants = [undefined, ...Object.values(ColorVariant)];
 const Template: Story<InputProps> = (args) => (
-  <div style={{ display: 'flex', gap: '10px' }}>
+  <StorybookVariants>
     {colorVariants.map((variant) => (
-      <Input {...args} key={variant} variant={variant} />
+      <Input {...args} key={variant ?? 'undefined'} variant={variant} />
     ))}
-  </div>
+  </StorybookVariants>
 );
 
 export const Default = Template.bind({});

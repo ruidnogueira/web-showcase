@@ -1,3 +1,5 @@
+@use "sass:list";
+
 // ==== Color ====
 
 // Slightly lighten a color
@@ -8,4 +10,40 @@
 // Slightly darken a color
 @function shade($color, $percentage) {
   @return mix(#000, $color, $percentage);
+}
+
+// ==== Util ====
+
+@function join-list($list, $glue: ', ') {
+  @if length($list) == 1 {
+    @return $list;
+  }
+
+  $string: '';
+  @each $item in $list {
+    @if $string != '' {
+      $string: $string + $glue;
+    }
+    $string: $string + $item;
+  }
+
+  @return $string;
+}
+
+@function append-list($list, $prefix: '', $suffix: '') {
+  $new-list: ();
+
+  @each $value in $list {
+    $new-list: list.append($new-list, $prefix + $value + $suffix);
+  }
+
+  @return $new-list;
+}
+
+// ==== CSS Modules ====
+
+@function globalize($selector, $is-css-module) {
+  // workaround to prevent css module scoping of classes inside mixin
+  // improve this if a better solution is found
+  @return if($is-css-module, #{':global(' + $selector + ')'}, $selector);
 }
