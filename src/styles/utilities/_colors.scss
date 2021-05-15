@@ -3,11 +3,17 @@
 
 $base-colors: (
   'alabaster': #fafafa,
+  'cornflower-blue': #6e7dff,
   'governor-bay': #3948ca,
+  'malibu': #73bdff,
   'mariner': #2d5fd3,
   'mine-shaft': #222,
   'persian-red': #d32d2d,
   'silver': #c9c9c9,
+  'submarine': #c2c9cc,
+  'sunset-orange': #ff4e4e,
+  'web-orange': #fa0,
+  'white': #fff,
 );
 
 $color-variants: 'primary', 'error';
@@ -30,16 +36,37 @@ $light-variant-colors: (
 $light-app-colors: (
   'background': map.get($base-colors, 'alabaster'),
   'text': map.get($base-colors, 'mine-shaft'),
+  'invert-text': map.get($base-colors, 'alabaster'),
   'focus': map.get($base-colors, 'mariner'),
   'outline': rgba(map.get($base-colors, 'mariner'), 0.3),
-  'default': map.get($base-colors, 'silver'),
+  'default': map.get($base-colors, 'submarine'),
 );
 
 $light-colors: map.merge($light-app-colors, $light-variant-colors);
 
-$dark-variant-colors: ();
+$dark-variant-colors: (
+  'primary': (
+    'base': map.get($base-colors, 'cornflower-blue'),
+    'text': map.get($base-colors, 'mine-shaft'),
+    'invert-text': map.get($base-colors, 'alabaster'),
+    'outline': rgba(map.get($base-colors, 'cornflower-blue'), 0.7),
+  ),
+  'error': (
+    'base': map.get($base-colors, 'sunset-orange'),
+    'text': map.get($base-colors, 'mine-shaft'),
+    'invert-text': map.get($base-colors, 'alabaster'),
+    'outline': rgba(map.get($base-colors, 'sunset-orange'), 0.7),
+  ),
+);
 
-$dark-app-colors: ();
+$dark-app-colors: (
+  'background': map.get($base-colors, 'mine-shaft'),
+  'text': map.get($base-colors, 'alabaster'),
+  'invert-text': map.get($base-colors, 'mine-shaft'),
+  'focus': map.get($base-colors, 'malibu'),
+  'outline': rgba(map.get($base-colors, 'malibu'), 0.7),
+  'default': map.get($base-colors, 'submarine'),
+);
 
 $dark-colors: map.merge($dark-app-colors, $dark-variant-colors);
 

@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "types": ["jest-playwright-preset", "jest"],
+    "isolatedModules": false,
+    "paths": {
+      "app/*": ["../src/*"]
+    }
+  },
+  "include": ["**/*.ts"]
+}

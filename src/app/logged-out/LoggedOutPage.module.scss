@@ -1,0 +1,56 @@
+@use "sass:map";
+@use "~styles/utilities";
+@use "LoggedOutShared.module" as shared;
+
+.backdrop {
+  --color-logged_out-backdrop: #{utilities.get-color('background')};
+
+  background-color: utilities.get-color('logged_out-backdrop');
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  @media (min-width: shared.$mobile-breakpoint) {
+    @include utilities.light-theme {
+      --color-logged_out-backdrop: #{utilities.get-color('primary-base')};
+    }
+
+    display: grid;
+    grid-template-rows: 1fr auto 1fr;
+    justify-content: center;
+
+    &::before {
+      // to center card and options
+      content: '';
+    }
+  }
+}
+
+.card {
+  --color-logged_out-card: #{utilities.get-color('background')};
+
+  background-color: var(--color-logged_out-card);
+  height: 100%;
+
+  @media (min-width: shared.$mobile-breakpoint) {
+    @include utilities.dark-theme {
+      --color-logged_out-card: #{utilities.tint(map.get(utilities.$dark-colors, 'background'), 6%)};
+    }
+
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    height: auto;
+    margin-bottom: utilities.$spacing-s;
+  }
+}
+
+.options {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  padding: utilities.$spacing-s shared.$card-horizontal-margin;
+
+  @media (min-width: shared.$mobile-breakpoint) {
+    padding: utilities.$spacing-s 0;
+  }
+}

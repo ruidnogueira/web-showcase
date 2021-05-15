@@ -1,5 +1,6 @@
 import { Story, Meta } from '@storybook/react';
 import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
+import { StorybookVariants } from 'test/storybook.helper';
 import { Button, ButtonProps } from './Button';
 
 export default {
@@ -21,22 +22,27 @@ export default {
 
 const colorVariants = [undefined, ...Object.values(ColorVariant)];
 const Template: Story<ButtonProps> = (args) => (
-  <div style={{ display: 'flex', gap: '10px' }}>
+  <StorybookVariants>
     {colorVariants.map((variant) => (
-      <Button {...args} key={variant} variant={variant} />
+      <Button {...args} key={variant ?? 'undefined'} variant={variant} />
     ))}
-  </div>
+  </StorybookVariants>
 );
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const Small = Template.bind({});
+Small.args = {
+  size: ControlSize.Small,
+};
 
 export const Disabled = Template.bind({});
 Disabled.args = {
   disabled: true,
 };
 
-export const Small = Template.bind({});
-Small.args = {
-  size: ControlSize.Small,
+export const Loading = Template.bind({});
+Loading.args = {
+  isLoading: true,
 };

@@ -1,0 +1,35 @@
+@use "~styles/utilities";
+@use "../LoggedOutShared.module" as shared;
+
+.card {
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: shared.$mobile-breakpoint) {
+    width: 32.2rem;
+  }
+}
+
+.form {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  justify-content: center;
+  padding: utilities.$spacing-s shared.$card-horizontal-margin;
+
+  @media (min-width: shared.$mobile-breakpoint) {
+    flex-grow: 0;
+  }
+}
+
+.field {
+  margin-bottom: utilities.$spacing-l;
+
+  &:last-of-type {
+    margin-bottom: utilities.$spacing-xxxl;
+  }
+}
+
+.error {
+  padding-bottom: utilities.$spacing-s;
+}
