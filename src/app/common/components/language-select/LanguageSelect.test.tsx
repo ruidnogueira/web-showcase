@@ -13,7 +13,7 @@ const setup = () => {
   const i18nMock = createI18nMock();
   i18nMock.changeLanguage('en-GB');
 
-  const result = render(
+  const result = renderWithProviders(
     <ConfigProvider
       config={{
         i18nConfig: {
