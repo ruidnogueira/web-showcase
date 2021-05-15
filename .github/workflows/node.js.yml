@@ -83,7 +83,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          REACT_APP_DISABLE_MOCKS: true
+          REACT_APP_E2E: true
 
       - uses: microsoft/playwright-github-action@v1
 

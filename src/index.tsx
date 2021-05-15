@@ -7,7 +7,6 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { ConfigProvider } from 'app/core/configs/ConfigProvider';
 import { I18nProvider } from 'app/core/i18n/I18nProvider';
-import { worker } from 'mocks/server/browser.mock';
 import { GlobalProviders } from 'app/core/providers/GlobalProviders';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'app/core/providers/ThemeProvider';
@@ -24,7 +23,9 @@ async function render() {
     window.location.pathname = process.env.PUBLIC_URL + '/';
   }
 
-  if (process.env.REACT_APP_DISABLE_MOCKS !== 'true') {
+  if (!process.env.REACT_APP_E2E) {
+    const { worker } = require('mocks/server/browser.mock');
+
     await worker.start({
       serviceWorker: {
         url: `${process.env.PUBLIC_URL}/mockServiceWorker.js`,
@@ -59,7 +60,9 @@ async function render() {
 render();
 
 // TODO ADD service worker check for updates
-serviceWorkerRegistration.register();
+if (!process.env.REACT_APP_E2E) {
+  serviceWorkerRegistration.register();
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
