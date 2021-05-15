@@ -4,6 +4,7 @@ import { OptionProps as RcSelectOptionprops } from 'rc-select/lib/Option';
 import classNames from 'classnames';
 import { ChevronDown } from 'react-feather';
 import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
+import { useTheme } from 'app/core/providers/ThemeProvider';
 
 export type SelectValue = DefaultValueType;
 export type SelectOptionProps = RcSelectOptionprops;
@@ -29,6 +30,8 @@ export function Select<Value extends SelectValue>({
   virtual = false,
   ...props
 }: SelectProps<Value>) {
+  const { theme } = useTheme();
+
   return (
     <RcSelect<Value>
       {...props}
@@ -37,7 +40,11 @@ export function Select<Value extends SelectValue>({
         { [`select--${variant}`]: variant, [`select--${size}`]: size },
         className
       )}
-      dropdownClassName={classNames({ [`select-dropdown--${size}`]: size }, dropdownClassName)}
+      dropdownClassName={classNames(
+        { [`select-dropdown--${size}`]: size },
+        `theme--${theme}`,
+        dropdownClassName
+      )}
       virtual={virtual}
       menuItemSelectedIcon={menuItemSelectedIcon}
       inputIcon={<ChevronDown />}
