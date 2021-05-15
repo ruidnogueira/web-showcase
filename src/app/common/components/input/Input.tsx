@@ -4,12 +4,12 @@ import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   /**
-   * Specifies the visual variant
+   * The visual variant of the input
    */
   variant?: ColorVariant;
 
   /**
-   * Specifies the size
+   * The size of the input
    */
   size?: ControlSize;
 }

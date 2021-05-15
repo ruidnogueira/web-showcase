@@ -1,34 +1,32 @@
-@mixin light-theme {
-  $selector: ':root';
+@use 'functions';
 
+@mixin theme($selectors) {
   @if & {
-    #{$selector} & {
+    #{functions.join-list(functions.append-list($selectors, $suffix: ' &'))} {
       @content;
     }
   } @else {
-    #{$selector} {
+    #{functions.join-list($selectors)} {
       @content;
     }
+  }
+}
+
+@mixin light-theme {
+  @include theme(('[data-theme="light"]', '.theme--light')) {
+    @content;
   }
 }
 
 @mixin dark-theme {
-  $selector: ':root[data-theme="dark"]';
-
-  @if & {
-    #{$selector} & {
-      @content;
-    }
-  } @else {
-    #{$selector} {
-      @content;
-    }
+  @include theme(('[data-theme="dark"]', '.theme--dark')) {
+    @content;
   }
 }
 
-@mixin outline($color: var(--color-outline)) {
+@mixin outline($color: var(--color-outline), $width: 0.2rem) {
   /* Visible in the full-colour space */
-  box-shadow: 0 0 0 0.2rem $color;
+  box-shadow: 0 0 0 $width $color;
 
   /* Visible in Windows high-contrast themes */
   outline: transparent solid 2px;
@@ -46,4 +44,34 @@
 @mixin disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+@mixin visually-hidden {
+  border: 0 none;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  overflow-wrap: normal;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@mixin not($list...) {
+  // flatten list variable
+  @if (length($list) == 1) {
+    $list: nth($list, 1);
+  }
+
+  $not: '';
+
+  @each $value in $list {
+    $not: $not + ':not(#{$value})';
+  }
+
+  &#{$not} {
+    @content;
+  }
 }

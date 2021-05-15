@@ -3,9 +3,11 @@ import { ConfigProvider } from '../configs/ConfigProvider';
 import { GlobalProviders } from './GlobalProviders';
 
 test('renders', () => {
-  render(
+  const { container } = render(
     <ConfigProvider>
       <GlobalProviders>children</GlobalProviders>
     </ConfigProvider>
   );
+
+  expect(container).toBeInTheDocument();
 });

@@ -1,0 +1,29 @@
+@use '../utilities';
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  @include utilities.regular-text;
+
+  margin-bottom: utilities.$spacing-xxxs;
+}
+
+.help {
+  @include utilities.text;
+
+  font-size: utilities.$font-size-2;
+
+  &:empty::after {
+    content: '.';
+    visibility: hidden;
+  }
+
+  @each $variant in utilities.$color-variants {
+    &--#{$variant} {
+      color: utilities.get-color($variant, 'base');
+    }
+  }
+}

@@ -1,0 +1,96 @@
+@use '../utilities';
+@use 'sass:map';
+
+$switch-outline-width: 0.3rem;
+$switch-height: utilities.$control-height;
+$switch-width: 2 * $switch-height;
+$switch-padding: 3px;
+$switch-thumb-size: calc(#{$switch-height} - #{2 * $switch-padding});
+$switch-thumb-shift: $switch-padding - 1px;
+
+:root {
+  --color-switch-thumb: #{map.get(utilities.$base-colors, 'white')};
+}
+
+@include utilities.light-theme {
+  --color-switch-unchecked: #{utilities.tint(map.get(utilities.$light-colors, 'default'), 20%)};
+  --color-switch-checked: #{map.get(utilities.$light-colors, 'focus')};
+
+  @each $variant in utilities.$color-variants {
+    --color-switch-#{$variant}-checked: #{map.get(utilities.$light-colors, $variant, 'base')};
+  }
+}
+
+@include utilities.dark-theme {
+  --color-switch-unchecked: #{utilities.shade(map.get(utilities.$dark-colors, 'default'), 40%)};
+  --color-switch-checked: #{map.get(utilities.$dark-colors, 'focus')};
+
+  @each $variant in utilities.$color-variants {
+    --color-switch-#{$variant}-checked: #{map.get(utilities.$dark-colors, $variant, 'base')};
+  }
+}
+
+.switch {
+  @extend %control;
+
+  background-color: utilities.get-color('switch-unchecked');
+  border-radius: 9999px;
+  height: $switch-height;
+  padding: $switch-padding;
+  transition: background-color 100ms;
+  width: $switch-width;
+
+  &--checked {
+    background-color: utilities.get-color('switch-checked');
+  }
+
+  &--focus {
+    @include utilities.outline($width: $switch-outline-width);
+  }
+
+  &--disabled {
+    @include utilities.disabled;
+  }
+
+  &--small {
+    @include utilities.control--small;
+  }
+
+  @each $variant in utilities.$color-variants {
+    &--#{$variant} {
+      &.switch--checked {
+        background-color: utilities.get-color('switch', $variant, 'checked');
+      }
+
+      &.switch--focus {
+        @include utilities.outline(
+          $color: utilities.get-color($variant, 'outline'),
+          $width: $switch-outline-width
+        );
+      }
+    }
+  }
+
+  &__input {
+    @include utilities.visually-hidden;
+  }
+
+  &__thumb {
+    align-items: center;
+    background-color: utilities.get-color('switch-thumb');
+    border-radius: 50%;
+    display: inline-flex;
+    height: $switch-thumb-size;
+    justify-content: center;
+    left: $switch-thumb-shift;
+    position: absolute;
+    top: $switch-thumb-shift;
+    transition: left 200ms;
+    vertical-align: middle;
+    width: $switch-thumb-size;
+
+    .switch--checked & {
+      left: calc(100% - #{$switch-thumb-size} - #{$switch-thumb-shift});
+    }
+  }
+}

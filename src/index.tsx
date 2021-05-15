@@ -7,37 +7,62 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { ConfigProvider } from 'app/core/configs/ConfigProvider';
 import { I18nProvider } from 'app/core/i18n/I18nProvider';
-import { worker } from 'mocks/server/browser.mock';
 import { GlobalProviders } from 'app/core/providers/GlobalProviders';
+import { HelmetProvider } from 'react-helmet-async';
+import { ThemeProvider } from 'app/core/providers/ThemeProvider';
 
-worker.start({
-  waitUntilReady: true,
-  serviceWorker: { url: `${process.env.PUBLIC_URL}/mockServiceWorker.js` },
-});
+// TODO E2E IN CI
 
-ReactDOM.render(
-  <StrictMode>
-    <Profiler id="App" onRender={() => {}}>
-      <BrowserRouter>
-        <ConfigProvider>
-          <I18nProvider>
-            <GlobalProviders>
-              <Suspense fallback={<div>Loading...</div>}>
-                <App />
-              </Suspense>
-            </GlobalProviders>
-          </I18nProvider>
-        </ConfigProvider>
-      </BrowserRouter>
-    </Profiler>
-  </StrictMode>,
-  document.getElementById('root')
-);
+async function render() {
+  if (window.location.pathname === process.env.PUBLIC_URL) {
+    // https://github.com/w3c/ServiceWorker/issues/1468
+    // due to a problem with service worker implementation when served from subdirectories,
+    // setting react homepage property in package.json causes service workers to fail when not using trailing slash
+    // does't work -> http://localhost:3000/example
+    // works -> http://localhost:3000/example/
+    window.location.pathname = process.env.PUBLIC_URL + '/';
+  }
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://cra.link/PWA
-serviceWorkerRegistration.unregister();
+  if (!process.env.REACT_APP_E2E) {
+    const { worker } = require('mocks/server/browser.mock');
+
+    await worker.start({
+      serviceWorker: {
+        url: `${process.env.PUBLIC_URL}/mockServiceWorker.js`,
+      },
+    });
+  }
+
+  ReactDOM.render(
+    <StrictMode>
+      <Profiler id="App" onRender={() => {}}>
+        <BrowserRouter basename={process.env.REACT_APP_BASE_PATH}>
+          <HelmetProvider>
+            <ConfigProvider>
+              <I18nProvider>
+                <ThemeProvider>
+                  <GlobalProviders>
+                    <Suspense fallback={<div>Loading...</div>}>
+                      <App />
+                    </Suspense>
+                  </GlobalProviders>
+                </ThemeProvider>
+              </I18nProvider>
+            </ConfigProvider>
+          </HelmetProvider>
+        </BrowserRouter>
+      </Profiler>
+    </StrictMode>,
+    document.getElementById('root')
+  );
+}
+
+render();
+
+// TODO ADD service worker check for updates
+if (!process.env.REACT_APP_E2E) {
+  serviceWorkerRegistration.register();
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
