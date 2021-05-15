@@ -1,3 +1,28 @@
 {
-  "appWorking": "App is working!"
+  "actions": {},
+  "states": {
+    "loading": "Loading"
+  },
+  "props": {
+    "user": {
+      "email": "Email",
+      "password": "Password"
+    }
+  },
+  "pages": {
+    "login": {
+      "title": "Login",
+      "submit": "Log in",
+      "errors": {
+        "invalidLogin": "The email and password you entered doesn't match any account. Please double check and try again.",
+        "unexpected": "Sorry, an unexpected error occurred. Please try again later."
+      }
+    }
+  },
+  "components": {
+    "themeSwitch": {
+      "light": "Enable dark mode",
+      "dark": "Enable light mode"
+    }
+  }
 }

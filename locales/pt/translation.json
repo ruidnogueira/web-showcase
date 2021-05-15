@@ -1,3 +1,28 @@
 {
-  "appWorking": "Aplicação funciona!"
+  "actions": {},
+  "states": {
+    "loading": "A carregar"
+  },
+  "props": {
+    "user": {
+      "email": "E-mail",
+      "password": "Palavra-passe"
+    }
+  },
+  "pages": {
+    "login": {
+      "title": "Inicia sessão",
+      "submit": "Iniciar sessão",
+      "errors": {
+        "invalidLogin": "O e-mail ou palavra-passe que introduziste não corresponde a uma conta. Por favor verifica e tenta outra vez.",
+        "unexpected": "Desculpa, ocurreu um erro inesperado. Tenta novamente mais tarde."
+      }
+    }
+  },
+  "components": {
+    "themeSwitch": {
+      "light": "Ativar modo escuro",
+      "dark": "Ativar modo claro"
+    }
+  }
 }
