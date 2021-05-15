@@ -93,6 +93,12 @@ jobs:
           TEST_CI: true
           BROWSER: ${{ matrix.browser }}
 
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: e2e-videos-${{ matrix.browser }}
+          path: e2e/videos
+
   deploy:
     runs-on: ubuntu-latest
     needs: [test, test-e2e]
