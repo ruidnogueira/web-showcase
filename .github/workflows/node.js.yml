@@ -18,8 +18,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [14.x] # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - name: Checkout repository
@@ -58,8 +57,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [14.x] # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        browser: [chromium, firefox, webkit]
 
     steps:
       - name: Checkout repository
@@ -92,7 +91,7 @@ jobs:
         run: npm run e2e:ci
         env:
           TEST_CI: true
-          BROWSER: chromium
+          BROWSER: ${{ matrix.browser }}
 
   deploy:
     runs-on: ubuntu-latest
@@ -101,8 +100,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+        node-version: [14.x] # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - name: Checkout repository
