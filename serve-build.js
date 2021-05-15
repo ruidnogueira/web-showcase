@@ -1,28 +1,15 @@
-const http = require('http');
+const express = require('express');
 const path = require('path');
-const fs = require('fs');
 
-const basePath = '/web-showcase';
-const buildDir = '/build';
+const port = process.env.PORT || 3000;
+const app = express();
 
-const server = http.createServer(function (request, response) {
-  if (request.url.startsWith(basePath)) {
-    const url = request.url.substring(basePath.length);
+app.use('/web-showcase', express.static(path.join(__dirname, '/build')));
 
-    console.info('url: ', request.url);
-
-    const urlPath = isFile(url)
-      ? path.join(__dirname, buildDir, url)
-      : path.join(__dirname, buildDir, '/index.html');
-
-    fs.createReadStream(urlPath).pipe(response);
-  }
+app.get('*', (_, response) => {
+  response.sendFile(path.join(__dirname, '/build/index.html'));
 });
 
-server.listen(3000, () => {
+app.listen(port, () => {
   console.log('Running at http://localhost:3000');
 });
-
-function isFile(pathname) {
-  return pathname.split('/').pop().indexOf('.') > -1;
-}
