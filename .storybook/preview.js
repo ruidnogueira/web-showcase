@@ -81,6 +81,7 @@ function ThemeWrapper({ theme, children, style, parameters }) {
           color: 'var(--color-text)',
           background: 'var(--color-background)',
           padding: parameters.layout === 'fullscreen' ? undefined : '1rem',
+          position: relative,
           ...style,
         }}
       >

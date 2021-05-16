@@ -1,0 +1,15 @@
+@use '../utilities';
+
+$notification-horizontal-margin: 12px;
+
+.notification {
+  @extend %control;
+
+  background-color: utilities.get-color('background');
+  box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%),
+    0 9px 28px 8px rgb(0 0 0 / 5%);
+  max-width: calc(100vw - #{2 * $notification-horizontal-margin});
+  min-width: 30rem;
+  position: absolute;
+  z-index: utilities.$z-index-notification;
+}
