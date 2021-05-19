@@ -47,7 +47,7 @@
     "playwright-testing-library": "^2.7.2",
     "prettier": "^2.2.1",
     "ramda": "^0.27.1",
-    "rc-select": "^12.1.9",
+    "rc-select": "^12.1.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-feather": "^2.0.9",
