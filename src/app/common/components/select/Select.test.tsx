@@ -1,10 +1,13 @@
 import { renderWithProviders } from 'test/component.helper';
-import Story, { Default, Disabled, Small } from './Select.stories';
+import * as stories from './Select.stories';
+import { composeStories } from '@storybook/testing-react';
+
+const { Default, Disabled, Small } = composeStories(stories);
 
 test.each([
   ['Default', Default],
   ['Disabled', Disabled],
   ['Small', Small],
 ])('renders %s story', (_, Component) => {
-  renderWithProviders(<Component {...Story.args} {...Component.args} />);
+  renderWithProviders(<Component />);
 });

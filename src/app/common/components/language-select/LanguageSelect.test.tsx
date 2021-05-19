@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
 import { LanguageSelect } from './LanguageSelect';
 import { ConfigProvider } from 'app/core/configs/ConfigProvider';
@@ -6,8 +5,9 @@ import { findBySelectSelection, selectOption } from 'test/select.helper';
 import { i18nConfig } from 'app/core/configs/i18n.config';
 import { act } from 'react-dom/test-utils';
 import { createI18nMock } from 'mocks/i18n.mock';
-import Story, { Default } from './LanguageSelect.stories';
+import * as stories from './LanguageSelect.stories';
 import { renderWithProviders } from 'test/component.helper';
+import { composeStories } from '@storybook/testing-react';
 
 const setup = () => {
   const i18nMock = createI18nMock();
@@ -35,8 +35,10 @@ const setup = () => {
   return { ...result, i18nMock };
 };
 
+const { Default } = composeStories(stories);
+
 test.each([['Default', Default]])('renders %s story', (_, Component) => {
-  renderWithProviders(<Component {...Story.args} {...Component.args} />);
+  renderWithProviders(<Component />);
 });
 
 test('renders', () => {
