@@ -1,7 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Switch } from './Switch';
-import Story, { Default, Checked, Disabled, WithThumbContent, Small } from './Switch.stories';
+import * as stories from './Switch.stories';
+import { composeStories } from '@storybook/testing-react';
+
+const { Default, Checked, Disabled, WithThumbContent, Small } = composeStories(stories);
 
 test.each([
   ['Default', Default],
@@ -10,7 +13,7 @@ test.each([
   ['WithThumbContent', WithThumbContent],
   ['Small', Small],
 ])('renders %s story', (_, Component) => {
-  render(<Component {...Story.args} {...Component.args} />);
+  render(<Component />);
 });
 
 test('renders', () => {
