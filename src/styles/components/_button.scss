@@ -10,6 +10,7 @@ $button-outline-width: 0.3rem;
   --color-button-focus: #{utilities.tint($default-color, 20%)};
   --color-button-active: #{utilities.tint($default-color, 28%)};
   --color-button-text: #{map.get(utilities.$light-colors, 'text')};
+  --color-button-transparent-hover: #{rgba($color: #000, $alpha: 0.06)};
 
   @each $variant in utilities.$color-variants {
     $color: map.get(utilities.$light-colors, $variant, 'base');
@@ -27,6 +28,7 @@ $button-outline-width: 0.3rem;
   --color-button-focus: #{utilities.tint($default-color, 20%)};
   --color-button-active: #{utilities.tint($default-color, 28%)};
   --color-button-text: #{map.get(utilities.$dark-colors, 'invert-text')};
+  --color-button-transparent-hover: #{rgba($color: #fff, $alpha: 0.09)};
 
   @each $variant in utilities.$color-variants {
     $color: map.get(utilities.$dark-colors, $variant, 'base');
@@ -49,7 +51,7 @@ $button-outline-width: 0.3rem;
   justify-content: center;
 
   &:hover {
-    background: utilities.get-color('button-hover');
+    background-color: utilities.get-color('button-hover');
   }
 
   &:focus {
@@ -74,13 +76,38 @@ $button-outline-width: 0.3rem;
     @include utilities.control--small;
   }
 
+  &--icon-button {
+    padding: 0.3em;
+    width: utilities.$control-height;
+
+    > * {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  &--transparent {
+    background-color: inherit;
+    color: utilities.get-color('text');
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: utilities.get-color('button-transparent-hover');
+    }
+
+    &:disabled {
+      background-color: inherit;
+    }
+  }
+
   @each $variant in utilities.$color-variants {
     &--#{$variant} {
-      background: utilities.get-color($variant, 'base');
+      background-color: utilities.get-color($variant, 'base');
       color: utilities.get-color($variant, 'text');
 
       &:hover {
-        background: utilities.get-color('button', $variant, 'hover');
+        background-color: utilities.get-color('button', $variant, 'hover');
       }
 
       &:focus {
@@ -89,17 +116,17 @@ $button-outline-width: 0.3rem;
           $width: $button-outline-width
         );
 
-        background: utilities.get-color('button', $variant, 'focus');
+        background-color: utilities.get-color('button', $variant, 'focus');
       }
 
       &:active {
         @include utilities.no-outline;
 
-        background: utilities.get-color('button', $variant, 'active');
+        background-color: utilities.get-color('button', $variant, 'active');
       }
 
       &:disabled {
-        background: utilities.get-color($variant, 'base');
+        background-color: utilities.get-color($variant, 'base');
       }
     }
   }
