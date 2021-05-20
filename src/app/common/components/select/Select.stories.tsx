@@ -7,7 +7,7 @@ export default {
   title: 'Atoms/Select',
   component: Select,
   argTypes: {
-    variant: { control: { disable: true } },
+    color: { control: { disable: true } },
     size: {
       control: { type: 'select' },
       options: [undefined, ...Object.values(ControlSize)],
@@ -22,8 +22,8 @@ export default {
 const colorVariants = [undefined, ...Object.values(ColorVariant)];
 const Template: Story<SelectProps<any>> = (args) => (
   <StorybookVariants>
-    {colorVariants.map((variant) => (
-      <Select {...args} key={variant ?? 'undefined'} variant={variant}>
+    {colorVariants.map((color) => (
+      <Select {...args} key={color ?? 'undefined'} color={color}>
         <Select.Option value="john">John</Select.Option>
         <Select.Option value="ann">Ann</Select.Option>
         <Select.Option value="davis">Davis</Select.Option>

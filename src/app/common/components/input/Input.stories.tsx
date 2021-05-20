@@ -7,7 +7,7 @@ export default {
   title: 'Atoms/Input',
   component: Input,
   argTypes: {
-    variant: { control: { disable: true } },
+    color: { control: { disable: true } },
     size: {
       control: { type: 'select' },
       options: [undefined, ...Object.values(ControlSize)],
@@ -22,8 +22,8 @@ export default {
 const colorVariants = [undefined, ...Object.values(ColorVariant)];
 const Template: Story<InputProps> = (args) => (
   <StorybookVariants>
-    {colorVariants.map((variant) => (
-      <Input {...args} key={variant ?? 'undefined'} variant={variant} />
+    {colorVariants.map((color) => (
+      <Input {...args} key={color ?? 'undefined'} color={color} />
     ))}
   </StorybookVariants>
 );

@@ -4,9 +4,9 @@ import { AriaAttributes, ChangeEvent, ComponentType, FocusEvent, ReactNode, useS
 
 export type SwitchProps = {
   /**
-   * The visual variant of the switch
+   * The color variant of the switch
    */
-  variant?: ColorVariant;
+  color?: ColorVariant;
 
   /**
    * The size of the switch
@@ -30,7 +30,7 @@ export type SwitchProps = {
 } & Pick<AriaAttributes, 'aria-labelledby'>;
 
 export function Switch({
-  variant,
+  color,
   size,
   className,
   checked,
@@ -53,7 +53,7 @@ export function Switch({
         className={classNames(
           'switch',
           {
-            [`switch--${variant}`]: variant,
+            [`switch--${color}`]: color,
             [`switch--${size}`]: size,
             'switch--checked': isChecked,
             'switch--focus': isFocused,

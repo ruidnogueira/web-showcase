@@ -7,7 +7,7 @@ export default {
   title: 'Atoms/Switch',
   component: Switch,
   argTypes: {
-    variant: { control: { disable: true } },
+    color: { control: { disable: true } },
     size: {
       control: { type: 'select' },
       options: [undefined, ...Object.values(ControlSize)],
@@ -20,8 +20,8 @@ export default {
 const colorVariants = [undefined, ...Object.values(ColorVariant)];
 const Template: Story<SwitchProps> = (args) => (
   <StorybookVariants>
-    {colorVariants.map((variant) => (
-      <Switch {...args} key={variant ?? 'undefined'} variant={variant} />
+    {colorVariants.map((color) => (
+      <Switch {...args} key={color ?? 'undefined'} color={color} />
     ))}
   </StorybookVariants>
 );

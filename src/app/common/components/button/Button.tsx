@@ -7,9 +7,9 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   type: 'submit' | 'reset' | 'button';
 
   /**
-   * The visual variant of the button
+   * The color variant of the button
    */
-  variant?: ColorVariant;
+  color?: ColorVariant;
 
   /**
    * The size of the button
@@ -27,7 +27,7 @@ export function Button({
   disabled,
   isLoading,
   className,
-  variant,
+  color,
   size,
   ...props
 }: ButtonProps) {
@@ -36,7 +36,7 @@ export function Button({
       {...props}
       className={classNames(
         'button',
-        { [`button--${variant}`]: variant, [`button--${size}`]: size },
+        { [`button--${color}`]: color, [`button--${size}`]: size },
         className
       )}
       disabled={disabled || isLoading}

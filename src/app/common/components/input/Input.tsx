@@ -4,9 +4,9 @@ import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
   /**
-   * The visual variant of the input
+   * The color variant of the input
    */
-  variant?: ColorVariant;
+  color?: ColorVariant;
 
   /**
    * The size of the input
@@ -14,13 +14,13 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   size?: ControlSize;
 }
 
-export function Input({ className, variant, size, ...props }: InputProps) {
+export function Input({ className, color, size, ...props }: InputProps) {
   return (
     <input
       {...props}
       className={classNames(
         'input',
-        { [`input--${variant}`]: variant, [`input--${size}`]: size },
+        { [`input--${color}`]: color, [`input--${size}`]: size },
         className
       )}
     />
