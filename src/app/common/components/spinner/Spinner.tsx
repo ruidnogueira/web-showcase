@@ -11,9 +11,9 @@ export enum SpinnerColorVariant {
 
 export interface SpinnerProps extends SVGAttributes<SVGElement> {
   /**
-   * The visual variant of the spinner
+   * The color variant of the spinner
    */
-  variant?: ColorVariant | SpinnerColorVariant;
+  color?: ColorVariant | SpinnerColorVariant;
 
   /**
    * Whether the spinner should be read by screen readers
@@ -21,7 +21,7 @@ export interface SpinnerProps extends SVGAttributes<SVGElement> {
   isAlert?: boolean;
 }
 
-export function Spinner({ variant, isAlert, className, ...props }: SpinnerProps) {
+export function Spinner({ color, isAlert, className, ...props }: SpinnerProps) {
   const { t } = useTranslation();
 
   return (
@@ -31,7 +31,7 @@ export function Spinner({ variant, isAlert, className, ...props }: SpinnerProps)
       </VisuallyHidden>
       <SpinnerSvg
         {...props}
-        className={classNames('spinner', { [`spinner--${variant}`]: variant }, className)}
+        className={classNames('spinner', { [`spinner--${color}`]: color }, className)}
         aria-hidden={true}
       />
     </>

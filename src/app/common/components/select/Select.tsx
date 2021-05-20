@@ -11,9 +11,9 @@ export type SelectOptionProps = RcSelectOptionprops;
 
 export interface SelectProps<Value extends SelectValue> extends RcSelectProps<Value> {
   /**
-   * The visual variant of the select
+   * The color variant of the select
    */
-  variant?: ColorVariant;
+  color?: ColorVariant;
 
   /**
    * The size of the select
@@ -25,7 +25,7 @@ export function Select<Value extends SelectValue>({
   className,
   dropdownClassName,
   size,
-  variant,
+  color,
   menuItemSelectedIcon = null,
   virtual = false,
   ...props
@@ -36,10 +36,7 @@ export function Select<Value extends SelectValue>({
     <RcSelect<Value>
       {...props}
       prefixCls="select"
-      className={classNames(
-        { [`select--${variant}`]: variant, [`select--${size}`]: size },
-        className
-      )}
+      className={classNames({ [`select--${color}`]: color, [`select--${size}`]: size }, className)}
       dropdownClassName={classNames(
         { [`select-dropdown--${size}`]: size },
         `theme--${theme}`,

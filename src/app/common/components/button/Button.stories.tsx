@@ -7,7 +7,7 @@ export default {
   title: 'Atoms/Button',
   component: Button,
   argTypes: {
-    variant: { control: { disable: true } },
+    color: { control: { disable: true } },
     size: {
       control: { type: 'select' },
       options: [undefined, ...Object.values(ControlSize)],
@@ -23,8 +23,8 @@ export default {
 const colorVariants = [undefined, ...Object.values(ColorVariant)];
 const Template: Story<ButtonProps> = (args) => (
   <StorybookVariants>
-    {colorVariants.map((variant) => (
-      <Button {...args} key={variant ?? 'undefined'} variant={variant} />
+    {colorVariants.map((color) => (
+      <Button {...args} key={color ?? 'undefined'} color={color} />
     ))}
   </StorybookVariants>
 );

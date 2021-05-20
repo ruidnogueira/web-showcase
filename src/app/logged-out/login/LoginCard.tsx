@@ -97,7 +97,7 @@ export function LoginCardPresentation({
           />
         </Field>
 
-        <Button type="submit" variant={ColorVariant.Primary} isLoading={isSubmitting}>
+        <Button type="submit" color={ColorVariant.Primary} isLoading={isSubmitting}>
           {t('pages.login.submit')}
         </Button>
       </form>
