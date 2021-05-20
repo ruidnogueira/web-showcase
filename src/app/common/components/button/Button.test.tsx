@@ -1,8 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
-import { Button, ButtonProps } from './Button';
-import Story, { Default, Disabled, Loading, Small } from './Button.stories';
+import { Button } from './Button';
+import * as stories from './Button.stories';
 import { createI18nMock } from 'mocks/i18n.mock';
+import { composeStories } from '@storybook/testing-react';
+
+const { Default, Disabled, Loading, Small } = composeStories(stories);
 
 test.each([
   ['Default', Default],
@@ -10,10 +13,9 @@ test.each([
   ['Small', Small],
   ['Loading', Loading],
 ])('renders %s story', (_, Component) => {
-  const props = { ...Story.args, ...Component.args } as ButtonProps;
   render(
     <I18nextProvider i18n={createI18nMock()}>
-      <Component {...props} />
+      <Component />
     </I18nextProvider>
   );
 });

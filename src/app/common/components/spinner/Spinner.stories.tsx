@@ -9,7 +9,7 @@ import { Spinner, SpinnerColorVariant, SpinnerProps } from './Spinner';
 export default {
   title: 'Atoms/Spinner',
   component: Spinner,
-  argTypes: { variant: { control: { disable: true } } },
+  argTypes: { color: { control: { disable: true } } },
   parameters: {},
   decorators: [
     (Story) => (
@@ -34,16 +34,15 @@ const Template: Story<SpinnerProps> = (args) => {
 
   return (
     <StorybookVariants>
-      {colorVariants.map((variant) => (
+      {colorVariants.map((color) => (
         <Spinner
           {...args}
-          key={variant ?? 'undefined'}
-          variant={variant}
+          key={color ?? 'undefined'}
+          color={color}
           style={{
             width: '100px',
             height: '100px',
-            backgroundColor:
-              variant !== SpinnerColorVariant.Inverted ? variant : invertedBackground,
+            backgroundColor: color !== SpinnerColorVariant.Inverted ? color : invertedBackground,
           }}
         />
       ))}

@@ -5,20 +5,22 @@ import { AuthMachineProvider } from 'app/core/auth/AuthMachineProvider';
 import { storageKeys } from 'app/core/configs/storage.config';
 import { renderWithProviders } from 'test/component.helper';
 import { createMachine, interpret } from 'xstate';
-import { LoginCard, LoginCardPresentationProps } from './LoginCard';
-import Story, { Submitting, Default } from './LoginCard.stories';
+import { LoginCard } from './LoginCard';
+import * as stories from './LoginCard.stories';
 import { createModel } from '@xstate/test';
 import { mockUserEmail, mockUserPassword } from 'mocks/model/user.mock';
 import { server } from 'mocks/server/server.mock';
 import { handleLoginRequest } from 'mocks/server/handlers.mock';
 import { context } from 'msw';
+import { composeStories } from '@storybook/testing-react';
+
+const { Default, Submitting } = composeStories(stories);
 
 test.each([
   ['Default', Default],
   ['Submitting', Submitting],
 ])('renders %s story', (_, Component) => {
-  const props = { ...Story.args, ...Component.args } as LoginCardPresentationProps;
-  renderWithProviders(<Component {...props} />);
+  renderWithProviders(<Component />);
 });
 
 describe('plans', () => {

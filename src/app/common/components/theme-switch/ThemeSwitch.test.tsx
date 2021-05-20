@@ -1,9 +1,10 @@
 import { ThemeContext, Theme } from 'app/core/providers/ThemeProvider';
 import { renderWithProviders } from 'test/component.helper';
 import { ThemeSwitch } from './ThemeSwitch';
-import Story, { Default } from './ThemeSwitch.stories';
+import * as stories from './ThemeSwitch.stories';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { composeStories } from '@storybook/testing-react';
 
 const setup = ({ theme }: { theme: Theme }) => {
   const toggleThemeMock = jest.fn();
@@ -17,8 +18,10 @@ const setup = ({ theme }: { theme: Theme }) => {
   return { ...result, toggleThemeMock };
 };
 
+const { Default } = composeStories(stories);
+
 test.each([['Default', Default]])('renders %s story', (_, Component) => {
-  renderWithProviders(<Component {...Story.args} {...Component.args} />);
+  renderWithProviders(<Component />);
 });
 
 test('renders', () => {

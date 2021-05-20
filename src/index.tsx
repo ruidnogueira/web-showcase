@@ -11,8 +11,6 @@ import { GlobalProviders } from 'app/core/providers/GlobalProviders';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'app/core/providers/ThemeProvider';
 
-// TODO E2E IN CI
-
 async function render() {
   if (window.location.pathname === process.env.PUBLIC_URL) {
     // https://github.com/w3c/ServiceWorker/issues/1468
