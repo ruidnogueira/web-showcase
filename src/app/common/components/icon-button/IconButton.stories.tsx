@@ -9,6 +9,7 @@ export default {
   component: IconButton,
   argTypes: {
     variant: { control: { disable: true } },
+    color: { control: { disable: true } },
     size: {
       control: { type: 'select' },
       options: [undefined, ...Object.values(ControlSize)],
