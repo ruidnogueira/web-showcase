@@ -15,3 +15,8 @@ const Template: Story<NotificationProps> = (args) => <Notification {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {};
+
+export const Closable = Template.bind({});
+Closable.args = {
+  isClosable: true,
+};

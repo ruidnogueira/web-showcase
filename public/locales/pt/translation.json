@@ -1,5 +1,7 @@
 {
-  "actions": {},
+  "actions": {
+    "close": "Fechar"
+  },
   "states": {
     "loading": "A carregar"
   },

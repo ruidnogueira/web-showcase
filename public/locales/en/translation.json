@@ -1,5 +1,7 @@
 {
-  "actions": {},
+  "actions": {
+    "close": "Close"
+  },
   "states": {
     "loading": "Loading"
   },
