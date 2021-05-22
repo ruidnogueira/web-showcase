@@ -1,8 +1,8 @@
 import { useTheme } from 'app/core/providers/ThemeProvider';
 import classNames from 'classnames';
 import { useMemo } from 'react';
-import { Notification, NotificationPosition } from './Notification';
-import { NotificationConfig } from './notification.types';
+import { Notification } from './Notification';
+import { NotificationConfig, NotificationPosition } from './notification.types';
 
 type NotificationDictionary = Record<NotificationPosition, NotificationConfig[]>;
 

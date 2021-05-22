@@ -6,15 +6,7 @@ import classNames from 'classnames';
 import { IconButton } from '../icon-button/IconButton';
 import { ControlSize } from 'app/core/models/styles.model';
 import { TFunction } from 'i18next';
-
-export enum NotificationPosition {
-  Top = 'top',
-  TopLeft = 'top-left',
-  TopRight = 'top-right',
-  Bottom = 'bottom',
-  BottomLeft = 'bottom-left',
-  BottomRight = 'bottom-right',
-}
+import { useTimeout } from 'app/common/hooks/useTimeout';
 
 export interface NotificationProps {
   className?: string;
@@ -41,8 +33,18 @@ interface NotificationCardProps {
   children: ReactNode;
 }
 
-export function Notification({ className, children, isClosable, onClose }: NotificationProps) {
+export function Notification({
+  className,
+  children,
+  isClosable,
+  duration,
+  onClose,
+}: NotificationProps) {
   const { t } = useTranslation();
+
+  useTimeout(() => {
+    onClose?.();
+  }, duration);
 
   return (
     <NotificationCard className={className}>
