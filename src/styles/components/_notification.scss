@@ -19,10 +19,57 @@ $notification-horizontal-margin: 12px;
     0 9px 28px 8px rgb(0 0 0 / 5%);
   max-width: calc(100vw - #{2 * $notification-horizontal-margin});
   min-width: 30rem;
-  position: absolute;
+  pointer-events: visible;
   z-index: utilities.$z-index-notification;
 
   &__close-button {
     margin-left: auto;
   }
+}
+
+.notification-manager {
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+  position: fixed;
+  z-index: utilities.$z-index-notification;
+
+  &--top {
+    left: env(safe-area-inset-left, 0);
+    right: env(safe-area-inset-right, 0);
+    top: env(safe-area-inset-top, 0);
+  }
+
+  &--top-left {
+    left: env(safe-area-inset-left, 0);
+    top: env(safe-area-inset-top, 0);
+  }
+
+  &--top-right {
+    right: env(safe-area-inset-right, 0);
+    top: env(safe-area-inset-top, 0);
+  }
+
+  &--bottom {
+    bottom: env(safe-area-inset-top, 0);
+    left: env(safe-area-inset-left, 0);
+    right: env(safe-area-inset-right, 0);
+  }
+
+  &--bottom-left {
+    bottom: env(safe-area-inset-top, 0);
+    left: env(safe-area-inset-left, 0);
+  }
+
+  &--bottom-right {
+    bottom: env(safe-area-inset-top, 0);
+    right: env(safe-area-inset-right, 0);
+  }
+}
+
+.notification-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: utilities.$spacing-xs;
 }

@@ -17,16 +17,8 @@ export enum NotificationPosition {
 }
 
 export interface NotificationProps {
-  id: string;
   className?: string;
   children: ReactNode;
-
-  status: 'success' | 'error';
-
-  /**
-   * The position of the notification on the page
-   */
-  position: NotificationPosition;
 
   /**
    * Whether to show close button or not
@@ -45,24 +37,15 @@ export interface NotificationProps {
 }
 
 interface NotificationCardProps {
-  id: string;
   className?: string;
   children: ReactNode;
-  position: NotificationPosition; // TODO IS THIS NEEDED?
 }
 
-export function Notification({
-  id,
-  className,
-  children,
-  position,
-  isClosable,
-  onClose,
-}: NotificationProps) {
+export function Notification({ className, children, isClosable, onClose }: NotificationProps) {
   const { t } = useTranslation();
 
   return (
-    <NotificationCard id={id} className={className} position={position}>
+    <NotificationCard className={className}>
       {children}
 
       {isClosable && <CloseButton t={t} onClose={onClose} />}
@@ -70,12 +53,8 @@ export function Notification({
   );
 }
 
-function NotificationCard({ id, position, children, className }: NotificationCardProps) {
-  return (
-    <div id={id} className={classNames('notification', `notification--${position}`, className)}>
-      {children}
-    </div>
-  );
+function NotificationCard({ children, className }: NotificationCardProps) {
+  return <div className={classNames('notification', className)}>{children}</div>;
 }
 
 function CloseButton({ t, onClose }: { t: TFunction; onClose?: () => void }) {
