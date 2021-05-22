@@ -1,7 +1,6 @@
 import { createContext, ReactNode, useContext, useLayoutEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { NotificationPosition } from './Notification';
-import { NotificationConfig, NotificationId } from './notification.types';
+import { NotificationConfig, NotificationId, NotificationPosition } from './notification.types';
 import { NotificationManager } from './NotificationManager';
 import { v4 as uuid } from 'uuid';
 

@@ -1,5 +1,5 @@
 import VisuallyHidden from '@reach/visually-hidden';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { X as CloseIcon } from 'react-feather';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -31,6 +31,9 @@ export interface NotificationProps {
 interface NotificationCardProps {
   className?: string;
   children: ReactNode;
+
+  onMouseLeave: () => void;
+  onMouseEnter: () => void;
 }
 
 export function Notification({
@@ -41,13 +44,30 @@ export function Notification({
   onClose,
 }: NotificationProps) {
   const { t } = useTranslation();
+  const [isHovered, setIsHovered] = useState(false);
 
-  useTimeout(() => {
-    onClose?.();
-  }, duration);
+  useTimeout(
+    () => {
+      onClose?.();
+    },
+    isHovered ? null : duration
+  );
+
+  const handleMouseEnter = () => {
+    console.log('hello');
+    setIsHovered(true);
+  };
+  const handleMouseLeave = () => {
+    console.log('bye');
+    setIsHovered(false);
+  };
 
   return (
-    <NotificationCard className={className}>
+    <NotificationCard
+      className={className}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {children}
 
       {isClosable && <CloseButton t={t} onClose={onClose} />}
@@ -55,9 +75,19 @@ export function Notification({
   );
 }
 
-function NotificationCard({ children, className }: NotificationCardProps) {
+function NotificationCard({
+  children,
+  className,
+  onMouseEnter,
+  onMouseLeave,
+}: NotificationCardProps) {
   return (
-    <div className={classNames('notification', className)} role="alert">
+    <div
+      className={classNames('notification', className)}
+      role="alert"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       {children}
     </div>
   );
