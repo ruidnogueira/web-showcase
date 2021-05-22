@@ -24,6 +24,18 @@ test('clears timer if component unmounts', () => {
   expect(callbackMock).not.toHaveBeenCalled();
 });
 
+test('clears timer if timeout changes', () => {
+  const callbackMock = jest.fn();
+  const { rerender } = renderHook(({ timeout }) => useTimeout(callbackMock, timeout), {
+    initialProps: { timeout: 5000 as number | null },
+  });
+
+  rerender({ timeout: null });
+  jest.runAllTimers();
+
+  expect(callbackMock).not.toHaveBeenCalled();
+});
+
 test('does not execute callback if timeout is not a number', () => {
   const callbackMock = jest.fn();
   renderHook(() => useTimeout(callbackMock));
@@ -33,7 +45,7 @@ test('does not execute callback if timeout is not a number', () => {
   expect(callbackMock).not.toHaveBeenCalled();
 });
 
-test('does retrigger timeout if callback changes and uses latest value when timer expires', () => {
+test('does not retrigger timeout if callback changes, and uses latest value when timer expires', () => {
   const initialCallbackMock = jest.fn();
   const finalCallbackMock = jest.fn();
 
