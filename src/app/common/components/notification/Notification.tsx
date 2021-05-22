@@ -54,7 +54,11 @@ export function Notification({ className, children, isClosable, onClose }: Notif
 }
 
 function NotificationCard({ children, className }: NotificationCardProps) {
-  return <div className={classNames('notification', className)}>{children}</div>;
+  return (
+    <div className={classNames('notification', className)} role="alert">
+      {children}
+    </div>
+  );
 }
 
 function CloseButton({ t, onClose }: { t: TFunction; onClose?: () => void }) {

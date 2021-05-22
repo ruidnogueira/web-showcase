@@ -19,7 +19,7 @@ $notification-horizontal-margin: 12px;
     0 9px 28px 8px rgb(0 0 0 / 5%);
   max-width: calc(100vw - #{2 * $notification-horizontal-margin});
   min-width: 30rem;
-  pointer-events: visible;
+  pointer-events: auto;
   z-index: utilities.$z-index-notification;
 
   &__close-button {
