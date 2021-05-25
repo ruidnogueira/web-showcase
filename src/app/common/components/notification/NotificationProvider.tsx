@@ -1,4 +1,12 @@
-import { createContext, ReactNode, useContext, useLayoutEffect, useMemo, useState } from 'react';
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { createPortal } from 'react-dom';
 import { NotificationConfig, NotificationId, NotificationPosition } from './notification.types';
 import { NotificationManager } from './NotificationManager';
@@ -18,14 +26,11 @@ const NotificationContext = createContext<NotificationMethods | undefined>(undef
 const portalId = 'notification-portal';
 
 export function NotificationProvider({ children }: { children: ReactNode }) {
+  const notificationsRef = useRef<NotificationConfig[]>([]);
   const [notifications, setNotifications] = useState<NotificationConfig[]>([]);
+  notificationsRef.current = notifications;
 
   const notificationActions = useMemo<NotificationMethods>(() => {
-    const close = (notificationId: NotificationId) =>
-      setNotifications((notifications) =>
-        notifications.filter((notification) => notification.id !== notificationId)
-      );
-
     return {
       open: ({ position, id, onClose, ...options }) => {
         const notificationId = id ?? uuid();
@@ -35,7 +40,13 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
           id: notificationId,
           position: position ?? NotificationPosition.TopRight, // TODO useConfig
           onClose: () => {
-            close(notificationId);
+            const notificationsToKeep = notificationsRef.current.filter(
+              (notification) => notification.id !== notificationId
+            );
+
+            notificationsRef.current = notificationsToKeep;
+            setNotifications(notificationsRef.current);
+
             onClose?.();
           },
         };
@@ -43,9 +54,27 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         setNotifications((notifications) => notifications.concat(notification));
       },
 
-      close,
+      close: (notificationId) => {
+        const currentNotifications = notificationsRef.current;
+        const notificationsToKeep: NotificationConfig[] = [];
 
-      closeAll: () => setNotifications([]),
+        for (const notification of currentNotifications) {
+          if (notification.id === notificationId) {
+            notification.onClose();
+          } else {
+            notificationsToKeep.push(notification);
+          }
+        }
+
+        notificationsRef.current = notificationsToKeep;
+        setNotifications(notificationsToKeep);
+      },
+
+      closeAll: () => {
+        notificationsRef.current.forEach((notification) => notification.onClose());
+        notificationsRef.current = [];
+        setNotifications([]);
+      },
     };
   }, []);
 
