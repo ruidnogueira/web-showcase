@@ -53,14 +53,8 @@ export function Notification({
     isHovered ? null : duration
   );
 
-  const handleMouseEnter = () => {
-    console.log('hello');
-    setIsHovered(true);
-  };
-  const handleMouseLeave = () => {
-    console.log('bye');
-    setIsHovered(false);
-  };
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => setIsHovered(false);
 
   return (
     <NotificationCard

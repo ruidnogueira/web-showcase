@@ -20,7 +20,16 @@ $notification-horizontal-margin: 12px;
   max-width: calc(100vw - #{2 * $notification-horizontal-margin});
   min-width: 30rem;
   pointer-events: auto;
+  transition: opacity 3s;
   z-index: utilities.$z-index-notification;
+
+  &--enter {
+    background: red; // TODO
+  }
+
+  &--exit {
+    background: blue; // TODO
+  }
 
   &__close-button {
     margin-left: auto;
@@ -72,4 +81,5 @@ $notification-horizontal-margin: 12px;
   display: flex;
   justify-content: center;
   padding: utilities.$spacing-xs;
+  transition: opacity 3s; // TODO
 }

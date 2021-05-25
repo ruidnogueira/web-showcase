@@ -1,6 +1,7 @@
 import { useTheme } from 'app/core/providers/ThemeProvider';
 import classNames from 'classnames';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import { Notification } from './Notification';
 import { NotificationConfig, NotificationPosition } from './notification.types';
 
@@ -40,13 +41,38 @@ export function NotificationManager({ notifications }: { notifications: Notifica
             `theme--${theme}`
           )}
         >
-          {notifications.map(({ id, message, ...props }) => (
-            <li key={id} className="notification-container">
-              <Notification {...props}>{message}</Notification>
-            </li>
+          {notifications.map((notification) => (
+            <NotificationContainer key={notification.id} {...notification} />
           ))}
         </ul>
       ))}
     </>
+  );
+}
+
+function NotificationContainer({ id, message, position, onClose, ...props }: NotificationConfig) {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => setIsMounted(true), []);
+  const handleClose = () => setIsMounted(false);
+
+  // TODO TIMEOUT
+
+  return (
+    <li className="notification-container">
+      <CSSTransition
+        in={isMounted}
+        timeout={3000}
+        classNames={{
+          enter: 'notification--enter',
+          exit: 'notification--exit',
+        }}
+        onExited={onClose}
+      >
+        <Notification {...props} onClose={handleClose}>
+          {message}
+        </Notification>
+      </CSSTransition>
+    </li>
   );
 }
