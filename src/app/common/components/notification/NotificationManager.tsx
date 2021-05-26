@@ -4,8 +4,12 @@ import { useEffect, useMemo, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Notification } from './Notification';
 import { NotificationConfig, NotificationPosition } from './notification.types';
+import styles from './notification.module.scss';
 
 type NotificationDictionary = Record<NotificationPosition, NotificationConfig[]>;
+
+const enterDuration = parseFloat(styles.enterAnimationDuration!);
+const exitDuration = parseFloat(styles.exitAnimationDuration!);
 
 export function NotificationManager({ notifications }: { notifications: NotificationConfig[] }) {
   const { theme } = useTheme();
@@ -62,7 +66,12 @@ function NotificationContainer({ id, message, position, onClose, ...props }: Not
     <li className="notification-container">
       <CSSTransition
         in={isMounted}
-        timeout={3000}
+        mountOnEnter={true}
+        unmountOnExit={true}
+        timeout={{
+          enter: enterDuration,
+          exit: exitDuration,
+        }}
         classNames={{
           enter: 'notification--enter',
           exit: 'notification--exit',

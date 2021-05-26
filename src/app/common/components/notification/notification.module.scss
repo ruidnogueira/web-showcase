@@ -1,0 +1,4 @@
+@use '~styles/utilities';
+
+@value enterAnimationDuration: #{utilities.$notification-enter-duration};
+@value exitAnimationDuration: #{utilities.$notification-exit-duration};

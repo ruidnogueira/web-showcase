@@ -45,7 +45,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
             );
 
             notificationsRef.current = notificationsToKeep;
-            setNotifications(notificationsRef.current);
+            setNotifications(notificationsToKeep);
 
             onClose?.();
           },

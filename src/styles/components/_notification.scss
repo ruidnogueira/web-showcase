@@ -2,6 +2,8 @@
 @use 'sass:map';
 
 $notification-horizontal-margin: 12px;
+$notification-enter-timing: cubic-bezier(0, 1, 1, 1);
+$notification-exit-timing: linear;
 
 @include utilities.light-theme {
   --color-notification: #{map.get(utilities.$light-colors, 'background')};
@@ -20,15 +22,34 @@ $notification-horizontal-margin: 12px;
   max-width: calc(100vw - #{2 * $notification-horizontal-margin});
   min-width: 30rem;
   pointer-events: auto;
-  transition: opacity 3s;
   z-index: utilities.$z-index-notification;
 
+  // TODO ANIMATION FOR MULTIPLE NOTIFICATIONS MOVEMENT
+
   &--enter {
-    background: red; // TODO
+    .notification-manager--top & {
+      animation: slide-down utilities.$notification-enter-duration $notification-enter-timing;
+    }
+
+    .notification-manager--bottom & {
+      animation: slide-up utilities.$notification-enter-duration $notification-enter-timing;
+    }
+
+    .notification-manager--top-left &,
+    .notification-manager--bottom-left & {
+      animation: slide-right utilities.$notification-enter-duration $notification-enter-timing;
+    }
+
+    .notification-manager--top-right &,
+    .notification-manager--bottom-right & {
+      animation: slide-left utilities.$notification-enter-duration $notification-enter-timing;
+    }
   }
 
   &--exit {
-    background: blue; // TODO
+    animation-duration: utilities.$notification-exit-duration;
+    animation-name: fade-out, scale-3-4;
+    animation-timing-function: $notification-exit-timing;
   }
 
   &__close-button {
@@ -81,5 +102,4 @@ $notification-horizontal-margin: 12px;
   display: flex;
   justify-content: center;
   padding: utilities.$spacing-xs;
-  transition: opacity 3s; // TODO
 }
