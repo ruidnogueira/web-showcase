@@ -24,8 +24,6 @@ $notification-exit-timing: linear;
   pointer-events: auto;
   z-index: utilities.$z-index-notification;
 
-  // TODO ANIMATION FOR MULTIPLE NOTIFICATIONS MOVEMENT
-
   &--enter {
     .notification-manager--top & {
       animation: slide-down utilities.$notification-enter-duration $notification-enter-timing;
@@ -65,17 +63,20 @@ $notification-exit-timing: linear;
   z-index: utilities.$z-index-notification;
 
   &--top {
+    flex-direction: column-reverse;
     left: env(safe-area-inset-left, 0);
     right: env(safe-area-inset-right, 0);
     top: env(safe-area-inset-top, 0);
   }
 
   &--top-left {
+    flex-direction: column-reverse;
     left: env(safe-area-inset-left, 0);
     top: env(safe-area-inset-top, 0);
   }
 
   &--top-right {
+    flex-direction: column-reverse;
     right: env(safe-area-inset-right, 0);
     top: env(safe-area-inset-top, 0);
   }

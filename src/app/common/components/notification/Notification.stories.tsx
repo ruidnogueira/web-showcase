@@ -1,4 +1,5 @@
 import { Story, Meta } from '@storybook/react';
+import { useRef } from 'react';
 import { StorybookVariants } from 'test/storybook.helper';
 import { Button } from '../button/Button';
 import { Notification, NotificationProps } from './Notification';
@@ -29,6 +30,7 @@ const positions = Object.values(NotificationPosition);
 
 export const Examples: Story<NotificationProps> = () => {
   const notification = useNotification();
+  const count = useRef(0);
 
   return (
     <StorybookVariants>
@@ -36,14 +38,16 @@ export const Examples: Story<NotificationProps> = () => {
         <Button
           type="button"
           key={position}
-          onClick={() =>
+          onClick={() => {
+            count.current++;
+
             notification.open({
               position,
-              message: 'Example notification',
+              message: 'Example notification ' + count.current,
               duration: 5000,
               isClosable: true,
-            })
-          }
+            });
+          }}
         >
           {position}
         </Button>
