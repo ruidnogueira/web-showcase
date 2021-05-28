@@ -11,16 +11,40 @@ import { GlobalProviders } from 'app/core/providers/GlobalProviders';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'app/core/providers/ThemeProvider';
 
-async function render() {
+start();
+
+async function start() {
+  redirectRoot();
+
+  await registerMockServiceWorker();
+
+  render();
+
+  registerServiceWorker();
+
+  // If you want to start measuring performance in your app, pass a function
+  // to log results (for example: reportWebVitals(console.log))
+  // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+  reportWebVitals();
+}
+
+/**
+ * https://github.com/w3c/ServiceWorker/issues/1468
+ * due to a problem with service worker implementation when served from subdirectories,
+ * setting react homepage property in package.json causes service workers to fail when not using trailing slash
+ *
+ * does't work -> http://localhost:3000/example
+ *
+ * works -> http://localhost:3000/example/
+ */
+function redirectRoot() {
   if (window.location.pathname === process.env.PUBLIC_URL) {
-    // https://github.com/w3c/ServiceWorker/issues/1468
-    // due to a problem with service worker implementation when served from subdirectories,
-    // setting react homepage property in package.json causes service workers to fail when not using trailing slash
-    // does't work -> http://localhost:3000/example
-    // works -> http://localhost:3000/example/
+    //
     window.location.pathname = process.env.PUBLIC_URL + '/';
   }
+}
 
+async function registerMockServiceWorker() {
   if (!process.env.REACT_APP_E2E) {
     const { worker } = require('mocks/server/browser.mock');
 
@@ -30,7 +54,17 @@ async function render() {
       },
     });
   }
+}
 
+function registerServiceWorker() {
+  serviceWorkerRegistration.register({
+    onUpdate: () => {
+      window.postMessage('SERVICE_WORKER_UPDATED');
+    },
+  });
+}
+
+function render() {
   ReactDOM.render(
     <StrictMode>
       <Profiler id="App" onRender={() => {}}>
@@ -54,15 +88,3 @@ async function render() {
     document.getElementById('root')
   );
 }
-
-render();
-
-// TODO ADD service worker check for updates
-if (!process.env.REACT_APP_E2E) {
-  serviceWorkerRegistration.register();
-}
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
