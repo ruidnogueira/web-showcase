@@ -60,7 +60,6 @@ async function registerMockServiceWorker() {
 function registerServiceWorker() {
   serviceWorkerRegistration.register({
     onUpdate: (registration) => {
-      console.log(registration);
       const waitingRegistration = registration.waiting;
 
       if (waitingRegistration) {
