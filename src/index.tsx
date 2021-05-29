@@ -12,12 +12,27 @@ import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'app/core/providers/ThemeProvider';
 import { HasServiceWorkerUpdateMessage } from 'app/core/providers/ServiceWorkerUpdateProvider';
 
+let registerMockServiceWorker: (() => Promise<void>) | undefined;
+
+if (process.env.NODE_ENV === 'development') {
+  // cannot be inside a function otherwise it will not be treeshaken
+  registerMockServiceWorker = async () => {
+    const { worker } = require('mocks/server/browser.mock');
+
+    await worker.start({
+      serviceWorker: {
+        url: `${process.env.PUBLIC_URL}/mockServiceWorker.js`,
+      },
+    });
+  };
+}
+
 start();
 
 async function start() {
   redirectRoot();
 
-  await registerMockServiceWorker();
+  await registerMockServiceWorker?.();
 
   render();
 
@@ -42,18 +57,6 @@ function redirectRoot() {
   if (window.location.pathname === process.env.PUBLIC_URL) {
     //
     window.location.pathname = process.env.PUBLIC_URL + '/';
-  }
-}
-
-async function registerMockServiceWorker() {
-  if (process.env.NODE_ENV === 'development') {
-    const { worker } = require('mocks/server/browser.mock');
-
-    await worker.start({
-      serviceWorker: {
-        url: `${process.env.PUBLIC_URL}/mockServiceWorker.js`,
-      },
-    });
   }
 }
 
