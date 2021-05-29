@@ -10,6 +10,7 @@ import { I18nProvider } from 'app/core/i18n/I18nProvider';
 import { GlobalProviders } from 'app/core/providers/GlobalProviders';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'app/core/providers/ThemeProvider';
+import { HasServiceWorkerUpdateMessage } from 'app/core/providers/ServiceWorkerUpdateProvider';
 
 start();
 
@@ -45,7 +46,7 @@ function redirectRoot() {
 }
 
 async function registerMockServiceWorker() {
-  if (!process.env.REACT_APP_E2E) {
+  if (process.env.NODE_ENV === 'development') {
     const { worker } = require('mocks/server/browser.mock');
 
     await worker.start({
@@ -58,8 +59,26 @@ async function registerMockServiceWorker() {
 
 function registerServiceWorker() {
   serviceWorkerRegistration.register({
-    onUpdate: () => {
-      window.postMessage('SERVICE_WORKER_UPDATED');
+    onUpdate: (registration) => {
+      console.log(registration);
+      const waitingRegistration = registration.waiting;
+
+      if (waitingRegistration) {
+        window.addEventListener('message', (message) => {
+          if (message.data?.type === 'UPDATE_SERVICE_WORKER') {
+            waitingRegistration.addEventListener('statechange', () => {
+              if (waitingRegistration.state === 'activated') {
+                window.location.reload();
+              }
+            });
+
+            waitingRegistration.postMessage({ type: 'SKIP_WAITING' });
+          }
+        });
+
+        const message: HasServiceWorkerUpdateMessage = { type: 'HAS_SERVICE_WORKER_UPDATE' };
+        window.postMessage(message);
+      }
     },
   });
 }
