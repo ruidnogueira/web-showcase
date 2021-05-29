@@ -1,6 +1,6 @@
 import { useTheme } from 'app/core/providers/ThemeProvider';
 import classNames from 'classnames';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Notification } from './Notification';
 import { NotificationConfig, NotificationPosition } from './notification.types';
@@ -57,14 +57,15 @@ export function NotificationManager({ notifications }: { notifications: Notifica
 function NotificationContainer({ id, message, position, onClose, ...props }: NotificationConfig) {
   const [isMounted, setIsMounted] = useState(false);
 
+  const notificationRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => setIsMounted(true), []);
   const handleClose = () => setIsMounted(false);
-
-  // TODO TIMEOUT
 
   return (
     <li className="notification-container">
       <CSSTransition
+        nodeRef={notificationRef}
         in={isMounted}
         mountOnEnter={true}
         unmountOnExit={true}
@@ -78,7 +79,7 @@ function NotificationContainer({ id, message, position, onClose, ...props }: Not
         }}
         onExited={onClose}
       >
-        <Notification {...props} onClose={handleClose}>
+        <Notification {...props} ref={notificationRef} onClose={handleClose}>
           {message}
         </Notification>
       </CSSTransition>

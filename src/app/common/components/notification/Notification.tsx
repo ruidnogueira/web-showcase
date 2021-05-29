@@ -1,5 +1,5 @@
 import VisuallyHidden from '@reach/visually-hidden';
-import { ReactNode, useState } from 'react';
+import { forwardRef, ReactNode, useState } from 'react';
 import { X as CloseIcon } from 'react-feather';
 import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
@@ -36,13 +36,10 @@ interface NotificationCardProps {
   onMouseEnter: () => void;
 }
 
-export function Notification({
-  className,
-  children,
-  isClosable,
-  duration,
-  onClose,
-}: NotificationProps) {
+export const Notification = forwardRef<HTMLDivElement, NotificationProps>(function Notification(
+  { className, children, isClosable, duration, onClose },
+  ref
+) {
   const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
 
@@ -59,6 +56,7 @@ export function Notification({
   return (
     <NotificationCard
       className={className}
+      ref={ref}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
@@ -67,25 +65,23 @@ export function Notification({
       {isClosable && <CloseButton t={t} onClose={onClose} />}
     </NotificationCard>
   );
-}
+});
 
-function NotificationCard({
-  children,
-  className,
-  onMouseEnter,
-  onMouseLeave,
-}: NotificationCardProps) {
-  return (
-    <div
-      className={classNames('notification', className)}
-      role="alert"
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      {children}
-    </div>
-  );
-}
+const NotificationCard = forwardRef<HTMLDivElement, NotificationCardProps>(
+  function NotificationCard({ children, className, onMouseEnter, onMouseLeave }, ref) {
+    return (
+      <div
+        className={classNames('notification', className)}
+        role="alert"
+        ref={ref}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}
+      >
+        {children}
+      </div>
+    );
+  }
+);
 
 function CloseButton({ t, onClose }: { t: TFunction; onClose?: () => void }) {
   return (
