@@ -17,7 +17,6 @@ export default {
   },
   args: {
     children: <CloseIcon />,
-    type: 'button',
     disabled: false,
   },
 } as Meta<IconButtonProps>;

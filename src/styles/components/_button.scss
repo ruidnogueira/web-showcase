@@ -101,6 +101,28 @@ $button-outline-width: 0.3rem;
     }
   }
 
+  &--link {
+    color: utilities.get-color('focus');
+    font-weight: bold;
+
+    &,
+    &:hover,
+    &:focus,
+    &:active,
+    &:disabled {
+      background-color: inherit;
+    }
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    &:disabled {
+      text-decoration: none;
+    }
+  }
+
   @each $variant in utilities.$color-variants {
     &--#{$variant} {
       background-color: utilities.get-color($variant, 'base');
