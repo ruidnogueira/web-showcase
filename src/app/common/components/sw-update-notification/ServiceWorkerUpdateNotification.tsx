@@ -4,8 +4,10 @@ import {
 } from 'app/core/providers/ServiceWorkerUpdateProvider';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { LinkButton } from '../link-button/LinkButton';
 import { NotificationPosition } from '../notification/notification.types';
 import { useNotification } from '../notification/NotificationProvider';
+import styles from './ServiceWorkerUpdateNotification.module.scss';
 
 // TODO TEST
 
@@ -16,7 +18,7 @@ export function useServiceWorkerUpdateNotification() {
   useEffect(() => {
     if (hasUpdate) {
       notification.open({
-        message: <ServiceWorkerUpdateNotification />,
+        message: <ServiceWorkerUpdateMessage />,
         position: NotificationPosition.Bottom,
         isClosable: true,
       });
@@ -24,7 +26,7 @@ export function useServiceWorkerUpdateNotification() {
   }, [hasUpdate, notification]);
 }
 
-export function ServiceWorkerUpdateNotification() {
+export function ServiceWorkerUpdateMessage() {
   const { t } = useTranslation();
 
   const handleUpdate = () => {
@@ -35,7 +37,10 @@ export function ServiceWorkerUpdateNotification() {
   return (
     <>
       <span>{t('components.serviceWorkerUpdateNotification.message')}</span>
-      <button onClick={handleUpdate}>{t('actions.update').toUpperCase()}</button>
+
+      <LinkButton className={styles.updateButton} onClick={handleUpdate}>
+        {t('actions.update').toUpperCase()}
+      </LinkButton>
     </>
   );
 }
