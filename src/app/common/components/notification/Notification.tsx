@@ -85,12 +85,7 @@ const NotificationCard = forwardRef<HTMLDivElement, NotificationCardProps>(
 
 function CloseButton({ t, onClose }: { t: TFunction; onClose?: () => void }) {
   return (
-    <IconButton
-      className="notification__close-button"
-      type="button"
-      size={ControlSize.Small}
-      onClick={onClose}
-    >
+    <IconButton className="notification__close-button" size={ControlSize.Small} onClick={onClose}>
       <VisuallyHidden>{t('actions.close')}</VisuallyHidden>
       <CloseIcon />
     </IconButton>

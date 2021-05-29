@@ -23,9 +23,7 @@ test.each([
 test('is disabled when loading', () => {
   render(
     <I18nextProvider i18n={createI18nMock()}>
-      <Button type="button" isLoading>
-        Test Button
-      </Button>
+      <Button isLoading>Test Button</Button>
     </I18nextProvider>
   );
 

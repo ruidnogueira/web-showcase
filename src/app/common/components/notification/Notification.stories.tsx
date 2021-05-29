@@ -36,7 +36,6 @@ export const Examples: Story<NotificationProps> = () => {
     <StorybookVariants>
       {positions.map((position) => (
         <Button
-          type="button"
           key={position}
           onClick={() => {
             count.current++;
