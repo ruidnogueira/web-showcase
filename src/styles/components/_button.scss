@@ -156,6 +156,10 @@ $button-outline-width: 0.3rem;
   &__spinner {
     stroke: utilities.get-color('button-text');
 
+    .button--transparent & {
+      stroke: utilities.get-color('text');
+    }
+
     @each $variant in utilities.$color-variants {
       .button--#{$variant} & {
         stroke: utilities.get-color($variant, 'text');
