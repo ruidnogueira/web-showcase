@@ -6,6 +6,7 @@ import { ThemeContext } from '../src/app/core/providers/ThemeProvider';
 import { ConfigProvider } from '../src/app/core/configs/ConfigProvider';
 import { I18nProvider } from '../src/app/core/i18n/I18nProvider';
 import { Suspense } from 'react';
+import classNames from 'classnames';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -75,14 +76,9 @@ function ThemeWrapper({ theme, children, style, parameters }) {
     <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
       <div
         data-theme={theme}
-        style={{
-          height: '100%',
-          width: '100%',
-          color: 'var(--color-text)',
-          background: 'var(--color-background)',
-          padding: parameters.layout === 'fullscreen' ? undefined : '1rem',
-          ...style,
-        }}
+        className={classNames('storybook-theme_wrapper', {
+          [`storybook-theme_wrapper--${parameters.layout}`]: parameters.layout,
+        })}
       >
         {children}
       </div>

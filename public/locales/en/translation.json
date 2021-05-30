@@ -1,5 +1,8 @@
 {
-  "actions": {},
+  "actions": {
+    "close": "Close",
+    "update": "Update"
+  },
   "states": {
     "loading": "Loading"
   },
@@ -23,6 +26,9 @@
     "themeSwitch": {
       "light": "Enable dark mode",
       "dark": "Enable light mode"
+    },
+    "serviceWorkerUpdateNotification": {
+      "message": "A new version is available"
     }
   }
 }

@@ -1,5 +1,25 @@
 <style>
-  body {
+  body,
+  #root {
     padding: 0 !important;
+  }
+
+  .storybook-theme_wrapper {
+    background: var(--color-background);
+    color: var(--color-text);
+    height: 100%;
+    padding: 1rem;
+    position: relative;
+    width: 100%;
+  }
+
+  .storybook-theme_wrapper--fullscreen {
+    padding: 0;
+  }
+
+  .storybook-theme_wrapper--centered {
+    align-items: center;
+    display: flex;
+    justify-content: center;
   }
 </style>

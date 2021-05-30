@@ -34,7 +34,7 @@
 
   @media (min-width: shared.$mobile-breakpoint) {
     @include utilities.dark-theme {
-      --color-logged_out-card: #{utilities.tint(map.get(utilities.$dark-colors, 'background'), 6%)};
+      --color-logged_out-card: #{map.get(utilities.$dark-colors, 'background-secondary')};
     }
 
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);

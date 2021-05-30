@@ -4,7 +4,7 @@ import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 import { Spinner } from '../spinner/Spinner';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  type: 'submit' | 'reset' | 'button';
+  type?: 'submit' | 'reset' | 'button';
 
   /**
    * The color variant of the button
@@ -29,11 +29,13 @@ export function Button({
   className,
   color,
   size,
+  type = 'button',
   ...props
 }: ButtonProps) {
   return (
     <button
       {...props}
+      type={type}
       className={classNames(
         'button',
         { [`button--${color}`]: color, [`button--${size}`]: size },

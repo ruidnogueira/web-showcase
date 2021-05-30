@@ -1,12 +1,14 @@
 import { Story, Meta } from '@storybook/react';
 import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 import { StorybookVariants } from 'test/storybook.helper';
-import { Button, ButtonProps } from './Button';
+import { IconButton, IconButtonProps, IconButtonVariant } from './IconButton';
+import { X as CloseIcon } from 'react-feather';
 
 export default {
-  title: 'Atoms/Button',
-  component: Button,
+  title: 'Atoms/IconButton',
+  component: IconButton,
   argTypes: {
+    variant: { control: { disable: true } },
     color: { control: { disable: true } },
     size: {
       control: { type: 'select' },
@@ -14,16 +16,23 @@ export default {
     },
   },
   args: {
-    children: 'Button',
+    children: <CloseIcon />,
     disabled: false,
   },
-} as Meta<ButtonProps>;
+} as Meta<IconButtonProps>;
 
 const colorVariants = [undefined, ...Object.values(ColorVariant)];
-const Template: Story<ButtonProps> = (args) => (
+const Template: Story<IconButtonProps> = (args) => (
   <StorybookVariants>
+    <IconButton {...args} variant={IconButtonVariant.Transparent} />
+
     {colorVariants.map((color) => (
-      <Button {...args} key={color ?? 'undefined'} color={color} />
+      <IconButton
+        {...args}
+        key={color ?? 'undefined'}
+        color={color}
+        variant={IconButtonVariant.Filled}
+      />
     ))}
   </StorybookVariants>
 );

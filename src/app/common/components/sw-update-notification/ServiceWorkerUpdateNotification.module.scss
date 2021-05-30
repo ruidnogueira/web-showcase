@@ -1,0 +1,7 @@
+@use '~styles/utilities';
+
+.updateButton {
+  height: auto;
+  margin-left: utilities.$spacing-s;
+  margin-right: utilities.$spacing-xxs;
+}

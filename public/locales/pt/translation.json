@@ -1,5 +1,8 @@
 {
-  "actions": {},
+  "actions": {
+    "close": "Fechar",
+    "update": "Atualizar"
+  },
   "states": {
     "loading": "A carregar"
   },
@@ -23,6 +26,9 @@
     "themeSwitch": {
       "light": "Ativar modo escuro",
       "dark": "Ativar modo claro"
+    },
+    "serviceWorkerUpdateNotification": {
+      "message": "Uma nova versão está disponível"
     }
   }
 }

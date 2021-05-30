@@ -1,7 +1,6 @@
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { I18nextProvider } from 'react-i18next';
-import { Button } from './Button';
-import * as stories from './Button.stories';
+import * as stories from './IconButton.stories';
 import { createI18nMock } from 'mocks/i18n.mock';
 import { composeStories } from '@storybook/testing-react';
 
@@ -18,14 +17,4 @@ test.each([
       <Component />
     </I18nextProvider>
   );
-});
-
-test('is disabled when loading', () => {
-  render(
-    <I18nextProvider i18n={createI18nMock()}>
-      <Button isLoading>Test Button</Button>
-    </I18nextProvider>
-  );
-
-  expect(screen.getByRole('button')).toBeDisabled();
 });
