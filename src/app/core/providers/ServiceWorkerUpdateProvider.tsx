@@ -8,7 +8,7 @@ export interface UpdateServiceWorkerMessage {
   type: 'UPDATE_SERVICE_WORKER';
 }
 
-const ServiceWorkerUpdateContext = createContext<boolean | undefined>(undefined);
+export const ServiceWorkerUpdateContext = createContext<boolean | undefined>(undefined);
 
 export function ServiceWorkerUpdateProvider({ children }: { children: ReactNode }) {
   const [hasUpdate, setHasUpdate] = useState(false);
