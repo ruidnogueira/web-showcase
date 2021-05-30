@@ -7,5 +7,6 @@ declare namespace NodeJS {
     REACT_APP_NAME: string;
     REACT_APP_BASE_PATH: string;
     REACT_APP_API_PATH: string;
+    REACT_APP_E2E?: 'true';
   }
 }

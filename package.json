@@ -92,7 +92,7 @@
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "e2e": "cd e2e && jest",
     "e2e:ci": "start-server-and-test build:serve http://localhost:3000/web-showcase e2e",
-    "e2e:local": "cross-env BROWSER=chromium REACT_APP_DISABLE_MOCKS=true start-server-and-test start:silent http://localhost:3000/web-showcase e2e",
+    "e2e:local": "cross-env BROWSER=chromium REACT_APP_E2E=true start-server-and-test start:silent http://localhost:3000/web-showcase e2e",
     "e2e:local:debug": "cross-env PWDEBUG=1 npm run e2e:local",
     "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:stylelint",
     "lint:eslint": "eslint --fix src/**/*.{ts,tsx}",

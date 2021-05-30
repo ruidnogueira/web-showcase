@@ -14,7 +14,7 @@ import { HasServiceWorkerUpdateMessage } from 'app/core/providers/ServiceWorkerU
 
 let registerMockServiceWorker: (() => Promise<void>) | undefined;
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' && !process.env.REACT_APP_E2E) {
   // cannot be inside a function otherwise it will not be treeshaken
   registerMockServiceWorker = async () => {
     const { worker } = require('mocks/server/browser.mock');
