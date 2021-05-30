@@ -31,7 +31,7 @@ export function ServiceWorkerUpdateMessage() {
 
   const handleUpdate = () => {
     const message: UpdateServiceWorkerMessage = { type: 'UPDATE_SERVICE_WORKER' };
-    window.postMessage(message);
+    window.postMessage(message, '*');
   };
 
   return (
