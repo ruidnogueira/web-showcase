@@ -5,7 +5,7 @@
   "homepage": "https://ruidnogueira.github.io/web-showcase",
   "dependencies": {
     "@commitlint/cli": "^12.1.1",
-    "@commitlint/config-conventional": "^12.1.1",
+    "@commitlint/config-conventional": "^12.1.4",
     "@reach/visually-hidden": "^0.15.0",
     "@storybook/addon-a11y": "^6.2.9",
     "@storybook/addon-actions": "^6.2.9",
