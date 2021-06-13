@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, forwardRef } from 'react';
 import classNames from 'classnames';
 import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 import { Spinner } from '../spinner/Spinner';
@@ -22,29 +22,23 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean;
 }
 
-export function Button({
-  children,
-  disabled,
-  isLoading,
-  className,
-  color,
-  size,
-  type = 'button',
-  ...props
-}: ButtonProps) {
-  return (
-    <button
-      {...props}
-      type={type}
-      className={classNames(
-        'button',
-        { [`button--${color}`]: color, [`button--${size}`]: size },
-        className
-      )}
-      disabled={disabled || isLoading}
-      aria-busy={isLoading}
-    >
-      {isLoading ? <Spinner className="button__spinner" /> : children}
-    </button>
-  );
-}
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, disabled, isLoading, className, color, size, type = 'button', ...props }, ref) => {
+    return (
+      <button
+        {...props}
+        ref={ref}
+        type={type}
+        className={classNames(
+          'button',
+          { [`button--${color}`]: color, [`button--${size}`]: size },
+          className
+        )}
+        disabled={disabled || isLoading}
+        aria-busy={isLoading}
+      >
+        {isLoading ? <Spinner className="button__spinner" /> : children}
+      </button>
+    );
+  }
+);

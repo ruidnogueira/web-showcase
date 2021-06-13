@@ -16,6 +16,7 @@ export default {
   args: {
     children: 'Button',
     disabled: false,
+    type: 'button',
   },
 } as Meta<ButtonProps>;
 

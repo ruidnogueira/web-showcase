@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from 'react';
+import { forwardRef, InputHTMLAttributes } from 'react';
 import classNames from 'classnames';
 import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 
@@ -14,15 +14,18 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   size?: ControlSize;
 }
 
-export function Input({ className, color, size, ...props }: InputProps) {
-  return (
-    <input
-      {...props}
-      className={classNames(
-        'input',
-        { [`input--${color}`]: color, [`input--${size}`]: size },
-        className
-      )}
-    />
-  );
-}
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ className, color, size, ...props }, ref) => {
+    return (
+      <input
+        {...props}
+        ref={ref}
+        className={classNames(
+          'input',
+          { [`input--${color}`]: color, [`input--${size}`]: size },
+          className
+        )}
+      />
+    );
+  }
+);

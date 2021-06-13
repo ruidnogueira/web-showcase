@@ -1,6 +1,14 @@
 import { ColorVariant, ControlSize } from 'app/core/models/styles.model';
 import classNames from 'classnames';
-import { AriaAttributes, ChangeEvent, ComponentType, FocusEvent, ReactNode, useState } from 'react';
+import {
+  AriaAttributes,
+  ChangeEvent,
+  ComponentType,
+  FocusEvent,
+  forwardRef,
+  ReactNode,
+  useState,
+} from 'react';
 
 export type SwitchProps = {
   /**
@@ -29,75 +37,81 @@ export type SwitchProps = {
   onBlur?: (event: FocusEvent<HTMLInputElement>) => unknown;
 } & Pick<AriaAttributes, 'aria-labelledby'>;
 
-export function Switch({
-  color,
-  size,
-  className,
-  checked,
-  defaultChecked,
-  disabled,
-  thumbChildren: ThumbChildren,
-  onChange,
-  onBlur,
-  onFocus,
-  ...props
-}: SwitchProps) {
-  const [isFocused, setIsFocused] = useState(false);
-  const [isCheckedInternal, setIsChecked] = useState(defaultChecked);
-  const isChecked = checked ?? isCheckedInternal;
+export const Switch = forwardRef<HTMLInputElement, SwitchProps>(
+  (
+    {
+      color,
+      size,
+      className,
+      checked,
+      defaultChecked,
+      disabled,
+      thumbChildren: ThumbChildren,
+      onChange,
+      onBlur,
+      onFocus,
+      ...props
+    },
+    ref
+  ) => {
+    const [isFocused, setIsFocused] = useState(false);
+    const [isCheckedInternal, setIsChecked] = useState(defaultChecked);
+    const isChecked = checked ?? isCheckedInternal;
 
-  return (
-    <>
-      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
-      <label
-        className={classNames(
-          'switch',
-          {
-            [`switch--${color}`]: color,
-            [`switch--${size}`]: size,
-            'switch--checked': isChecked,
-            'switch--focus': isFocused,
-            'switch--disabled': disabled,
-          },
-          className
-        )}
-        onMouseDown={(event) => {
-          // prevent checkbox blur on repeated clicks
-          event.preventDefault();
-        }}
-      >
-        <input
-          {...props}
-          type="checkbox"
-          className="switch__input"
-          defaultChecked={defaultChecked}
-          checked={checked}
-          disabled={disabled}
-          onChange={(event) => {
-            setIsChecked(event.target.checked);
-            onChange?.(event.target.checked, event);
-          }}
-          onFocus={(event) => {
-            setIsFocused(true);
-            onFocus?.(event);
-          }}
-          onBlur={(event) => {
-            setIsFocused(false);
-            onBlur?.(event);
-          }}
-        />
-
-        <span className="switch__thumb" aria-hidden={true}>
-          {isComponentType(ThumbChildren) ? (
-            <ThumbChildren isChecked={isChecked ?? false} />
-          ) : (
-            ThumbChildren
+    return (
+      <>
+        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+        <label
+          className={classNames(
+            'switch',
+            {
+              [`switch--${color}`]: color,
+              [`switch--${size}`]: size,
+              'switch--checked': isChecked,
+              'switch--focus': isFocused,
+              'switch--disabled': disabled,
+            },
+            className
           )}
-        </span>
-      </label>
-    </>
-  );
-}
+          onMouseDown={(event) => {
+            // prevent checkbox blur on repeated clicks
+            event.preventDefault();
+          }}
+        >
+          <input
+            {...props}
+            ref={ref}
+            type="checkbox"
+            className="switch__input"
+            defaultChecked={defaultChecked}
+            checked={checked}
+            disabled={disabled}
+            onChange={(event) => {
+              setIsChecked(event.target.checked);
+              onChange?.(event.target.checked, event);
+            }}
+            onFocus={(event) => {
+              setIsFocused(true);
+              onFocus?.(event);
+            }}
+            onBlur={(event) => {
+              setIsFocused(false);
+              onBlur?.(event);
+            }}
+          />
+
+          <span className="switch__thumb" aria-hidden={true}>
+            {isComponentType(ThumbChildren) ? (
+              <ThumbChildren isChecked={isChecked ?? false} />
+            ) : (
+              ThumbChildren
+            )}
+          </span>
+        </label>
+      </>
+    );
+  }
+);
 
 function isComponentType<T>(
   component: ComponentType<T> | ReactNode
