@@ -55,7 +55,6 @@ async function start() {
  */
 function redirectRoot() {
   if (window.location.pathname === process.env.PUBLIC_URL) {
-    //
     window.location.pathname = process.env.PUBLIC_URL + '/';
   }
 }
