@@ -46,7 +46,7 @@
     "msw": "^0.32.0",
     "playwright": "^1.10.0",
     "playwright-testing-library": "^3.0.0",
-    "prettier": "^2.2.1",
+    "prettier": "^2.3.2",
     "rc-select": "^12.1.10",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
