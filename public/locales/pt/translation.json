@@ -20,6 +20,12 @@
         "invalidLogin": "O e-mail ou palavra-passe que introduziste não corresponde a uma conta. Por favor verifica e tenta outra vez.",
         "unexpected": "Desculpa, ocurreu um erro inesperado. Tenta novamente mais tarde."
       }
+    },
+    "home": {
+      "settings": {
+        "open": "Abrir definições"
+      },
+      "logout": "Terminar sessão"
     }
   },
   "components": {

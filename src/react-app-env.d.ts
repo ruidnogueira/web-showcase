@@ -5,6 +5,7 @@ declare namespace NodeJS {
     PUBLIC_URL: string;
     NODE_ENV: 'development' | 'production' | 'test';
     REACT_APP_NAME: string;
+    REACT_APP_NAME_SHORT: string;
     REACT_APP_BASE_PATH: string;
     REACT_APP_API_PATH: string;
     REACT_APP_E2E?: 'true';

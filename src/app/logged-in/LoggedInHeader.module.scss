@@ -1,0 +1,19 @@
+@use "~styles/utilities";
+
+.header {
+  @include utilities.regular-text;
+
+  align-items: center;
+  display: flex;
+  padding: 0.75em;
+}
+
+.title {
+  @include utilities.font-family-heading;
+
+  color: utilities.get-color('primary-base');
+  font-size: utilities.$font-size-10;
+  font-weight: bold;
+  line-height: 1;
+  margin-right: auto;
+}

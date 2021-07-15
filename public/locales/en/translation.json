@@ -20,6 +20,12 @@
         "invalidLogin": "The email and password you entered doesn't match any account. Please double check and try again.",
         "unexpected": "Sorry, an unexpected error occurred. Please try again later."
       }
+    },
+    "home": {
+      "settings": {
+        "open": "Open settings"
+      },
+      "logout": "Log out"
     }
   },
   "components": {
