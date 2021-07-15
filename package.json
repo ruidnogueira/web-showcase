@@ -44,7 +44,7 @@
     "jest-playwright-preset": "^1.5.2",
     "lint-staged": "^11.0.0",
     "msw": "^0.32.0",
-    "playwright": "^1.10.0",
+    "playwright": "^1.12.3",
     "playwright-testing-library": "^3.0.0",
     "prettier": "^2.3.2",
     "rc-select": "^12.1.10",
