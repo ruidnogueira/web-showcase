@@ -1,6 +1,19 @@
 import { Either } from 'fp-ts/lib/Either';
 import { Observable } from 'rxjs';
 import { AjaxRequest } from 'rxjs/ajax';
+import { Overwrite } from 'utility-types';
+
+export type ApiRequest = Overwrite<
+  AjaxRequest,
+  {
+    headers?: AjaxRequest['headers'];
+    async?: boolean;
+    timeout?: number;
+    crossDomain?: boolean;
+    withCredentials?: boolean;
+    responseType?: XMLHttpRequestResponseType;
+  }
+>;
 
 export interface ApiResponse<T = unknown> {
   status: number;
@@ -25,7 +38,7 @@ export type Interceptor = <Data>(
 ) => Observable<ApiResponseEither<Data>>;
 
 export interface ApiClient {
-  call: <Data>(data: AjaxRequest) => Observable<ApiResponseEither<Data>>;
+  call: <Data>(data: ApiRequest) => Observable<ApiResponseEither<Data>>;
 
   get: <Data>(url: string, headers?: AjaxRequest['headers']) => Observable<ApiResponseEither<Data>>;
 
