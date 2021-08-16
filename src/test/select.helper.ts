@@ -62,9 +62,9 @@ export {
 };
 
 function queryAllBySelectDropdown(container: HTMLElement) {
-  return Array.from(container.querySelectorAll<HTMLElement>('.select-dropdown')).filter(
-    (element) => !isInaccessible(element)
-  );
+  return Array.from(
+    container.querySelectorAll<HTMLElement>('.select-dropdown .rc-virtual-list')
+  ).filter((element) => !isInaccessible(element));
 }
 
 const [
