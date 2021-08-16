@@ -9,8 +9,7 @@ import { useServiceWorkerUpdateNotification } from './ServiceWorkerUpdateNotific
 import * as stories from './ServiceWorkerUpdateNotification.stories';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { fromEvent } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { firstValueFrom, fromEvent } from 'rxjs';
 
 const { Default } = composeStories(stories);
 
@@ -50,7 +49,7 @@ test('sends message on update click', async () => {
   userEvent.click(screen.getByRole('button', { name: /actions.update/i }));
 
   const expectedMessage: UpdateServiceWorkerMessage = { type: 'UPDATE_SERVICE_WORKER' };
-  const message = await message$.pipe(first()).toPromise();
+  const message = await firstValueFrom(message$);
 
   expect(message.data).toEqual(expectedMessage);
 });
