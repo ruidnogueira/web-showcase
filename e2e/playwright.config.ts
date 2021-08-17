@@ -5,7 +5,7 @@ const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 const config: PlaywrightTestConfig = {
   outputDir: 'results',
   forbidOnly: !!process.env.CI,
-  reporter: [[process.env.CI ? 'dot' : 'list']],
+  reporter: [['list']],
   use: {
     baseURL: `http://127.0.0.1:${port}/web-showcase`,
     headless: true,
