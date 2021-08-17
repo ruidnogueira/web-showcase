@@ -1,6 +1,6 @@
 import { RenderResult, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { AuthMachineEventType, createAuthMachine } from 'app/core/auth/authMachine';
+import { authEvents, createAuthMachine } from 'app/core/auth/authMachine';
 import { AuthMachineProvider } from 'app/core/auth/AuthMachineProvider';
 import { storageKeys } from 'app/core/configs/storage.config';
 import { renderWithProviders } from 'test/component.helper';
@@ -96,7 +96,7 @@ describe('plans', () => {
         meta: {
           test: ({ sendAuthEventSpy }: TestContext) => {
             expect(sendAuthEventSpy).toHaveBeenCalledWith(
-              expect.objectContaining({ type: AuthMachineEventType.Login })
+              expect.objectContaining({ type: authEvents.login.name })
             );
 
             expect(invalidLoginErrorMessageQueries.query()).toBeNull();

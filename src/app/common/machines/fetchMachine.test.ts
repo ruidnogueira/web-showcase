@@ -1,11 +1,13 @@
 import { Chance } from 'chance';
 import { interpret } from 'xstate';
-import { createFetchMachine, FetchMachineEventType, FetchMachineStateValue } from './fetchMachine';
+import { createFetchModel, FetchMachineStateValue } from './fetchMachine';
 
 const chance = new Chance('fetchMachine');
 
 test('sets machine id', () => {
   const id = chance.word();
+
+  const { createFetchMachine } = createFetchModel();
   const machine = createFetchMachine({
     id,
     fetcher: jest.fn(),
@@ -18,6 +20,7 @@ describe(`${FetchMachineStateValue.Pending}`, () => {
   test('calls provided fetcher', () => {
     const fetchMock = jest.fn();
 
+    const { fetchModel, createFetchMachine } = createFetchModel();
     const machine = createFetchMachine({
       id: 'fetchTest',
       fetcher: fetchMock,
@@ -25,7 +28,7 @@ describe(`${FetchMachineStateValue.Pending}`, () => {
 
     const service = interpret(machine).start();
 
-    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
+    service.send(fetchModel.events.fetch(undefined));
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
@@ -33,6 +36,7 @@ describe(`${FetchMachineStateValue.Pending}`, () => {
 
 describe(`${FetchMachineStateValue.Success}`, () => {
   function setup() {
+    const { fetchModel, createFetchMachine } = createFetchModel();
     const machine = createFetchMachine({
       id: 'fetchTest',
       fetcher: jest.fn(),
@@ -40,36 +44,36 @@ describe(`${FetchMachineStateValue.Success}`, () => {
 
     const service = interpret(machine).start();
 
-    return { service };
+    return { fetchModel, service };
   }
 
   test('reaches state', () => {
-    const { service } = setup();
+    const { fetchModel, service } = setup();
 
-    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
-    service.send({ type: FetchMachineEventType.ReceiveDataSuccess, data: undefined });
+    service.send(fetchModel.events.fetch(undefined));
+    service.send(fetchModel.events.receiveDataSuccess(undefined));
 
     expect(service.state.matches(FetchMachineStateValue.Success)).toBe(true);
   });
 
   test('sets response data', () => {
     const response = chance.sentence();
-    const { service } = setup();
+    const { fetchModel, service } = setup();
 
-    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
-    service.send({ type: FetchMachineEventType.ReceiveDataSuccess, data: response });
+    service.send(fetchModel.events.fetch(undefined));
+    service.send(fetchModel.events.receiveDataSuccess(response));
 
     expect(service.state.context.data).toBe(response);
   });
 
   test('clears response error', () => {
     const error = new Error();
-    const { service } = setup();
+    const { fetchModel, service } = setup();
 
-    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
-    service.send({ type: FetchMachineEventType.ReceiveDataFailure, data: error });
-    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
-    service.send({ type: FetchMachineEventType.ReceiveDataSuccess, data: undefined });
+    service.send(fetchModel.events.fetch(undefined));
+    service.send(fetchModel.events.receiveDataFailure(error));
+    service.send(fetchModel.events.fetch(undefined));
+    service.send(fetchModel.events.receiveDataSuccess(undefined));
 
     expect(service.state.context.error).toBeUndefined();
   });
@@ -77,6 +81,7 @@ describe(`${FetchMachineStateValue.Success}`, () => {
 
 describe(`${FetchMachineStateValue.Failure}`, () => {
   function setup() {
+    const { fetchModel, createFetchMachine } = createFetchModel();
     const machine = createFetchMachine({
       id: 'fetchTest',
       fetcher: jest.fn(),
@@ -84,24 +89,24 @@ describe(`${FetchMachineStateValue.Failure}`, () => {
 
     const service = interpret(machine).start();
 
-    return { service };
+    return { fetchModel, service };
   }
 
   test('reaches state', () => {
-    const { service } = setup();
+    const { fetchModel, service } = setup();
 
-    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
-    service.send({ type: FetchMachineEventType.ReceiveDataFailure, data: new Error() });
+    service.send(fetchModel.events.fetch(undefined));
+    service.send(fetchModel.events.receiveDataFailure(new Error()));
 
     expect(service.state.matches(FetchMachineStateValue.Failure)).toBe(true);
   });
 
   test('sets response error', () => {
     const error = new Error();
-    const { service } = setup();
+    const { fetchModel, service } = setup();
 
-    service.send({ type: FetchMachineEventType.Fetch, data: undefined });
-    service.send({ type: FetchMachineEventType.ReceiveDataFailure, data: error });
+    service.send(fetchModel.events.fetch(undefined));
+    service.send(fetchModel.events.receiveDataFailure(error));
 
     expect(service.state.context.error).toBe(error);
   });

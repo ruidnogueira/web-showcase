@@ -1,20 +1,19 @@
 import { useMachine } from '@xstate/react';
-import { FetchMachineEventType, FetchMachineStateValue } from 'app/common/machines/fetchMachine';
 import { useApiServices } from 'app/core/api/services/ApiServicesProvider';
-import { AuthMachineEventType } from 'app/core/auth/authMachine';
 import { useAuthMachine } from 'app/core/auth/AuthMachineProvider';
 import { useEffect, useMemo } from 'react';
-import { createLoginMachine } from './loginMachine';
+import { createLoginMachine, loginEvents, LoginMachineStateValue } from './loginMachine';
 import { FormikErrors, useFormik } from 'formik';
 import { LoginError, LoginForm } from './login.types';
+import { authEvents } from 'app/core/auth/authMachine';
 
 export function useLoginCard() {
   const [, sendAuthEvent] = useAuthMachine();
   const [loginState, sendLoginEvent] = useLoginMachine();
 
   useEffect(() => {
-    if (loginState.matches(FetchMachineStateValue.Success)) {
-      sendAuthEvent({ type: AuthMachineEventType.Login, data: loginState.context.data });
+    if (loginState.matches(LoginMachineStateValue.Success)) {
+      sendAuthEvent(authEvents.login(loginState.context.data));
     }
   }, [loginState, sendAuthEvent]);
 
@@ -29,13 +28,13 @@ export function useLoginCard() {
     validateOnBlur: false,
 
     onSubmit: (values) => {
-      sendLoginEvent({ type: FetchMachineEventType.Fetch, data: values });
+      sendLoginEvent(loginEvents.fetch(values));
     },
   });
 
   const formError = Object.keys(errors).length > 0 ? LoginError.Invalid : undefined;
 
-  const isSubmitting = loginState.matches(FetchMachineStateValue.Pending);
+  const isSubmitting = loginState.matches(LoginMachineStateValue.Pending);
 
   return {
     isSubmitting,
