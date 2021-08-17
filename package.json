@@ -93,7 +93,7 @@
     "build:serve": "node serve-build",
     "test": "react-scripts test",
     "test:coverage": "react-scripts test --coverage --watchAll=false",
-    "e2e": "playwright test",
+    "e2e": "playwright test --config=e2e/playwright.config.ts",
     "e2e-old": "cd e2e && jest",
     "e2e-old:ci": "start-server-and-test build:serve http://localhost:3000/web-showcase e2e",
     "e2e-old:local": "cross-env BROWSER=chromium REACT_APP_E2E=true start-server-and-test start:silent http://localhost:3000/web-showcase e2e",
@@ -146,7 +146,9 @@
         ],
         "rules": {
           "testing-library/no-await-sync-query": "off",
-          "jest/no-done-callback": "off"
+          "jest/no-done-callback": "off",
+          "jest/no-standalone-expect": "off",
+          "jest/no-identical-title": "off"
         }
       }
     ]
