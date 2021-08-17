@@ -4,7 +4,7 @@ const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 const config: PlaywrightTestConfig = {
   outputDir: 'results',
-  forbidOnly: !!process.env.TEST_CI,
+  forbidOnly: !!process.env.CI,
   reporter: [[process.env.CI ? 'dot' : 'list']],
   use: {
     baseURL: `http://127.0.0.1:${port}/web-showcase`,
@@ -20,7 +20,7 @@ const config: PlaywrightTestConfig = {
     { name: 'WebKit', use: { browserName: 'webkit' } },
   ],
   webServer: {
-    command: 'npm run start:silent',
+    command: process.env.CI ? 'npm run build:serve' : 'npm run start:silent',
     port,
     reuseExistingServer: !process.env.CI,
   },
