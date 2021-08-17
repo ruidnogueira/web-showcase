@@ -1,5 +1,5 @@
 import { Button } from 'app/common/components/button/Button';
-import { AuthMachineEventType } from 'app/core/auth/authMachine';
+import { authEvents } from 'app/core/auth/authMachine';
 import { useAuthMachine } from 'app/core/auth/AuthMachineProvider';
 import { MouseEvent } from 'react';
 
@@ -8,7 +8,7 @@ export function LoggedInPage() {
 
   const handleLogout = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    sendAuthEvent({ type: AuthMachineEventType.Logout });
+    sendAuthEvent(authEvents.logout());
   };
 
   return (

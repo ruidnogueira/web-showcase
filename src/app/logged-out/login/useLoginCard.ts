@@ -1,12 +1,12 @@
 import { useMachine } from '@xstate/react';
 import { FetchMachineEventType, FetchMachineStateValue } from 'app/common/machines/fetchMachine';
 import { useApiServices } from 'app/core/api/services/ApiServicesProvider';
-import { AuthMachineEventType } from 'app/core/auth/authMachine';
 import { useAuthMachine } from 'app/core/auth/AuthMachineProvider';
 import { useEffect, useMemo } from 'react';
 import { createLoginMachine } from './loginMachine';
 import { FormikErrors, useFormik } from 'formik';
 import { LoginError, LoginForm } from './login.types';
+import { authEvents } from 'app/core/auth/authMachine';
 
 export function useLoginCard() {
   const [, sendAuthEvent] = useAuthMachine();
@@ -14,7 +14,7 @@ export function useLoginCard() {
 
   useEffect(() => {
     if (loginState.matches(FetchMachineStateValue.Success)) {
-      sendAuthEvent({ type: AuthMachineEventType.Login, data: loginState.context.data });
+      sendAuthEvent(authEvents.login(loginState.context.data));
     }
   }, [loginState, sendAuthEvent]);
 
