@@ -83,7 +83,7 @@
     "workbox-routing": "^5.1.4",
     "workbox-strategies": "^5.1.4",
     "workbox-streams": "^5.1.4",
-    "xstate": "^4.19.1"
+    "xstate": "^4.23.1"
   },
   "scripts": {
     "start": "react-scripts start",
