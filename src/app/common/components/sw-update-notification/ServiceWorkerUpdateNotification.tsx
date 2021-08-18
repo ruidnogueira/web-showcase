@@ -9,8 +9,6 @@ import { NotificationPosition } from '../notification/notification.types';
 import { useNotification } from '../notification/NotificationProvider';
 import styles from './ServiceWorkerUpdateNotification.module.scss';
 
-// TODO TEST
-
 export function useServiceWorkerUpdateNotification() {
   const hasUpdate = useServiceWorkerUpdate();
   const notification = useNotification();
