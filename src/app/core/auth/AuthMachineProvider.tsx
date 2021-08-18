@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useMemo } from 'react';
-import { useMachine, useService } from '@xstate/react';
+import { useActor, useMachine } from '@xstate/react';
 import { Interpreter } from 'xstate';
 import {
   AuthMachineContext as MachineContext,
@@ -41,6 +41,6 @@ export function useAuthMachine() {
     throw new Error('useAuthMachine must be used within AuthMachineProvider');
   }
 
-  const [state, send] = useService(service);
+  const [state, send] = useActor(service);
   return [state, send, service] as const;
 }

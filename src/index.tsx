@@ -11,15 +11,17 @@ import { GlobalProviders } from 'app/core/providers/GlobalProviders';
 import { HelmetProvider } from 'react-helmet-async';
 import { ThemeProvider } from 'app/core/providers/ThemeProvider';
 import { HasServiceWorkerUpdateMessage } from 'app/core/providers/ServiceWorkerUpdateProvider';
+import { SetupWorkerApi } from 'msw';
 
 let registerMockServiceWorker: (() => Promise<void>) | undefined;
 
 if (process.env.NODE_ENV === 'development' && !process.env.REACT_APP_E2E) {
   // cannot be inside a function otherwise it will not be treeshaken
   registerMockServiceWorker = async () => {
-    const { worker } = require('mocks/server/browser.mock');
+    const { worker }: { worker: SetupWorkerApi } = require('mocks/server/browser.mock');
 
     await worker.start({
+      onUnhandledRequest: 'bypass',
       serviceWorker: {
         url: `${process.env.PUBLIC_URL}/mockServiceWorker.js`,
       },

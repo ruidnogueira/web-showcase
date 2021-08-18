@@ -8,9 +8,10 @@ import {
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
-import { NotificationConfig, NotificationId, NotificationPosition } from './notification.types';
+import { NotificationConfig, NotificationId } from './notification.types';
 import { NotificationManager } from './NotificationManager';
 import { v4 as uuid } from 'uuid';
+import { useConfig } from 'app/core/configs/ConfigProvider';
 
 type NotificationOptions = Pick<NotificationConfig, 'message' | 'duration' | 'isClosable'> &
   Partial<Pick<NotificationConfig, 'id' | 'position' | 'onClose'>>;
@@ -26,6 +27,8 @@ const NotificationContext = createContext<NotificationMethods | undefined>(undef
 const portalId = 'notification-portal';
 
 export function NotificationProvider({ children }: { children: ReactNode }) {
+  const { constants } = useConfig();
+
   const notificationsRef = useRef<NotificationConfig[]>([]);
   const [notifications, setNotifications] = useState<NotificationConfig[]>([]);
   notificationsRef.current = notifications;
@@ -38,7 +41,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         const notification: NotificationConfig = {
           ...options,
           id: notificationId,
-          position: position ?? NotificationPosition.TopRight, // TODO useConfig
+          position: position ?? constants.defaultNotificationPosition,
           onClose: () => {
             const notificationsToKeep = notificationsRef.current.filter(
               (notification) => notification.id !== notificationId
@@ -76,7 +79,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         setNotifications([]);
       },
     };
-  }, []);
+  }, [constants]);
 
   return (
     <>

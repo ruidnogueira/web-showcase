@@ -1,26 +1,13 @@
 import { getFromLocalStorage, saveToLocalStorage } from 'app/common/utils/browser.util';
 import { Reader } from 'fp-ts/lib/Reader';
-import { createMachine, send, StateMachine } from 'xstate';
+import { ContextFrom, EventFrom, send, StateMachine, ExtractEvent } from 'xstate';
 import { StorageKeys } from 'app/core/configs/storage.config';
 import { ApiAuthToken } from '../models/auth.model';
+import { createModel } from 'xstate/lib/model';
+import { fixModelEventNames } from 'app/common/utils/machine.util';
 
-export type AuthMachineContext = {};
-
-export enum AuthMachineEventType {
-  CheckIfLoggedIn = 'CHECK_IF_LOGGED_IN',
-  Login = 'LOGIN',
-  Logout = 'LOGOUT',
-}
-
-export type AuthMachineEvent =
-  | { type: AuthMachineEventType.CheckIfLoggedIn }
-  | { type: AuthMachineEventType.Logout }
-  | LoginEvent;
-
-interface LoginEvent {
-  type: AuthMachineEventType.Login;
-  data: ApiAuthToken;
-}
+export type AuthMachineContext = ContextFrom<typeof authModel>;
+export type AuthMachineEvent = EventFrom<typeof authModel>;
 
 export enum AuthMachineStateValue {
   CheckingIfLoggedIn = 'checkingIfLoggedIn',
@@ -30,27 +17,41 @@ export enum AuthMachineStateValue {
 
 export type AuthMachineState = {
   value: AuthMachineStateValue;
-  context: {};
+  context: AuthMachineContext;
 };
+
+const authModel = createModel(
+  {},
+  {
+    events: {
+      checkIfLoggedIn: () => ({}),
+      login: (token: ApiAuthToken) => ({ token }),
+      logout: () => ({}),
+    },
+  }
+);
+
+export const authEvents = fixModelEventNames(authModel.events);
 
 export const createAuthMachine: Reader<
   { storageKeys: StorageKeys },
   StateMachine<AuthMachineContext, any, AuthMachineEvent, AuthMachineState>
 > = ({ storageKeys }) => {
-  const storeToken = (_: any, event: LoginEvent) =>
-    saveToLocalStorage(storageKeys.authToken, event.data);
+  const storeToken = (_: any, event: ExtractEvent<AuthMachineEvent, 'login'>) =>
+    saveToLocalStorage(storageKeys.authToken, event.token);
 
   const clearToken = () => localStorage.removeItem(storageKeys.authToken);
 
   const isLoggedIn = () => Boolean(getFromLocalStorage<ApiAuthToken>(storageKeys.authToken));
 
-  return createMachine({
+  return authModel.createMachine({
     id: 'auth',
+    context: authModel.initialContext,
     initial: AuthMachineStateValue.CheckingIfLoggedIn,
     states: {
       [AuthMachineStateValue.CheckingIfLoggedIn]: {
         on: {
-          [AuthMachineEventType.CheckIfLoggedIn]: [
+          checkIfLoggedIn: [
             {
               target: AuthMachineStateValue.LoggedIn,
               cond: isLoggedIn,
@@ -58,12 +59,12 @@ export const createAuthMachine: Reader<
             { target: AuthMachineStateValue.LoggedOut },
           ],
         },
-        entry: send({ type: AuthMachineEventType.CheckIfLoggedIn }),
+        entry: send(authEvents.checkIfLoggedIn()),
       },
 
       [AuthMachineStateValue.LoggedIn]: {
         on: {
-          [AuthMachineEventType.Logout]: {
+          logout: {
             target: AuthMachineStateValue.LoggedOut,
             actions: clearToken,
           },
@@ -72,7 +73,7 @@ export const createAuthMachine: Reader<
 
       [AuthMachineStateValue.LoggedOut]: {
         on: {
-          [AuthMachineEventType.Login]: {
+          login: {
             target: AuthMachineStateValue.LoggedIn,
             actions: storeToken,
           },
