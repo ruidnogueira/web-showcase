@@ -35,6 +35,7 @@ $switch-thumb-shift: $switch-padding - 1px;
 
   background-color: utilities.get-color('switch-unchecked');
   border-radius: 9999px;
+  cursor: pointer;
   height: $switch-height;
   padding: $switch-padding;
   transition: background-color 100ms;
