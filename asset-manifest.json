@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/web-showcase/static/css/main.b543539c.chunk.css",
-    "main.js": "/web-showcase/static/js/main.9ec25227.chunk.js",
-    "main.js.map": "/web-showcase/static/js/main.9ec25227.chunk.js.map",
+    "main.css": "/web-showcase/static/css/main.f72ff3a5.chunk.css",
+    "main.js": "/web-showcase/static/js/main.bd9b07bc.chunk.js",
+    "main.js.map": "/web-showcase/static/js/main.bd9b07bc.chunk.js.map",
     "runtime-main.js": "/web-showcase/static/js/runtime-main.aaf8ccf5.js",
     "runtime-main.js.map": "/web-showcase/static/js/runtime-main.aaf8ccf5.js.map",
     "static/js/2.0a39c10e.chunk.js": "/web-showcase/static/js/2.0a39c10e.chunk.js",
@@ -12,7 +12,7 @@
     "index.html": "/web-showcase/index.html",
     "service-worker.js": "/web-showcase/service-worker.js",
     "service-worker.js.map": "/web-showcase/service-worker.js.map",
-    "static/css/main.b543539c.chunk.css.map": "/web-showcase/static/css/main.b543539c.chunk.css.map",
+    "static/css/main.f72ff3a5.chunk.css.map": "/web-showcase/static/css/main.f72ff3a5.chunk.css.map",
     "static/js/2.0a39c10e.chunk.js.LICENSE.txt": "/web-showcase/static/js/2.0a39c10e.chunk.js.LICENSE.txt",
     "static/media/styles.scss": "/web-showcase/static/media/Roboto-Regular.49ae34d4.woff",
     "static/media/getFetch.cjs": "/web-showcase/static/media/getFetch.582d29c4.cjs",
@@ -21,7 +21,7 @@
   "entrypoints": [
     "static/js/runtime-main.aaf8ccf5.js",
     "static/js/2.0a39c10e.chunk.js",
-    "static/css/main.b543539c.chunk.css",
-    "static/js/main.9ec25227.chunk.js"
+    "static/css/main.f72ff3a5.chunk.css",
+    "static/js/main.bd9b07bc.chunk.js"
   ]
 }
