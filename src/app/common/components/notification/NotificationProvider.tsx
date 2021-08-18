@@ -8,10 +8,9 @@ import {
   useState,
 } from 'react';
 import { createPortal } from 'react-dom';
-import { NotificationConfig, NotificationId } from './notification.types';
+import { NotificationConfig, NotificationId, NotificationPosition } from './notification.types';
 import { NotificationManager } from './NotificationManager';
 import { v4 as uuid } from 'uuid';
-import { useConfig } from 'app/core/configs/ConfigProvider';
 
 type NotificationOptions = Pick<NotificationConfig, 'message' | 'duration' | 'isClosable'> &
   Partial<Pick<NotificationConfig, 'id' | 'position' | 'onClose'>>;
@@ -22,13 +21,19 @@ interface NotificationMethods {
   closeAll: () => void;
 }
 
+export interface NotificationProviderProps {
+  children: ReactNode;
+  defaultNotificationPosition?: NotificationPosition;
+}
+
 const NotificationContext = createContext<NotificationMethods | undefined>(undefined);
 
 const portalId = 'notification-portal';
 
-export function NotificationProvider({ children }: { children: ReactNode }) {
-  const { constants } = useConfig();
-
+export function NotificationProvider({
+  children,
+  defaultNotificationPosition = NotificationPosition.TopRight,
+}: NotificationProviderProps) {
   const notificationsRef = useRef<NotificationConfig[]>([]);
   const [notifications, setNotifications] = useState<NotificationConfig[]>([]);
   notificationsRef.current = notifications;
@@ -41,7 +46,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         const notification: NotificationConfig = {
           ...options,
           id: notificationId,
-          position: position ?? constants.defaultNotificationPosition,
+          position: position ?? defaultNotificationPosition,
           onClose: () => {
             const notificationsToKeep = notificationsRef.current.filter(
               (notification) => notification.id !== notificationId
@@ -79,7 +84,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         setNotifications([]);
       },
     };
-  }, [constants]);
+  }, [defaultNotificationPosition]);
 
   return (
     <>
