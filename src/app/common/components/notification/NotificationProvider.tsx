@@ -79,7 +79,7 @@ export function NotificationProvider({ children }: { children: ReactNode }) {
         setNotifications([]);
       },
     };
-  }, []);
+  }, [constants]);
 
   return (
     <>
