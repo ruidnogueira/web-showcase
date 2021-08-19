@@ -6,7 +6,8 @@ export default {
   component: Dropdown,
   argTypes: {},
   args: {
-    children: 'example',
+    children: 'trigger button',
+    overlay: 'overlay content',
   },
 } as Meta<DropdownProps>;
 

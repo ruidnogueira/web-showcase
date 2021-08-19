@@ -2,6 +2,7 @@ import { ReactNode, useLayoutEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 // TODO TEST
+// TODO STORYBOOK
 
 export interface PortalProps {
   id?: string;
@@ -20,12 +21,14 @@ export function Portal({ children, id, className }: PortalProps) {
     return () => element.remove();
   }, []);
 
-  return container
-    ? createPortal(
-        <div id={id} className={className}>
-          {children}
-        </div>,
-        container
-      )
-    : null;
+  if (!container) {
+    return null;
+  }
+
+  return createPortal(
+    <div id={id} className={className}>
+      {children}
+    </div>,
+    container
+  );
 }
