@@ -1,16 +1,8 @@
-import {
-  createContext,
-  ReactNode,
-  useContext,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import { createPortal } from 'react-dom';
+import { createContext, ReactNode, useContext, useMemo, useRef, useState } from 'react';
 import { NotificationConfig, NotificationId, NotificationPosition } from './notification.types';
 import { NotificationManager } from './NotificationManager';
 import { v4 as uuid } from 'uuid';
+import { Portal } from '../portal/Portal';
 
 type NotificationOptions = Pick<NotificationConfig, 'message' | 'duration' | 'isClosable'> &
   Partial<Pick<NotificationConfig, 'id' | 'position' | 'onClose'>>;
@@ -88,9 +80,9 @@ export function NotificationProvider({
 
   return (
     <>
-      <NotificationPortal>
+      <Portal id={portalId}>
         <NotificationManager notifications={notifications}></NotificationManager>
-      </NotificationPortal>
+      </Portal>
 
       <NotificationContext.Provider value={notificationActions}>
         {children}
@@ -107,19 +99,4 @@ export function useNotification() {
   }
 
   return context;
-}
-
-function NotificationPortal({ children }: { children: ReactNode }) {
-  const outletElement = useMemo(() => {
-    const element = document.createElement('div');
-    element.id = portalId;
-    return element;
-  }, []);
-
-  useLayoutEffect(() => {
-    document.body.querySelector(`#${portalId}`)?.remove();
-    document.body.appendChild(outletElement);
-  }, [outletElement]);
-
-  return createPortal(children, outletElement);
 }
