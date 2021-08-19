@@ -1,16 +1,14 @@
-import { ReactNode, useLayoutEffect, useState } from 'react';
+import { HTMLAttributes, ReactNode, useLayoutEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 // TODO TEST
 // TODO STORYBOOK
 
-export interface PortalProps {
-  id?: string;
-  className?: string;
+export interface PortalProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
 }
 
-export function Portal({ children, id, className }: PortalProps) {
+export function Portal({ children, ...props }: PortalProps) {
   const [container, setContainer] = useState<HTMLDivElement>();
 
   useLayoutEffect(() => {
@@ -25,10 +23,5 @@ export function Portal({ children, id, className }: PortalProps) {
     return null;
   }
 
-  return createPortal(
-    <div id={id} className={className}>
-      {children}
-    </div>,
-    container
-  );
+  return createPortal(<div {...props}>{children}</div>, container);
 }

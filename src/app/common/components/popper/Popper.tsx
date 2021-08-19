@@ -1,13 +1,12 @@
-import { ReactNode, useState } from 'react';
+import { HTMLAttributes, ReactNode, useState } from 'react';
 import { usePopper } from 'react-popper';
 import { Portal } from '../portal/Portal';
 
 // TODO TEST
 // TODO STORYBOOK
 
-export interface PopperProps<T extends HTMLElement> {
+export interface PopperProps<T extends HTMLElement> extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
-  className?: string;
   isOpen?: boolean;
   referenceElement?: T | null;
 }
@@ -16,6 +15,7 @@ export function Popper<T extends HTMLElement>({
   children,
   isOpen,
   referenceElement,
+  ...props
 }: PopperProps<T>) {
   const [popperElement, setPopperElement] = useState<HTMLElement | null>(null);
   const { styles, attributes } = usePopper(referenceElement, popperElement, {
@@ -29,7 +29,7 @@ export function Popper<T extends HTMLElement>({
 
   return (
     <Portal>
-      <div ref={setPopperElement} style={{ ...styles.popper }} {...attributes.popper}>
+      <div ref={setPopperElement} style={{ ...styles.popper }} {...attributes.popper} {...props}>
         {children}
       </div>
     </Portal>
