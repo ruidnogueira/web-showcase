@@ -1,6 +1,6 @@
 import { Chance } from 'chance';
 import { interpret } from 'xstate';
-import { createFetchModel, FetchMachineStateValue } from './fetchMachine';
+import { createFetchModel, FetchMachineStateValue } from './fetch-machine';
 
 const chance = new Chance('fetchMachine');
 

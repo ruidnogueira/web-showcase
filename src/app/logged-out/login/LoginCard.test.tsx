@@ -1,6 +1,6 @@
 import { RenderResult, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { authEvents, createAuthMachine } from 'app/core/auth/authMachine';
+import { authEvents, createAuthMachine } from 'app/core/auth/auth-machine';
 import { AuthMachineProvider } from 'app/core/auth/AuthMachineProvider';
 import { storageKeys } from 'app/core/configs/storage.config';
 import { renderWithProviders } from 'test/component.helper';

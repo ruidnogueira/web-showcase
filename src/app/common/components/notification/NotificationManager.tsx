@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { Notification } from './Notification';
-import { NotificationConfig, NotificationPosition } from './notification.types';
-import styles from './notification.module.scss';
+import { NotificationConfig, NotificationPosition } from './Notification.types';
+import styles from './Notification.module.scss';
 
 type NotificationDictionary = Record<NotificationPosition, NotificationConfig[]>;
 

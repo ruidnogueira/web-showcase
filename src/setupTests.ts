@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import 'test/globalMocks';
+import 'test/global-mocks';
 import { server } from 'mocks/server/server.mock';
 import { config } from 'react-transition-group';
 

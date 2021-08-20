@@ -1,12 +1,12 @@
 import { I18nConfig, i18nConfig } from '../configs/i18n.config';
-import { getI18nFormatter } from './i18nFormat';
+import { getI18nFormatter } from './i18n-format';
 import enGB from 'date-fns/locale/en-GB';
 import enUS from 'date-fns/locale/en-US';
 import ptPT from 'date-fns/locale/pt';
 import { format as formatDate } from 'date-fns';
 
 jest.mock('date-fns/format');
-const formatDateMock = (formatDate as unknown) as jest.Mock<typeof format>;
+const formatDateMock = formatDate as unknown as jest.Mock<typeof format>;
 
 const config: I18nConfig = {
   ...i18nConfig,

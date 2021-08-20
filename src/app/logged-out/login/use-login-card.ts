@@ -2,10 +2,10 @@ import { useMachine } from '@xstate/react';
 import { useApiServices } from 'app/core/api/services/ApiServicesProvider';
 import { useAuthMachine } from 'app/core/auth/AuthMachineProvider';
 import { useEffect, useMemo } from 'react';
-import { createLoginMachine, loginEvents, LoginMachineStateValue } from './loginMachine';
+import { createLoginMachine, loginEvents, LoginMachineStateValue } from './login-machine';
 import { FormikErrors, useFormik } from 'formik';
 import { LoginError, LoginForm } from './login.types';
-import { authEvents } from 'app/core/auth/authMachine';
+import { authEvents } from 'app/core/auth/auth-machine';
 
 export function useLoginCard() {
   const [, sendAuthEvent] = useAuthMachine();

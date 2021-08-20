@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useMemo } from 'react';
 import { useApiClient } from '../ApiProvider';
-import { AuthService, createAuthService } from './authService';
+import { AuthService, createAuthService } from './auth-service';
 
 interface ApiServices {
   authService: AuthService;

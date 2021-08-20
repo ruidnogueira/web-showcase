@@ -1,5 +1,5 @@
 import { Button } from 'app/common/components/button/Button';
-import { authEvents } from 'app/core/auth/authMachine';
+import { authEvents } from 'app/core/auth/auth-machine';
 import { useAuthMachine } from 'app/core/auth/AuthMachineProvider';
 import { MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';

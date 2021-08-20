@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { IconButton } from '../icon-button/IconButton';
 import { ControlSize } from 'app/core/models/styles.model';
 import { TFunction } from 'i18next';
-import { useTimeout } from 'app/common/hooks/useTimeout';
+import { useTimeout } from 'app/common/hooks/use-timeout';
 
 export interface NotificationProps {
   className?: string;

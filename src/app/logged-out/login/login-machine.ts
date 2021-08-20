@@ -1,5 +1,5 @@
-import { createFetchModel, FetchMachineState } from 'app/common/machines/fetchMachine';
-import { AuthService } from 'app/core/api/services/authService';
+import { createFetchModel, FetchMachineState } from 'app/common/machines/fetch-machine';
+import { AuthService } from 'app/core/api/services/auth-service';
 import { ApiAuthToken, ApiCreateAuthTokenRequest } from 'app/core/models/auth.model';
 import { Reader } from 'fp-ts/lib/Reader';
 import { map } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import { ContextFrom, EventFrom, StateMachine } from 'xstate';
 export type LoginMachineContext = ContextFrom<typeof fetchModel>;
 export type LoginMachineEvent = EventFrom<typeof fetchModel>;
 export type LoginMachineState = FetchMachineState<ApiAuthToken, LoginError>;
-export { FetchMachineStateValue as LoginMachineStateValue } from 'app/common/machines/fetchMachine';
+export { FetchMachineStateValue as LoginMachineStateValue } from 'app/common/machines/fetch-machine';
 
 const { fetchModel, createFetchMachine } = createFetchModel<
   ApiCreateAuthTokenRequest,

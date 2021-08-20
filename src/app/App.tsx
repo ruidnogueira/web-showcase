@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { memo } from 'react';
 import { LoggedOutPage } from './logged-out/LoggedOutPage';
 import { useAuthMachine } from './core/auth/AuthMachineProvider';
-import { AuthMachineStateValue } from './core/auth/authMachine';
+import { AuthMachineStateValue } from './core/auth/auth-machine';
 import { LoggedInPage } from './logged-in/LoggedInPage';
 import { useServiceWorkerUpdateNotification } from './common/components/sw-update-notification/ServiceWorkerUpdateNotification';
 

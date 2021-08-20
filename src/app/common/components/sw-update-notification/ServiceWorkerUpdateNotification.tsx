@@ -5,7 +5,7 @@ import {
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LinkButton } from '../link-button/LinkButton';
-import { NotificationPosition } from '../notification/notification.types';
+import { NotificationPosition } from '../notification/Notification.types';
 import { useNotification } from '../notification/NotificationProvider';
 import styles from './ServiceWorkerUpdateNotification.module.scss';
 

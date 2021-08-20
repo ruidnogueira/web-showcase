@@ -5,7 +5,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import Backend from 'i18next-http-backend';
 import { initReactI18next } from 'react-i18next';
 import { useConfig } from '../configs/ConfigProvider';
-import { getI18nFormatter } from './i18nFormat';
+import { getI18nFormatter } from './i18n-format';
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const { i18nConfig } = useConfig();

@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { StorybookVariants } from 'test/storybook.helper';
 import { Button } from '../button/Button';
 import { Notification, NotificationProps } from './Notification';
-import { NotificationPosition } from './notification.types';
+import { NotificationPosition } from './Notification.types';
 import { NotificationProvider, useNotification } from './NotificationProvider';
 
 export default {

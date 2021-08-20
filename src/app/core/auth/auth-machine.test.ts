@@ -2,7 +2,7 @@ import { getFromLocalStorage, saveToLocalStorage } from 'app/common/utils/browse
 import { mockAuthToken } from 'mocks/model/user.mock';
 import { interpret } from 'xstate';
 import { storageKeys } from '../configs/storage.config';
-import { authEvents, AuthMachineStateValue, createAuthMachine } from './authMachine';
+import { authEvents, AuthMachineStateValue, createAuthMachine } from './auth-machine';
 
 test(`reaches ${AuthMachineStateValue.LoggedOut} state if user data is not in local storage`, () => {
   const machine = createAuthMachine({ storageKeys });

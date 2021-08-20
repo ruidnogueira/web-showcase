@@ -6,7 +6,7 @@ import {
   AuthMachineEvent,
   AuthMachineState,
   createAuthMachine,
-} from './authMachine';
+} from './auth-machine';
 import { useConfig } from '../configs/ConfigProvider';
 
 const AuthMachineContext = createContext<

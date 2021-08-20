@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import styles from './LoginCard.module.scss';
 import sharedStyles from '../LoggedOutShared.module.scss';
 import classNames from 'classnames';
-import { useLoginCard } from './useLoginCard';
+import { useLoginCard } from './use-login-card';
 import { ChangeEvent, FormEvent } from 'react';
 import { LoginError, LoginForm } from './login.types';
 
