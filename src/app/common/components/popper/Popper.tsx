@@ -29,8 +29,8 @@ export function Popper<T extends HTMLElement>({
 
   return (
     <Portal>
-      <div ref={setPopperElement} style={{ ...styles.popper }} {...attributes.popper} {...props}>
-        {children}
+      <div ref={setPopperElement} style={styles.popper} {...attributes.popper}>
+        <div {...props}>{children}</div>
       </div>
     </Portal>
   );

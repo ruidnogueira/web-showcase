@@ -1,8 +1,8 @@
 import { createContext, ReactNode, useContext, useMemo, useRef, useState } from 'react';
 import { NotificationConfig, NotificationId, NotificationPosition } from './Notification.types';
 import { NotificationManager } from './NotificationManager';
-import { v4 as uuid } from 'uuid';
 import { Portal } from '../portal/Portal';
+import { uniqueId } from 'app/common/utils/id.util';
 
 type NotificationOptions = Pick<NotificationConfig, 'message' | 'duration' | 'isClosable'> &
   Partial<Pick<NotificationConfig, 'id' | 'position' | 'onClose'>>;
@@ -33,7 +33,7 @@ export function NotificationProvider({
   const notificationActions = useMemo<NotificationMethods>(() => {
     return {
       open: ({ position, id, onClose, ...options }) => {
-        const notificationId = id ?? uuid();
+        const notificationId = id ?? uniqueId('notification');
 
         const notification: NotificationConfig = {
           ...options,
