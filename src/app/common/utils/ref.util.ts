@@ -28,7 +28,7 @@ export function assignRef<T = any>(ref: ReactRef<T> | undefined, value: T) {
  * This is used mostly when you need to allow consumers forward refs to
  * internal components
  */
-export function mergeRefs<T>(...refs: (ReactRef<T> | undefined)[]) {
+export function mergeRefs<T>(...refs: Array<ReactRef<T> | undefined>) {
   return (node: T | null) => {
     refs.forEach((ref) => assignRef(ref, node));
   };

@@ -1,4 +1,3 @@
-import { useTheme } from 'app/core/providers/ThemeProvider';
 import classNames from 'classnames';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
@@ -12,8 +11,6 @@ const enterDuration = parseFloat(styles.enterAnimationDuration!);
 const exitDuration = parseFloat(styles.exitAnimationDuration!);
 
 export function NotificationManager({ notifications }: { notifications: NotificationConfig[] }) {
-  const { theme } = useTheme();
-
   const groupedNotifications = useMemo(() => {
     const notificationDictionary = notifications.reduce<NotificationDictionary>(
       (dictionary, notification) => {
@@ -39,11 +36,7 @@ export function NotificationManager({ notifications }: { notifications: Notifica
         <ul
           key={position}
           id={`notification-manager-${position}`}
-          className={classNames(
-            'notification-manager',
-            `notification-manager--${position}`,
-            `theme--${theme}`
-          )}
+          className={classNames('notification-manager', `notification-manager--${position}`)}
         >
           {notifications.map((notification) => (
             <NotificationContainer key={notification.id} {...notification} />
