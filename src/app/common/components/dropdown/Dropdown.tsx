@@ -4,58 +4,51 @@ import {
   cloneElement,
   HTMLAttributes,
   ReactElement,
-  ReactNode,
-  Ref,
   useState,
-  LiHTMLAttributes,
+  MouseEvent,
+  RefAttributes,
 } from 'react';
 import { Popper } from '../popper/Popper';
+import { DropdownMenu, DropdownMenuItem, DropdownMenuProps } from './DropdownMenu';
 
 // TODO TEST
 // TODO CHECK RERENDERS
+// TODO CHECK IF USELAYOUTEFFECT IS NEEDED
 // TODO CLEANUP
-// TODO MENU COMPONENT SHOULD HAVE aria-haspopup="menu"
-// TODO ADD ARIA-CONTROLS (create unique ids instead of forcing a prop with the id?)
 // TODO CLOSE ON CLICK OUTSIDE DROPDOWN
 
-type HTMLElementAttributes = HTMLAttributes<HTMLElement>;
-
-type TriggerElement = ReactElement & {
-  ref?: Ref<HTMLElement>;
-  onClick?: HTMLElementAttributes['onClick'];
-};
+type TriggerElement = ReactElement<HTMLAttributes<HTMLElement> & RefAttributes<HTMLElement>>;
 
 export interface DropdownProps {
   children: TriggerElement;
-  menu?: ReactElement<DropdownMenuProps>;
-}
-
-export interface DropdownMenuProps extends HTMLAttributes<HTMLUListElement> {
-  children: ReactElement<DropdownMenuItemProps> | ReactElement<DropdownMenuItemProps>[];
-}
-
-export interface DropdownMenuItemProps extends LiHTMLAttributes<HTMLLIElement> {
-  children: ReactNode;
+  menu: ReactElement<DropdownMenuProps>;
 }
 
 export function Dropdown({ children, menu }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null);
-
-  const menuId = useId({ prefix: 'dropdown-menu' });
-
   const handleToggleDropdown = () => setIsOpen((isOpen) => !isOpen);
 
+  const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null);
+
+  const menuId = useId({ id: menu.props.id, prefix: 'dropdown-menu' });
+
   const trigger = cloneElement(children, {
-    ref: mergeRefs(setReferenceElement, children.ref),
+    ref: mergeRefs(setReferenceElement, children.props.ref),
 
     'aria-expanded': isOpen,
-    'aria-haspopup': 'menu',
     'aria-controls': menuId,
+    'aria-haspopup': 'menu',
 
     onClick: (event: any) => {
       handleToggleDropdown();
-      children.onClick?.(event);
+      children.props.onClick?.(event);
+    },
+  });
+
+  const menuClone = cloneElement(menu, {
+    onClick: (event: MouseEvent<HTMLElement>) => {
+      handleToggleDropdown();
+      menu.props.onClick?.(event);
     },
   });
 
@@ -64,11 +57,11 @@ export function Dropdown({ children, menu }: DropdownProps) {
       {trigger}
 
       <Popper id={menuId} isOpen={isOpen} referenceElement={referenceElement}>
-        {menu}
+        {menuClone}
       </Popper>
     </>
   );
 }
 
-Dropdown.Menu = (props: DropdownMenuProps) => <ul {...props} />;
-Dropdown.MenuItem = (props: DropdownMenuItemProps) => <li {...props} />;
+Dropdown.Menu = DropdownMenu;
+Dropdown.MenuItem = DropdownMenuItem;

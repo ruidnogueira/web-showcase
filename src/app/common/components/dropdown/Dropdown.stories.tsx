@@ -14,9 +14,17 @@ export default {
     children: <Button>trigger button</Button>,
     menu: (
       <Dropdown.Menu>
-        <Dropdown.MenuItem>Option 1</Dropdown.MenuItem>
-        <Dropdown.MenuItem>Option 2</Dropdown.MenuItem>
-        <Dropdown.MenuItem>Option 3</Dropdown.MenuItem>
+        <Dropdown.MenuItem>
+          <Button>Option 1</Button>
+        </Dropdown.MenuItem>
+
+        <Dropdown.MenuItem>
+          <Button>Option 2</Button>
+        </Dropdown.MenuItem>
+
+        <Dropdown.MenuItem>
+          <Button>Option 3</Button>
+        </Dropdown.MenuItem>
       </Dropdown.Menu>
     ),
   },
