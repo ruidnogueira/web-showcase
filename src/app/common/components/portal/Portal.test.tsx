@@ -1,10 +1,11 @@
-import { render, screen, within } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
+import { renderWithProviders } from 'test/component.helper';
 import { Portal } from './Portal';
 
 test('renders content inside portal', () => {
   const text = 'test content';
 
-  render(
+  renderWithProviders(
     <div data-testid="wrapper">
       <Portal>{text}</Portal>
     </div>
@@ -19,7 +20,7 @@ test('renders content inside portal', () => {
 test('renders multiple portals', () => {
   const text = 'test content';
 
-  render(
+  renderWithProviders(
     <>
       <Portal>{text}</Portal>
       <Portal>{text}</Portal>
